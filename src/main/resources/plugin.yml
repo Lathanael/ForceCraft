@@ -1,0 +1,7 @@
+name: TheLivingForce
+main: de.Lathanael.TheLivingForce.bukkit.Force
+version: ${project.version} (BUILD ${git.build.time})
+author: Lathanael
+depend: [Spout]
+description: >
+             A plugin to implement the "Force" in Minecraft!
