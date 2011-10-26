@@ -8,17 +8,17 @@ import java.util.Set;
 
 public class PlayerHandler {
 
-	private final Set<String> filePlayers = new HashSet<String>();
+	private final static Set<String> filePlayers = new HashSet<String>();
 	private HashMap<String, ForcePlayer> players = new HashMap<String, ForcePlayer>();
 	private File playerFolder;
 	private FilenameFilter ymlFilter = new YamlFileFilter();
+	private static PlayerHandler handler= null;
 
-	public PlayerHandler(String dir) {
-		playerFolder = new File(dir + File.separator + "players");
-		initialize();
+	public PlayerHandler() {
 	}
 
-	private void initialize() {
+	public void initialize(String dir) {
+		playerFolder = new File(dir + File.separator + "players");
 		File[] files = playerFolder.listFiles(ymlFilter);
 		for (File file : files) {
 			String name = file.getName();
@@ -37,15 +37,21 @@ public class PlayerHandler {
 			return new ForcePlayer(player, playerFolder.getPath());
 	}
 
-	public void addForcePlayer(String playerName) {
+	public void createForcePlayer(String playerName) {
 		players.put(playerName, callForcePlayer(playerName));
 	}
 
 
 
+	public static void setInstance() {
+		if (handler != null)
+			return;
+		handler = new PlayerHandler();
+	}
 
-
-
+	public static PlayerHandler getInstance() {
+		return handler;
+	}
 
 /*-----------------------------FilenameFilter-------------------------------------*/
 

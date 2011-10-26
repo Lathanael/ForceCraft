@@ -2,7 +2,9 @@ package de.Lathanael.TheLivingForce.Players;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -44,6 +46,11 @@ public class ForcePlayer {
 			try {
 				playerFile.createNewFile();
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
+				playerConfig.addDefault("Key.E", "none");
+				playerConfig.addDefault("Key.F", "none");
+				playerConfig.addDefault("Key.R", "none");
+				playerConfig.options().copyDefaults(true);
+				playerConfig.save(playerFile);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -89,5 +96,26 @@ public class ForcePlayer {
 
 	public ForceAlignment getAligment() {
 		return (ForceAlignment) playerConfig.get("Alignment", ForceAlignment.NEUTRAL);
+	}
+
+	// TODO: Better way to handle more than 3 keys!
+	public void setKey(String key, String power) {
+		ConfigurationSection keys = playerConfig.getConfigurationSection("Key");
+		if (keys.contains(key))
+			playerConfig.set("Key." + key, power);
+		else
+			if (keys.getKeys(false).size() < 3)
+				playerConfig.set("Key." + key, power);
+			else {
+				Set<String> temp = keys.getKeys(false);
+				int i = 1;
+				for (String string : temp)
+					if (i == 1)
+						string = key;
+			}
+	}
+
+	public void getKey() {
+
 	}
 }

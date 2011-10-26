@@ -38,7 +38,8 @@ public class ForcePlugin extends JavaPlugin {
 			createConfig();
 		else
 			config = getConfig();
-		playerHandler = new PlayerHandler(getDataFolder().getPath());
+		PlayerHandler.setInstance();
+		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		registerCommands();
 		pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
