@@ -1,5 +1,8 @@
-package de.Lathanael.TheLivingForce.Enums;
+package de.Lathanael.TheLivingForce.Utils;
 
+/**
+ * @author Lathanael (aka Philippe Leipold)
+ */
 public enum Ranks {
 	STUDENT(1),
 	APPRENTICE(2),

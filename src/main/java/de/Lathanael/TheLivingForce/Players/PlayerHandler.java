@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
+
+/**
+ * @author Lathanael (aka Philippe Leipold)
+ */
 public class PlayerHandler {
 
 	private final static Set<String> filePlayers = new HashSet<String>();
@@ -19,10 +24,14 @@ public class PlayerHandler {
 
 	public void initialize(String dir) {
 		playerFolder = new File(dir + File.separator + "players");
-		File[] files = playerFolder.listFiles(ymlFilter);
-		for (File file : files) {
-			String name = file.getName();
-			filePlayers.add(name.substring(0, name.lastIndexOf('.')));
+		if (!playerFolder.exists()) {
+			playerFolder.mkdirs();
+		} else {
+			File[] files = playerFolder.listFiles(ymlFilter);
+			for (File file : files) {
+				String name = file.getName();
+				filePlayers.add(name.substring(0, name.lastIndexOf('.')));
+			}
 		}
 	}
 
@@ -30,11 +39,16 @@ public class PlayerHandler {
 		return players.get(name);
 	}
 
-	private ForcePlayer callForcePlayer(String player) {
-		if (filePlayers.contains(player))
-			return new ForcePlayer(player);
-		else
-			return new ForcePlayer(player, playerFolder.getPath());
+	private ForcePlayer callForcePlayer(String playerName) {
+		if (!filePlayers.contains(playerName)) {
+			if (ForcePlugin.getInstance().config.getBoolean("DebugMessages"))
+				ForcePlugin.log.info("Creating new player!");
+			return new ForcePlayer(playerName);
+		} else {
+			if (ForcePlugin.getInstance().config.getBoolean("DebugMessages"))
+				ForcePlugin.log.info("Loading playerfile!");
+			return new ForcePlayer(playerName, playerFolder.getPath());
+		}
 	}
 
 	public void createForcePlayer(String playerName) {
