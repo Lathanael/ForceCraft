@@ -1,3 +1,23 @@
+/*************************************************************************
+ * Copyright (C) 2011  Philippe Leipold
+ *
+ * This file is part of TheLivingForce.
+ *
+ * TheLivingForce is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * TheLivingForce is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SimpleCalc. If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************/
+
 package de.Lathanael.TheLivingForce.Players;
 
 import java.io.File;
@@ -54,29 +74,64 @@ public class ForcePlayer {
 		this.playerFile = new File(dir, name + ".yml");
 		if (!playerFile.exists()) {
 			try {
+				if (ForcePlugin.debug)
+					ForcePlugin.log.info("Creating player file for: " + name);
 				playerFile.createNewFile();
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-				playerConfig.addDefault("Alignment", ForceAlignment.NEUTRAL);
-				playerConfig.addDefault("Rank", Ranks.NONE);
+				playerConfig.addDefault("Alignment", ForceAlignment.NEUTRAL.toString());
+				playerConfig.addDefault("Rank", Ranks.NONE.getRankNr());
 				playerConfig.addDefault("Keys", Arrays.asList("18.none", "33.none", "19.none"));
 				playerConfig.options().copyDefaults(true);
 				playerConfig.save(playerFile);
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
+				rank = Ranks.getRank(playerConfig.getInt("Rank"));
+				alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
+				@SuppressWarnings("unchecked")
+				List<String> tempKeys = playerConfig.getList("Keys");
+				for (String key : tempKeys) {
+					String splittedKeys[] = key.split("\\.");
+					if (splittedKeys.length >= 2)
+						keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
+				}
+				if (ForcePlugin.debug)
+					ForcePlugin.log.info("Player file for " + name + " created!");
 			} catch (IOException e) {
+				ForcePlugin.log.info("An error occured during the creation of the player file for: " + name);
 				e.printStackTrace();
 			}
 		} else {
+			if (ForcePlugin.debug)
+				ForcePlugin.log.info("Loading player file for: " + name);
 			playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-			rank = (Ranks) playerConfig.get("Rank");
-			alignment = (ForceAlignment) playerConfig.get("Alignment");
+			rank = Ranks.getRank(playerConfig.getInt("Rank"));
+			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
 			@SuppressWarnings("unchecked")
 			List<String> tempKeys = playerConfig.getList("Keys");
 			if (tempKeys.size() > 3)
 				tempKeys = tempKeys.subList(0, 4);
 			for (String key : tempKeys) {
-				String splittedKeys[] = key.split(".");
+				String splittedKeys[] = key.split("\\.");
 				if (splittedKeys.length >= 2)
 					keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
+			}
+			if (ForcePlugin.debug) {
+				ForcePlugin.log.info("Loaded player file for: " + name);
+				ForcePlugin.log.info("Loaded attributes are:");
+				ForcePlugin.log.info("Alignment: " + alignment.toString());
+				ForcePlugin.log.info("Rank: " + rank.toString());
+				ForcePlugin.log.info("Keys:");
+				int i = 1;
+				for (String key : tempKeys) {
+					String splittedKeys[] = key.split("\\.");
+					if (splittedKeys.length >=2) {
+						ForcePlugin.log.info("Key: " + splittedKeys[0]);
+						ForcePlugin.log.info("Power: " + splittedKeys[1]);
+					} else {
+						ForcePlugin.log.info("Entry " + i + ": " + key);
+						i++;
+					}
+				}
+				i = 0;
 			}
 			tempKeys.clear();
 		}
@@ -85,8 +140,12 @@ public class ForcePlayer {
 	public void updateFile(boolean forceSave) {
 		if (count == 5 || forceSave) {
 			try {
+				if (ForcePlugin.debug)
+					ForcePlugin.log.info("Saving player file for: " + name);
+				updateKeysInFile();
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
+				ForcePlugin.log.info("Failed to save player file for: " + name);
 				e.printStackTrace();
 			}
 			count = 0;
@@ -99,22 +158,24 @@ public class ForcePlayer {
 		updateFile(false);
 	}
 
-	public void setRank(int rank) {
-		playerConfig.set("Rank", rank);
+	public void setRank(Ranks rank) {
+		playerConfig.set("Rank", rank.getRankNr());
+		this.rank = rank;
 		updateFile();
 	}
 
 	public int getRank() {
-		return ((Ranks) playerConfig.get("Rank", Ranks.NONE)).getRank();
+		return rank.getRankNr();
 	}
 
 	public void setAlignment(ForceAlignment fa) {
-		playerConfig.set("Alignment", fa);
+		playerConfig.set("Alignment", fa.toString());
+		this.alignment = fa;
 		updateFile();
 	}
 
 	public ForceAlignment getAligment() {
-		return (ForceAlignment) playerConfig.get("Alignment", ForceAlignment.NEUTRAL);
+		return alignment;
 	}
 
 	public void setKey(Keyboard key, String power) {
@@ -132,6 +193,7 @@ public class ForcePlayer {
 					}
 				}
 		}
+		updateKeysInFile();
 		updateFile(true);
 	}
 
@@ -141,8 +203,12 @@ public class ForcePlayer {
 
 	public void updateKeysInFile() {
 		List<String> temp = new ArrayList<String>();
+		if (ForcePlugin.debug)
+			ForcePlugin.log.info("List of keys to save:");
 		for(Map.Entry<Keyboard, String> entries : keys.entrySet()) {
 			String key = String.valueOf(entries.getKey().getKeyCode()).concat(".").concat(entries.getValue());
+			if (ForcePlugin.debug)
+				ForcePlugin.log.info(key);
 			temp.add(key);
 		}
 		playerConfig.set("Keys", temp);

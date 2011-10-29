@@ -180,13 +180,8 @@
         </repository>
         <repository>
             <id>spout-repo</id>
+            <name>Spout Repo</name>
             <url>http://repo.getspout.org</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -243,12 +238,6 @@
         <groupId>de.bananaco</groupId>
         <artifactId>bPermissions</artifactId>
         <version>1337-SNAPSHOT</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>5.1.18</version>
         <scope>provided</scope>
     </dependency>
   </dependencies>

@@ -1,3 +1,21 @@
+/*************************************************************************
+ * Copyright (C) 2011  Philippe Leipold
+ *
+ * TheLivingForce is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * TheLivingForce is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SimpleCalc. If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************/
+
 package de.Lathanael.TheLivingForce.bukkit;
 
 import java.io.File;
@@ -23,10 +41,11 @@ public class ForcePlugin extends JavaPlugin {
 	private static ForcePlugin instance;
 	public FileConfiguration config;
 	public String directory;
-	public static PlayerHandler playerHandler;
-	public static CommandsHandler commandsHandler;
+	public PlayerHandler playerHandler;
+	public CommandsHandler commandsHandler;
 	public static Logger log = Logger.getLogger("Minecraft");
-	public static PluginManager pm;
+	public PluginManager pm;
+	public static boolean debug = false;
 
 	public void onDisable() {
 		PluginDescriptionFile pdf = getDescription();
@@ -36,8 +55,10 @@ public class ForcePlugin extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		directory = getDataFolder().getPath() + File.separator + "config.yml";
-		updateConfig();
 		config = getConfig();
+		config.options().copyDefaults(true);
+		saveConfig();
+		loadConfig(config);
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		tlfPL = new TLFPlayerListener();
@@ -55,48 +76,8 @@ public class ForcePlugin extends JavaPlugin {
 		return instance;
 	}
 
-	private void updateConfig() {
-		config = getConfig();
-		config.addDefault("ForceSensitiveOnJoin", false);
-		config.addDefault("DebugMessages", false);
-		config.addDefault("Power.Push.enabled", true);
-		config.addDefault("Power.Push.rank", 1);
-		config.addDefault("Power.Push.alignment", "neutral");
-		config.addDefault("Power.Pull.enabled", true);
-		config.addDefault("Power.Pull.rank", 1);
-		config.addDefault("Power.Pull.alignment", "neutral");
-		config.addDefault("Power.Choke.enabled", true);
-		config.addDefault("Power.Choke.rank", 1);
-		config.addDefault("Power.Choke.alignment", "dark");
-		config.addDefault("Power.Lift.enabled", true);
-		config.addDefault("Power.Lift.rank", 1);
-		config.addDefault("Power.Lift.alignment", "neutral");
-		config.addDefault("Power.Run.enabled", true);
-		config.addDefault("Power.Run.rank", 1);
-		config.addDefault("Power.Run.alignment", "neutral");
-		config.addDefault("Power.Jump.enabled", true);
-		config.addDefault("Power.Jump.rank", 1);
-		config.addDefault("Power.Jump.alignment", "neutral");
-		config.addDefault("Power.Lightning.enabled", true);
-		config.addDefault("Power.Lightning.rank", 1);
-		config.addDefault("Power.Lightning.alignment", "neutral");
-		config.addDefault("Power.Shield.enabled", true);
-		config.addDefault("Power.Shield.rank", 1);
-		config.addDefault("Power.Shield.alignment", "neutral");
-		config.addDefault("Power.Flash.enabled", true);
-		config.addDefault("Power.Flash.rank", 1);
-		config.addDefault("Power.Flash.alignment", "neutral");
-		config.addDefault("Power.Heal.enabled", true);
-		config.addDefault("Power.Heal.rank", 1);
-		config.addDefault("Power.Heal.alignment", "neutral");
-		config.addDefault("Power.Rage.enabled", true);
-		config.addDefault("Power.Rage.rank", 1);
-		config.addDefault("Power.Rage.alignment", "neutral");
-		config.addDefault("Power.Mediation.enabled", true);
-		config.addDefault("Power.Mediation.rank", 1);
-		config.addDefault("Power.Mediation.alignment", "light");
-		config.options().copyDefaults(true);
-		saveConfig();
+	private void loadConfig(FileConfiguration config) {
+		debug = config.getBoolean("DebugMessages");
 	}
 
 	public void registerCommands() {
