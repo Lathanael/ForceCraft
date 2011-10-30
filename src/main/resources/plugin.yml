@@ -7,7 +7,29 @@ description: >
              A plugin to implement the "Force" in Minecraft!
 
 commands:
-    force:
+    tlf_force:
         description: Basic plugin Info
-        default: true
+        aliases: [force]
         usage: /<command>
+    tlf_debug:
+        description: Creates a Debug output to see if the system is working
+        aliases: [debug]
+        usage: /<command>
+
+permissions:
+    force.user:
+        description: Grants access to all user related commands.
+        default: true
+        children:
+            force.pull: true
+    force.admin:
+        description: Grants access to all commands.
+        default: op
+        children:
+            force.debug: true
+    force.debug:
+        description: Allows usage of the /debug command.
+        default: false
+    force.pull:
+        description: Allows usage of the Pull force.
+        default: false
