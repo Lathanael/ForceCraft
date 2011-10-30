@@ -21,20 +21,23 @@
 package de.Lathanael.TheLivingForce.Powers;
 
 import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
+import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
 public abstract class BasePower {
 
-	protected final String name;
+	protected String name;
+	protected String perm;
 	protected ForceAlignment alignment;
 	protected boolean enabled = false;
 	protected int rank = 1;
+	protected final ForcePlugin instance;
+	protected Long delay = 0L;
 
-	private BasePower (String powerName, ForceAlignment alignment) {
-		this.name = powerName;
-		this.alignment = alignment;
+	public BasePower() {
+		instance = ForcePlugin.getInstance();
 	}
 
 	public abstract void execute();
