@@ -121,6 +121,7 @@ public class ForcePlayer {
 				if (ForcePlugin.debug)
 					ForcePlugin.log.info("[TheLivingForce] Saving player file for: " + name);
 				updateKeysInFile();
+				saveAmounts();
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
 				ForcePlugin.log.info("[TheLivingForce] Failed to save player file for: " + name);
@@ -183,20 +184,12 @@ public class ForcePlayer {
 		return amounts.get(power);
 	}
 
-	public void updateKeysInFile() {
-		List<String> temp = new ArrayList<String>();
-		if (ForcePlugin.debug)
-			ForcePlugin.log.info("[TheLivingForce] List of keys to save:");
-		for(Map.Entry<Keyboard, String> entries : keys.entrySet()) {
-			String key = String.valueOf(entries.getKey().getKeyCode()).concat(".").concat(entries.getValue());
-			if (ForcePlugin.debug)
-				ForcePlugin.log.info("[TheLivingForce] " + key);
-			temp.add(key);
-		}
-		playerConfig.set("Keys", temp);
+	public void setPowerAmount(String power, int value) {
+		amounts.put(power, value);
+		updateFile();
 	}
 
-/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
 
 	private void createDefaults() {
 		playerConfig.addDefault("Alignment", ForceAlignment.NEUTRAL.toString());
@@ -234,6 +227,21 @@ public class ForcePlayer {
 		Map<String, Object> tempList = playerConfig.getConfigurationSection("Amount").getValues(false);
 		for (Map.Entry<String, Object> entries : tempList.entrySet()) {
 			amounts.put(entries.getKey(), (Integer) entries.getValue());
+		}
+	}
+
+	private void updateKeysInFile() {
+		List<String> temp = new ArrayList<String>();
+		for(Map.Entry<Keyboard, String> entries : keys.entrySet()) {
+			String key = String.valueOf(entries.getKey().getKeyCode()).concat(".").concat(entries.getValue());
+			temp.add(key);
+		}
+		playerConfig.set("Keys", temp);
+	}
+
+	private void saveAmounts() {
+		for (Map.Entry<String, Integer> entries : amounts.entrySet()) {
+			playerConfig.set("Amount." + entries.getKey(), entries.getValue());
 		}
 	}
 }
