@@ -26,8 +26,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
-
 /**
  * @author Lathanael (aka Philippe Leipold)
  */

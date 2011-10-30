@@ -19,9 +19,11 @@
 package de.Lathanael.TheLivingForce.bukkit;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -29,6 +31,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.Lathanael.TheLivingForce.Commands.CommandsHandler;
+import de.Lathanael.TheLivingForce.Listeners.TLFInputListener;
 import de.Lathanael.TheLivingForce.Listeners.TLFPlayerListener;
 import de.Lathanael.TheLivingForce.Players.PlayerHandler;
 
@@ -40,6 +43,7 @@ public class ForcePlugin extends JavaPlugin {
 	public TLFPlayerListener tlfPL;
 	private static ForcePlugin instance;
 	public FileConfiguration config;
+	public FileConfiguration ranksInfo;
 	public String directory;
 	public PlayerHandler playerHandler;
 	public CommandsHandler commandsHandler;
@@ -59,6 +63,7 @@ public class ForcePlugin extends JavaPlugin {
 		config.options().copyDefaults(true);
 		saveConfig();
 		loadConfig(config);
+		loadRanksInfo();
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		tlfPL = new TLFPlayerListener();
@@ -68,6 +73,7 @@ public class ForcePlugin extends JavaPlugin {
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_QUIT, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_KICK, tlfPL, Priority.Normal, this);
+		pm.registerEvent(Type.CUSTOM_EVENT, new TLFInputListener(), Priority.Normal, this);
 		PluginDescriptionFile pdf = getDescription();
 		log.info("[" + pdf.getName() + "] Version " + pdf.getVersion() + " enabled!");
 	}
@@ -78,6 +84,25 @@ public class ForcePlugin extends JavaPlugin {
 
 	private void loadConfig(FileConfiguration config) {
 		debug = config.getBoolean("DebugMessages");
+	}
+
+	private void loadRanksInfo() {
+		File ranksInfoFile = new File(getDataFolder().getPath() + File.separator + "ranksInfo.yml");
+		if (!ranksInfoFile.exists()) {
+			try {
+				ranksInfoFile.createNewFile();
+
+			ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+			ranksInfo.options().copyDefaults(true);
+			ranksInfo.save(ranksInfoFile);
+			ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+			} catch (IOException e) {
+				log.info("[TheLivingForce] Failed to create ranksInfo.yml!");
+				e.printStackTrace();
+			}
+		} else {
+				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+		}
 	}
 
 	public void registerCommands() {

@@ -75,7 +75,7 @@ public class ForcePlayer {
 		if (!playerFile.exists()) {
 			try {
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("Creating player file for: " + name);
+					ForcePlugin.log.info("[TheLivingForce] Creating player file for: " + name);
 				playerFile.createNewFile();
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 				playerConfig.addDefault("Alignment", ForceAlignment.NEUTRAL.toString());
@@ -94,14 +94,14 @@ public class ForcePlayer {
 						keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
 				}
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("Player file for " + name + " created!");
+					ForcePlugin.log.info("[TheLivingForce] Player file for " + name + " created!");
 			} catch (IOException e) {
-				ForcePlugin.log.info("An error occured during the creation of the player file for: " + name);
+				ForcePlugin.log.info("[TheLivingForce] An error occured during the creation of the player file for: " + name);
 				e.printStackTrace();
 			}
 		} else {
 			if (ForcePlugin.debug)
-				ForcePlugin.log.info("Loading player file for: " + name);
+				ForcePlugin.log.info("[TheLivingForce] Loading player file for: " + name);
 			playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			rank = Ranks.getRank(playerConfig.getInt("Rank"));
 			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
@@ -115,19 +115,19 @@ public class ForcePlayer {
 					keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
 			}
 			if (ForcePlugin.debug) {
-				ForcePlugin.log.info("Loaded player file for: " + name);
-				ForcePlugin.log.info("Loaded attributes are:");
-				ForcePlugin.log.info("Alignment: " + alignment.toString());
-				ForcePlugin.log.info("Rank: " + rank.toString());
-				ForcePlugin.log.info("Keys:");
+				ForcePlugin.log.info("[TheLivingForce] Loaded player file for: " + name);
+				ForcePlugin.log.info("[TheLivingForce] Loaded attributes are:");
+				ForcePlugin.log.info("[TheLivingForce] Alignment: " + alignment.toString());
+				ForcePlugin.log.info("[TheLivingForce] Rank: " + rank.toString());
+				ForcePlugin.log.info("[TheLivingForce] Keys:");
 				int i = 1;
 				for (String key : tempKeys) {
 					String splittedKeys[] = key.split("\\.");
 					if (splittedKeys.length >=2) {
-						ForcePlugin.log.info("Key: " + splittedKeys[0]);
-						ForcePlugin.log.info("Power: " + splittedKeys[1]);
+						ForcePlugin.log.info("[TheLivingForce] Key: " + splittedKeys[0]);
+						ForcePlugin.log.info("[TheLivingForce] Power: " + splittedKeys[1]);
 					} else {
-						ForcePlugin.log.info("Entry " + i + ": " + key);
+						ForcePlugin.log.info("[TheLivingForce] Entry " + i + ": " + key);
 						i++;
 					}
 				}
@@ -141,11 +141,11 @@ public class ForcePlayer {
 		if (count == 5 || forceSave) {
 			try {
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("Saving player file for: " + name);
+					ForcePlugin.log.info("[TheLivingForce] Saving player file for: " + name);
 				updateKeysInFile();
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
-				ForcePlugin.log.info("Failed to save player file for: " + name);
+				ForcePlugin.log.info("[TheLivingForce] Failed to save player file for: " + name);
 				e.printStackTrace();
 			}
 			count = 0;
@@ -204,11 +204,11 @@ public class ForcePlayer {
 	public void updateKeysInFile() {
 		List<String> temp = new ArrayList<String>();
 		if (ForcePlugin.debug)
-			ForcePlugin.log.info("List of keys to save:");
+			ForcePlugin.log.info("[TheLivingForce] List of keys to save:");
 		for(Map.Entry<Keyboard, String> entries : keys.entrySet()) {
 			String key = String.valueOf(entries.getKey().getKeyCode()).concat(".").concat(entries.getValue());
 			if (ForcePlugin.debug)
-				ForcePlugin.log.info(key);
+				ForcePlugin.log.info("[TheLivingForce] " + key);
 			temp.add(key);
 		}
 		playerConfig.set("Keys", temp);
