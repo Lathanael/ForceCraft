@@ -51,6 +51,7 @@ public class ForcePlayer {
 	protected int count = 0;
 	protected File playerFile;
 	protected HashMap<Keyboard, String> keys = new HashMap<Keyboard, String>();
+	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
 
 	public ForcePlayer (String playerName, String dir) {
 		this.name = playerName;
@@ -78,21 +79,13 @@ public class ForcePlayer {
 					ForcePlugin.log.info("[TheLivingForce] Creating player file for: " + name);
 				playerFile.createNewFile();
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-				playerConfig.addDefault("Alignment", ForceAlignment.NEUTRAL.toString());
-				playerConfig.addDefault("Rank", Ranks.NONE.getRankNr());
-				playerConfig.addDefault("Keys", Arrays.asList("18.none", "33.none", "19.none"));
-				playerConfig.options().copyDefaults(true);
+				createDefaults();
 				playerConfig.save(playerFile);
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 				rank = Ranks.getRank(playerConfig.getInt("Rank"));
 				alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
-				@SuppressWarnings("unchecked")
-				List<String> tempKeys = playerConfig.getList("Keys");
-				for (String key : tempKeys) {
-					String splittedKeys[] = key.split("\\.");
-					if (splittedKeys.length >= 2)
-						keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
-				}
+				loadKeys();
+				loadAmounts();
 				if (ForcePlugin.debug)
 					ForcePlugin.log.info("[TheLivingForce] Player file for " + name + " created!");
 			} catch (IOException e) {
@@ -105,35 +98,20 @@ public class ForcePlayer {
 			playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			rank = Ranks.getRank(playerConfig.getInt("Rank"));
 			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
-			@SuppressWarnings("unchecked")
-			List<String> tempKeys = playerConfig.getList("Keys");
-			if (tempKeys.size() > 3)
-				tempKeys = tempKeys.subList(0, 4);
-			for (String key : tempKeys) {
-				String splittedKeys[] = key.split("\\.");
-				if (splittedKeys.length >= 2)
-					keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
-			}
+			loadKeys();
+			loadAmounts();
 			if (ForcePlugin.debug) {
 				ForcePlugin.log.info("[TheLivingForce] Loaded player file for: " + name);
 				ForcePlugin.log.info("[TheLivingForce] Loaded attributes are:");
 				ForcePlugin.log.info("[TheLivingForce] Alignment: " + alignment.toString());
 				ForcePlugin.log.info("[TheLivingForce] Rank: " + rank.toString());
 				ForcePlugin.log.info("[TheLivingForce] Keys:");
-				int i = 1;
-				for (String key : tempKeys) {
-					String splittedKeys[] = key.split("\\.");
-					if (splittedKeys.length >=2) {
-						ForcePlugin.log.info("[TheLivingForce] Key: " + splittedKeys[0]);
-						ForcePlugin.log.info("[TheLivingForce] Power: " + splittedKeys[1]);
-					} else {
-						ForcePlugin.log.info("[TheLivingForce] Entry " + i + ": " + key);
-						i++;
-					}
+				for (Map.Entry<Keyboard, String> entries : keys.entrySet()) {
+						ForcePlugin.log.info("[TheLivingForce] Key: " + entries.getKey().toString());
+						ForcePlugin.log.info("[TheLivingForce] Power: " + entries.getValue());
 				}
-				i = 0;
+				ForcePlugin.log.info("[TheLivingForce] Loaded player file for: " + name);
 			}
-			tempKeys.clear();
 		}
 	}
 
@@ -201,6 +179,10 @@ public class ForcePlayer {
 		return keys.containsKey(key);
 	}
 
+	public int getPowerAmount(String power) {
+		return amounts.get(power);
+	}
+
 	public void updateKeysInFile() {
 		List<String> temp = new ArrayList<String>();
 		if (ForcePlugin.debug)
@@ -212,5 +194,46 @@ public class ForcePlayer {
 			temp.add(key);
 		}
 		playerConfig.set("Keys", temp);
+	}
+
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+
+	private void createDefaults() {
+		playerConfig.addDefault("Alignment", ForceAlignment.NEUTRAL.toString());
+		playerConfig.addDefault("Rank", Ranks.NONE.getRankNr());
+		playerConfig.addDefault("Keys", Arrays.asList("18.none", "33.none", "19.none"));
+		playerConfig.addDefault("Amount.Pull", 0);
+		playerConfig.addDefault("Amount.Push", 0);
+		playerConfig.addDefault("Amount.Run", 0);
+		playerConfig.addDefault("Amount.Jump", 0);
+		playerConfig.addDefault("Amount.Heal", 0);
+		playerConfig.addDefault("Amount.Lift", 0);
+		playerConfig.addDefault("Amount.Choke", 0);
+		playerConfig.addDefault("Amount.Rage", 0);
+		playerConfig.addDefault("Amount.Flash", 0);
+		playerConfig.addDefault("Amount.Mediation", 0);
+		playerConfig.addDefault("Amount.Lightning", 0);
+		playerConfig.addDefault("Amount.Shield", 0);
+		playerConfig.options().copyDefaults(true);
+
+	}
+
+	private void loadKeys() {
+		@SuppressWarnings("unchecked")
+		List<String> tempKeys = playerConfig.getList("Keys");
+		if (tempKeys.size() > 3)
+			tempKeys = tempKeys.subList(0, 4);
+		for (String key : tempKeys) {
+			String splittedKeys[] = key.split("\\.");
+			if (splittedKeys.length >= 2)
+				keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
+		}
+	}
+
+	private void loadAmounts() {
+		Map<String, Object> tempList = playerConfig.getConfigurationSection("Amount").getValues(false);
+		for (Map.Entry<String, Object> entries : tempList.entrySet()) {
+			amounts.put(entries.getKey(), (Integer) entries.getValue());
+		}
 	}
 }
