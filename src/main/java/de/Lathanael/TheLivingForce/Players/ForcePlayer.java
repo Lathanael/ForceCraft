@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with SimpleCalc. If not, see <http://www.gnu.org/licenses/>.
+ * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
@@ -36,7 +36,7 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 
 import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
 import de.Lathanael.TheLivingForce.Utils.Ranks;
-import de.Lathanael.TheLivingForce.Utils.SpoutKeys;
+import de.Lathanael.TheLivingForce.Utils.Tools;
 import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
 
 /**
@@ -219,7 +219,7 @@ public class ForcePlayer {
 		for (String key : tempKeys) {
 			String splittedKeys[] = key.split("\\.");
 			if (splittedKeys.length >= 2)
-				keys.put(SpoutKeys.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
+				keys.put(Tools.getKey(Integer.valueOf(splittedKeys[0])), splittedKeys[1]);
 		}
 	}
 

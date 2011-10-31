@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with SimpleCalc. If not, see <http://www.gnu.org/licenses/>.
+ * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
@@ -32,6 +32,8 @@ import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
+ *
+ * Some code-ideas in here are from AdminCmd!
  */
 public class CommandsHandler implements CommandExecutor {
 
