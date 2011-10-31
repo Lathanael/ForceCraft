@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with SimpleCalc. If not, see <http://www.gnu.org/licenses/>.
+ * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
@@ -31,8 +31,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.Lathanael.TheLivingForce.Commands.CommandsHandler;
+import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
 import de.Lathanael.TheLivingForce.Listeners.TLFInputListener;
 import de.Lathanael.TheLivingForce.Listeners.TLFPlayerListener;
+import de.Lathanael.TheLivingForce.Listeners.TLFPluginListener;
 import de.Lathanael.TheLivingForce.Players.PlayerHandler;
 import de.Lathanael.TheLivingForce.Powers.Pull;
 
@@ -41,7 +43,8 @@ import de.Lathanael.TheLivingForce.Powers.Pull;
  */
 public class ForcePlugin extends JavaPlugin {
 
-	public TLFPlayerListener tlfPL;
+	private TLFPlayerListener tlfPL;
+	private TLFPluginListener tlfPluL;
 	private static ForcePlugin instance;
 	public FileConfiguration config;
 	public FileConfiguration ranksInfo;
@@ -68,13 +71,17 @@ public class ForcePlugin extends JavaPlugin {
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		tlfPL = new TLFPlayerListener();
+		tlfPluL = new TLFPluginListener();
 		commandsHandler.initInstance(this);
 		registerCommands();
+		PermissionsHandler.setInstance();
 		pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_QUIT, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_KICK, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.CUSTOM_EVENT, new TLFInputListener(), Priority.Normal, this);
+		pm.registerEvent(Type.PLUGIN_DISABLE, tlfPluL, Priority.Normal, this);
+		pm.registerEvent(Type.PLUGIN_ENABLE, tlfPluL, Priority.Normal, this);
 		PluginDescriptionFile pdf = getDescription();
 		log.info("[" + pdf.getName() + "] Version " + pdf.getVersion() + " enabled!");
 	}
@@ -109,6 +116,6 @@ public class ForcePlugin extends JavaPlugin {
 	private void registerCommands() {
 		if (config.getBoolean("Power.Pull.enabled"))
 			commandsHandler.registerCommand(Pull.class);
-		commandsHandler.registerCommand("tlf_debug");
+		commandsHandler.registerCommand("tlf_info");
 	}
 }
