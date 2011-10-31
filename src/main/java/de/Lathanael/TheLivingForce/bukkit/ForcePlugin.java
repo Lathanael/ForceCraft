@@ -31,6 +31,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.Lathanael.TheLivingForce.Commands.CommandsHandler;
+import de.Lathanael.TheLivingForce.Commands.Info;
 import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
 import de.Lathanael.TheLivingForce.Listeners.TLFInputListener;
 import de.Lathanael.TheLivingForce.Listeners.TLFPlayerListener;
@@ -116,7 +117,7 @@ public class ForcePlugin extends JavaPlugin {
 
 	private void registerCommands() {
 		if (config.getBoolean("Power.Pull.enabled"))
-			commandsHandler.registerCommand(Pull.class);
-		commandsHandler.registerCommand("tlf_info");
+			commandsHandler.registerPower(Pull.class);
+		commandsHandler.registerCommand(Info.class);
 	}
 }

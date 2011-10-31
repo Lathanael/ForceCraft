@@ -20,15 +20,20 @@
 
 package de.Lathanael.TheLivingForce.Commands;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import de.Lathanael.TheLivingForce.Powers.BasePower;
+import de.Lathanael.TheLivingForce.Utils.Tools;
 import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
+import de.Lathanael.TheLivingForce.Commands.BaseCommand;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -39,7 +44,8 @@ public class CommandsHandler implements CommandExecutor {
 
 	private ForcePlugin plugin;
 	private static CommandsHandler instance = null;
-	private Set<Command> cmdList = new HashSet<Command>();
+	private HashMap<Command, BasePower> powerMap = new HashMap<Command, BasePower>();
+	private HashMap<Command, BaseCommand> cmdMap = new HashMap<Command, BaseCommand>();
 
 	public CommandsHandler(){
 	}
@@ -51,15 +57,35 @@ public class CommandsHandler implements CommandExecutor {
 		return instance;
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (powerMap.get(cmd) != null) {
+			executePower(sender, powerMap.get(cmd));
+			return true;
+		} else if (cmdMap.get(cmd) != null) {
+			executeCommand(sender, cmdMap.get(cmd), args);
+			return true;
+		}
 		return false;
 	}
 
-	public void registerCommand(Class<? extends BasePower> class1) {
-		BasePower cmd = null;
+	private void executePower(CommandSender sender, BasePower power) {
+		if (Tools.isPLayer(sender)) {
+			if (PermissionsHandler.getInstance().hasPerm(sender, power.perm))
+				power.execute((Player) sender);
+			else
+				sender.sendMessage(ChatColor.RED + "You do not have the permission to use the " + power.name + " Power!");
+		}
+	}
+
+	private void executeCommand(CommandSender sender, BaseCommand cmd, String[] args) {
+
+	}
+
+	public void registerPower(Class<? extends BasePower> class1) {
+		BasePower power = null;
 		try {
-			cmd = (BasePower) class1.newInstance();
-			plugin.getCommand(cmd.cmdName).setExecutor(instance);
-			cmdList.add(plugin.getCommand(cmd.cmdName));
+			power = (BasePower) class1.newInstance();
+			plugin.getCommand(power.cmdName).setExecutor(instance);
+			powerMap.put(plugin.getCommand(power.cmdName), power);
 		} catch (InstantiationException e) {
 			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
@@ -69,8 +95,18 @@ public class CommandsHandler implements CommandExecutor {
 		}
 	}
 
-	public void registerCommand(String command) {
-		cmdList.add(plugin.getCommand(command));
-		plugin.getCommand(command).setExecutor(instance);
+	public void registerCommand(Class<? extends BaseCommand> class1) {
+		BaseCommand cmd = null;
+		try {
+			cmd = (BaseCommand) class1.newInstance();
+			plugin.getCommand(cmd.name).setExecutor(instance);
+			cmdMap.put(plugin.getCommand(cmd.name), cmd);
+		} catch (InstantiationException e) {
+			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			e.printStackTrace();
+		}
 	}
 }

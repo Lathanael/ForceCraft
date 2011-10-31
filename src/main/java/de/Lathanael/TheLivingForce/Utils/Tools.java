@@ -21,6 +21,7 @@
 package de.Lathanael.TheLivingForce.Utils;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
 /**
@@ -36,6 +37,8 @@ public class Tools {
 	}
 
 	public static boolean isPLayer(CommandSender sender) {
+		if (sender instanceof Player)
+			return true;
 		return false;
 	}
 }

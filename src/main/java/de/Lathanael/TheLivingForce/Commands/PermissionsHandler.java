@@ -52,7 +52,7 @@ public class PermissionsHandler {
 			permHandler = new PermissionsHandler();
 	}
 
-	public PermissionsHandler getInstance() {
+	public static PermissionsHandler getInstance() {
 		return permHandler;
 	}
 

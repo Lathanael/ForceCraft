@@ -20,9 +20,20 @@
 
 package de.Lathanael.TheLivingForce.Commands;
 
+import org.bukkit.command.CommandSender;
+
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class Info {
+public class Info extends BaseCommand {
+
+	public Info() {
+		name = "force_info";
+		permNode = "force.info";
+	}
+
+	public void execute(CommandSender sender, String[] args) {
+
+	}
 
 }

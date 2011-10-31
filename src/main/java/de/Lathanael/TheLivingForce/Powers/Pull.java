@@ -20,6 +20,8 @@
 
 package de.Lathanael.TheLivingForce.Powers;
 
+import org.bukkit.entity.Player;
+
 import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
 
 /**
@@ -37,7 +39,7 @@ public class Pull extends BasePower {
 	}
 
 	@Override
-	public void execute() {
+	public void execute(Player player) {
 		// TODO Auto-generated method stub
 
 	}
