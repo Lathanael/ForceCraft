@@ -34,6 +34,7 @@ import de.Lathanael.TheLivingForce.Commands.CommandsHandler;
 import de.Lathanael.TheLivingForce.Listeners.TLFInputListener;
 import de.Lathanael.TheLivingForce.Listeners.TLFPlayerListener;
 import de.Lathanael.TheLivingForce.Players.PlayerHandler;
+import de.Lathanael.TheLivingForce.Powers.Pull;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -67,7 +68,7 @@ public class ForcePlugin extends JavaPlugin {
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		tlfPL = new TLFPlayerListener();
-		commandsHandler = new CommandsHandler(this);
+		commandsHandler.initInstance(this);
 		registerCommands();
 		pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
@@ -105,7 +106,9 @@ public class ForcePlugin extends JavaPlugin {
 		}
 	}
 
-	public void registerCommands() {
-		getCommand("force").setExecutor(commandsHandler);
+	private void registerCommands() {
+		if (config.getBoolean("Power.Pull.enabled"))
+			commandsHandler.registerCommand(Pull.class);
+		commandsHandler.registerCommand("tlf_debug");
 	}
 }

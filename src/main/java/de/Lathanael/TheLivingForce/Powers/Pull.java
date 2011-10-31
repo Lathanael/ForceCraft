@@ -6,11 +6,11 @@ public class Pull extends BasePower {
 
 	public Pull() {
 		name = "Pull";
+		cmdName = "tlf_pull";
 		perm = "force.pull";
-		alignment = ForceAlignment.valueOf(instance.config.getString(name + ".alignment"));
-		enabled = instance.config.getBoolean(name + ".enabled");
-		rank = instance.config.getInt(name + ".rank");
-		delay = instance.config.getLong(name + "delay");
+		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
+		rank = instance.config.getInt("Power." + name + ".rank");
+		delay = instance.config.getLong("Power." + name + "delay");
 	}
 
 	@Override

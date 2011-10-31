@@ -20,10 +20,14 @@
 
 package de.Lathanael.TheLivingForce.Commands;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import de.Lathanael.TheLivingForce.Powers.BasePower;
 import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
 
 /**
@@ -31,16 +35,40 @@ import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
  */
 public class CommandsHandler implements CommandExecutor {
 
-	@SuppressWarnings("unused")
-	private final ForcePlugin plugin;
+	private ForcePlugin plugin;
+	private static CommandsHandler instance = null;
+	private Set<Command> cmdList = new HashSet<Command>();
 
-	public CommandsHandler(ForcePlugin plugin){
-		this.plugin = plugin;
+	public CommandsHandler(){
 	}
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
-		// TODO Auto-generated method stub
+
+	public CommandsHandler initInstance(ForcePlugin plugin) {
+		this.plugin = plugin;
+		if (instance == null)
+			instance = new CommandsHandler();
+		return instance;
+	}
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		return false;
 	}
 
+	public void registerCommand(Class<? extends BasePower> class1) {
+		BasePower cmd = null;
+		try {
+			cmd = (BasePower) class1.newInstance();
+			plugin.getCommand(cmd.cmdName).setExecutor(instance);
+			cmdList.add(plugin.getCommand(cmd.cmdName));
+		} catch (InstantiationException e) {
+			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			e.printStackTrace();
+		}
+	}
+
+	public void registerCommand(String command) {
+		cmdList.add(plugin.getCommand(command));
+		plugin.getCommand(command).setExecutor(instance);
+	}
 }

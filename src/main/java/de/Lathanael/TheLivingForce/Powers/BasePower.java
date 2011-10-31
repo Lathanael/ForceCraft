@@ -28,13 +28,13 @@ import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
  */
 public abstract class BasePower {
 
-	protected String name;
-	protected String perm;
-	protected ForceAlignment alignment;
-	protected boolean enabled = false;
-	protected int rank = 1;
-	protected final ForcePlugin instance;
-	protected Long delay = 0L;
+	public String name;
+	public String cmdName;
+	public String perm;
+	public ForceAlignment alignment;
+	public int rank = 1;
+	public final ForcePlugin instance;
+	public Long delay = 0L;
 
 	public BasePower() {
 		instance = ForcePlugin.getInstance();
