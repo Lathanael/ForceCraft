@@ -27,6 +27,7 @@ import de.Lathanael.TheLivingForce.Utils.AbstractPermission;
 import de.Lathanael.TheLivingForce.Utils.BukkitPermOrOP;
 import de.Lathanael.TheLivingForce.Utils.PermissionEx;
 import de.Lathanael.TheLivingForce.Utils.YetiPermission;
+import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -64,22 +65,47 @@ public class PermissionsHandler {
 		perm = new YetiPermission(yetiPermPlugin);
 	}
 
-	public static void setbPerm() {
-		bPerm = true;
-		perm = new BukkitPermOrOP();
+	public static boolean setbPerm() {
+		if (!yetiPerm) {
+			bPerm = true;
+			perm = new BukkitPermOrOP();
+			return true;
+		}
+		return false;
 	}
 
-	public static void setPermEx(Plugin permExPlugin) {
-		if (!bPerm) {
+	public static boolean setPermEx(Plugin permExPlugin) {
+		if (!bPerm && !yetiPerm) {
 			permEx = true;
 			perm = new PermissionEx(permExPlugin);
+			return true;
 		}
+		return false;
 	}
 
-	public static void setPermBukkit() {
-		if (!bPerm && !permEx) {
+	public static boolean setPermBukkit() {
+		if (!bPerm && !permEx && !yetiPerm) {
 			permBukkit = true;
 			perm = new BukkitPermOrOP();
+			return true;
 		}
+		return false;
+	}
+
+	public static void ressetPerm(String name) {
+		if (name.equalsIgnoreCase("Permissions")) {
+			yetiPerm = false;
+			ForcePlugin.log.info("[TheLivingForce] Permissions 2.x/3.x disabled, using OP system!");
+		} else if (name.equalsIgnoreCase("bPermissions")) {
+			bPerm = false;
+			ForcePlugin.log.info("[TheLivingForce] bPermissions disabled, using OP system!");
+		} else if (name.equalsIgnoreCase("PermissionsEx")) {
+			permEx = false;
+			ForcePlugin.log.info("[TheLivingForce] PermissionsEx disabled, using OP system!");
+		} else if (name.equalsIgnoreCase("PermissionsBukkit")) {
+			permBukkit = false;
+			ForcePlugin.log.info("[TheLivingForce] PermissionsBukkit disabled, using OP system!");
+		}
+		perm = new BukkitPermOrOP();
 	}
 }

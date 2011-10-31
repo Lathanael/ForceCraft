@@ -39,10 +39,10 @@ public class YetiPermission extends AbstractPermission {
 	}
 
 	@Override
-	public boolean hasPerm(CommandSender player, String permNode) {
-		if (player instanceof ConsoleCommandSender)
+	public boolean hasPerm(CommandSender sender, String permNode) {
+		if (sender instanceof ConsoleCommandSender)
 			return true;
-		else if (permH.has((Player) player, permNode))
+		else if (permH.has((Player) sender, permNode))
 			return true;
 		else
 			return false;

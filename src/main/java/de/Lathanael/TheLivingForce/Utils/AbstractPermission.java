@@ -36,6 +36,6 @@ public abstract class AbstractPermission {
 	 * @param errorMsg
 	 * @return
 	 */
-	public abstract boolean hasPerm(CommandSender player, String perm);
+	public abstract boolean hasPerm(CommandSender sender, String perm);
 
 }

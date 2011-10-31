@@ -39,10 +39,11 @@ public class PermissionEx extends AbstractPermission {
 	}
 
 	@Override
-	public boolean hasPerm(CommandSender player, String permNode) {
-		if (player instanceof ConsoleCommandSender)
+	public boolean hasPerm(CommandSender sender, String permNode) {
+		if (sender instanceof ConsoleCommandSender)
 			return true;
-		else if (perm.has((Player) player, permNode))
+		Player player = (Player) sender;
+		if (perm.has((Player) player, permNode))
 			return true;
 		else
 			return false;

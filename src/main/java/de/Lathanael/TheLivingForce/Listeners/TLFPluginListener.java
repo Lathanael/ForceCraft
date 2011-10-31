@@ -20,6 +20,8 @@
 
 package de.Lathanael.TheLivingForce.Listeners;
 
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 
 import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
@@ -38,8 +40,43 @@ public class TLFPluginListener extends ServerListener {
 				PermissionsHandler.setYetiPerm(instance.getServer().getPluginManager().getPlugin("Permissions"));
 			}
 		}
-		if (instance.getServer().getPluginManager().getPlugin("Permissions").isEnabled()) {
-				return;
+
+		if (instance.getServer().getPluginManager().getPlugin("PermissionsEx").isEnabled())
+			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("PermissionsEx")))
+				ForcePlugin.log.info("[TheLivingForce] Found PermissionsEx, hooking in!");
+
+		if (instance.getServer().getPluginManager().getPlugin("bPermissions").isEnabled())
+			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("bPermissions")))
+				ForcePlugin.log.info("[TheLivingForce] Found bPermissions, hooking in!");
+
+		if (instance.getServer().getPluginManager().getPlugin("PermissionsBukkit").isEnabled())
+			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("PermissionsBukkit")))
+				ForcePlugin.log.info("[TheLivingForce] Found PermissionsBukkit, hooking in!");
+	}
+
+	public void onPluginEnable(PluginEnableEvent event) {
+		ForcePlugin instance = ForcePlugin.getInstance();
+		if (!instance.config.getBoolean("IgnorePermissionBridge")) {
+			if (event.getPlugin().getDescription().getName().equalsIgnoreCase("Permissions")) {
+				ForcePlugin.log.info("[TheLivingForce] Found Permission 2.x/3.x, hooking in!");
+				PermissionsHandler.setYetiPerm(event.getPlugin());
+			}
 		}
+
+		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("PermissionsEx"))
+			if (PermissionsHandler.setPermEx(event.getPlugin()))
+				ForcePlugin.log.info("[TheLivingForce] Found PermissionsEx, hooking in!");
+
+		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("bPermissions"))
+			if (PermissionsHandler.setPermEx(event.getPlugin()))
+				ForcePlugin.log.info("[TheLivingForce] Found bPermissions, hooking in!");
+
+		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("PermissionsBukkit"))
+			if (PermissionsHandler.setPermEx(event.getPlugin()))
+				ForcePlugin.log.info("[TheLivingForce] Found PermissionsBukkit, hooking in!");
+	}
+
+	public void onPluginDisable(PluginDisableEvent event) {
+		PermissionsHandler.ressetPerm(event.getPlugin().getDescription().getName());
 	}
 }

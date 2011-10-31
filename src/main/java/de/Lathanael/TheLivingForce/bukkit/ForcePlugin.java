@@ -75,6 +75,7 @@ public class ForcePlugin extends JavaPlugin {
 		commandsHandler.initInstance(this);
 		registerCommands();
 		PermissionsHandler.setInstance();
+		tlfPluL.hook();
 		pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_QUIT, tlfPL, Priority.Normal, this);
