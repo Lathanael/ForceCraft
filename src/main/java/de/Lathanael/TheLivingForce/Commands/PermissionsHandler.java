@@ -20,7 +20,7 @@
 
 package de.Lathanael.TheLivingForce.Commands;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import de.Lathanael.TheLivingForce.Utils.AbstractPermission;
@@ -56,7 +56,7 @@ public class PermissionsHandler {
 		return permHandler;
 	}
 
-	public boolean hasPerm(CommandSender player, String permNode) {
+	public boolean hasPerm(Player player, String permNode) {
 		return perm.hasPerm(player, permNode);
 	}
 

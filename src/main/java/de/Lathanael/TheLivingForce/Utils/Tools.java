@@ -26,6 +26,8 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
+ *
+ * Some code-ideas in here are from AdminCmd!
  */
 public class Tools {
 	public static Keyboard getKey(int keyNr) {
@@ -36,9 +38,13 @@ public class Tools {
 		return Keyboard.valueOf("KEY_" + keyName.toUpperCase());
 	}
 
-	public static boolean isPLayer(CommandSender sender) {
+	public static boolean isPLayer(CommandSender sender, boolean errorMsg) {
 		if (sender instanceof Player)
 			return true;
-		return false;
+		else {
+			if (errorMsg)
+				sender.sendMessage("[TheLivingForce] You must be a player to use this command!");
+			return false;
+		}
 	}
 }

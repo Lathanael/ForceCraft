@@ -20,8 +20,6 @@
 
 package de.Lathanael.TheLivingForce.Utils;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -39,10 +37,8 @@ public class YetiPermission extends AbstractPermission {
 	}
 
 	@Override
-	public boolean hasPerm(CommandSender sender, String permNode) {
-		if (sender instanceof ConsoleCommandSender)
-			return true;
-		else if (permH.has((Player) sender, permNode))
+	public boolean hasPerm(Player player, String permNode) {
+		if (permH.has(player, permNode))
 			return true;
 		else
 			return false;

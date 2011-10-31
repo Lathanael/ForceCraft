@@ -20,9 +20,14 @@
 
 package de.Lathanael.TheLivingForce.Powers;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
+import de.Lathanael.TheLivingForce.Players.ForcePlayer;
 import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
+import de.Lathanael.TheLivingForce.Utils.Tools;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -39,9 +44,18 @@ public class Pull extends BasePower {
 	}
 
 	@Override
-	public void execute(Player player) {
+	public void execute(ForcePlayer player) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean checkPerm(CommandSender sender) {
+		if (!Tools.isPLayer(sender, true))
+			return false;
+		else if (PermissionsHandler.getInstance().hasPerm((Player) sender, perm))
+			return true;
+		return false;
 	}
 
 }

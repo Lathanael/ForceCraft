@@ -20,8 +20,6 @@
 
 package de.Lathanael.TheLivingForce.Utils;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,10 +31,7 @@ public class BukkitPermOrOP extends AbstractPermission {
 	}
 
 	@Override
-	public boolean hasPerm(CommandSender sender, String perm) {
-		if (sender instanceof ConsoleCommandSender)
-			return true;
-		Player player = (Player) sender;
+	public boolean hasPerm(Player player, String perm) {
 		if (player.hasPermission(perm) || player.isOp())
 			return true;
 		else

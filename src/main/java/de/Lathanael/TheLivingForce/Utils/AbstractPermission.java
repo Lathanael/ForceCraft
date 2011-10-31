@@ -20,7 +20,7 @@
 
 package de.Lathanael.TheLivingForce.Utils;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * @authors Balor, Lathanael
@@ -33,9 +33,8 @@ public abstract class AbstractPermission {
 	 *
 	 * @param player
 	 * @param perm
-	 * @param errorMsg
 	 * @return
 	 */
-	public abstract boolean hasPerm(CommandSender sender, String perm);
+	public abstract boolean hasPerm(Player player, String perm);
 
 }

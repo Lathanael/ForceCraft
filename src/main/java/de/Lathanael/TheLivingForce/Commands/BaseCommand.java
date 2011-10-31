@@ -8,4 +8,6 @@ public abstract class BaseCommand {
 	public String permNode;
 
 	public abstract void execute(CommandSender sender, String[] args);
+
+	public abstract boolean checkPerm(CommandSender sender);
 }

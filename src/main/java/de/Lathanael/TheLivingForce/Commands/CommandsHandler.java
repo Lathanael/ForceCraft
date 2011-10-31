@@ -30,6 +30,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.Lathanael.TheLivingForce.Players.PlayerHandler;
 import de.Lathanael.TheLivingForce.Powers.BasePower;
 import de.Lathanael.TheLivingForce.Utils.Tools;
 import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
@@ -68,16 +69,15 @@ public class CommandsHandler implements CommandExecutor {
 	}
 
 	private void executePower(CommandSender sender, BasePower power) {
-		if (Tools.isPLayer(sender)) {
-			if (PermissionsHandler.getInstance().hasPerm(sender, power.perm))
-				power.execute((Player) sender);
+		if (Tools.isPLayer(sender, true)) {
+			if (PermissionsHandler.getInstance().hasPerm((Player) sender, power.perm))
+				power.execute(PlayerHandler.getInstance().getPlayer(((Player) sender).getName()));
 			else
 				sender.sendMessage(ChatColor.RED + "You do not have the permission to use the " + power.name + " Power!");
 		}
 	}
 
 	private void executeCommand(CommandSender sender, BaseCommand cmd, String[] args) {
-
 	}
 
 	public void registerPower(Class<? extends BasePower> class1) {

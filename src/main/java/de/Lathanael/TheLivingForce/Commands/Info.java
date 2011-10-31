@@ -21,6 +21,8 @@
 package de.Lathanael.TheLivingForce.Commands;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -32,8 +34,19 @@ public class Info extends BaseCommand {
 		permNode = "force.info";
 	}
 
+	@Override
 	public void execute(CommandSender sender, String[] args) {
 
+	}
+
+	@Override
+	public boolean checkPerm(CommandSender sender) {
+		if (sender instanceof ConsoleCommandSender)
+			return true;
+		Player player = (Player) sender;
+		if (PermissionsHandler.getInstance().hasPerm(player, permNode))
+			return true;
+		return false;
 	}
 
 }

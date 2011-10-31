@@ -20,8 +20,9 @@
 
 package de.Lathanael.TheLivingForce.Powers;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
+import de.Lathanael.TheLivingForce.Players.ForcePlayer;
 import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
 import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
 
@@ -42,5 +43,7 @@ public abstract class BasePower {
 		instance = ForcePlugin.getInstance();
 	}
 
-	public abstract void execute(Player player);
+	public abstract void execute(ForcePlayer player);
+
+	public abstract boolean checkPerm(CommandSender sender);
 }
