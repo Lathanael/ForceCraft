@@ -1,5 +1,6 @@
 ForceSensitiveOnJoin: false
 DebugMessages: false
+IgnorePermissionBridge: true
 Power:
   Push:
     enabled: true

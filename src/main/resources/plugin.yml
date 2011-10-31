@@ -2,7 +2,7 @@ name: TheLivingForce
 main: de.Lathanael.TheLivingForce.bukkit.ForcePlugin
 version: ${project.version} (BUILD ${git.build.time})
 author: Lathanael
-softdepend: [Spout]
+depend: [Spout]
 description: >
              A plugin to implement the "Force" in Minecraft!
 
@@ -11,8 +11,8 @@ commands:
         description: Basic plugin Info
         aliases: [force]
         usage: /<command>
-    tlf_debug:
-        description: Creates a Debug output to see if the system is working
+    tlf_info:
+        description: Creates an info output to see if the system is working
         aliases: [debug]
         usage: /<command>
 
@@ -22,12 +22,13 @@ permissions:
         default: true
         children:
             force.pull: true
+            force.push: true
     force.admin:
         description: Grants access to all commands.
         default: op
         children:
-            force.debug: true
-    force.debug:
+            force.info: true
+    force.info:
         description: Allows usage of the /debug command.
         default: false
     force.pull:
