@@ -14,24 +14,28 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with SimpleCalc. If not, see <http://www.gnu.org/licenses/>.
+ * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
 package de.Lathanael.TheLivingForce.Utils;
 
+import org.bukkit.command.CommandSender;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class SpoutKeys {
-
+public class Tools {
 	public static Keyboard getKey(int keyNr) {
 		return Keyboard.getKey(keyNr);
 	}
 
 	public static Keyboard getKey(String keyName) {
 		return Keyboard.valueOf("KEY_" + keyName.toUpperCase());
+	}
+
+	public static boolean isPLayer(CommandSender sender) {
+		return false;
 	}
 }
