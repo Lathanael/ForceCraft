@@ -54,7 +54,10 @@ public class PlayerHandler {
 	}
 
 	public ForcePlayer getPlayer(String name) {
-		return players.get(name);
+		if (players.containsKey(name))
+			return players.get(name);
+		else
+			return null;
 	}
 
 	private ForcePlayer callForcePlayer(String playerName) {

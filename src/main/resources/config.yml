@@ -7,58 +7,70 @@ Power:
     rank: 1
     alignment: neutral
     delay: 0
+    mana: 10
   Pull:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
+    mana: 10
   Choke:
     enabled: true
     rank: 1
     alignment: dark
     delay: 0
+    mana: 10
   Lift:
     enabled: true
     rank: 1
     alignment: light
     delay: 0
+    mana: 10
   Run:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
+    mana: 10
   Jump:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
+    mana: 10
   Lightning:
     enabled: true
     rank: 1
     alignment: dark
     delay: 0
+    mana: 10
   Shield:
     enabled: true
     rank: 1
     alignment: light
     delay: 0
+    mana: 10
   Flash:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
+    mana: 10
   Heal:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
+    mana: 10
   Rage:
     enabled: true
     rank: 1
     alignment: dark
     delay: 0
+    mana: 10
   Mediation:
     enabled: true
     rank: 1
     alignment: light
     delay: 0
+    mana: 10

@@ -20,6 +20,8 @@
 
 package de.Lathanael.TheLivingForce.Commands;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -58,6 +60,12 @@ public class PermissionsHandler {
 
 	public boolean hasPerm(Player player, String permNode) {
 		return perm.hasPerm(player, permNode);
+	}
+
+	public boolean hasPerm(CommandSender sender, String permNode) {
+		if (sender instanceof ConsoleCommandSender)
+			return true;
+		return perm.hasPerm((Player) sender, permNode);
 	}
 
 	public static void setYetiPerm(Plugin yetiPermPlugin) {

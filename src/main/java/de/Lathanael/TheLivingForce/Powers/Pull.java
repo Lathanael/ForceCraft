@@ -21,7 +21,6 @@
 package de.Lathanael.TheLivingForce.Powers;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
@@ -40,7 +39,8 @@ public class Pull extends BasePower {
 		perm = "force.pull";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");
-		delay = instance.config.getLong("Power." + name + "delay");
+		delay = instance.config.getLong("Power." + name + ".delay");
+		manaCost = instance.config.getInt("Power." + name + ".mana");
 	}
 
 	@Override

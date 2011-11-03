@@ -27,40 +27,55 @@ import java.util.Map;
  * @author Lathanael (aka Philippe Leipold)
  */
 public enum Ranks {
-	STUDENT(1),
-	APPRENTICE(2),
-	ACOLYTE(3),
-	MAURAUDER(4),
-	LORD(5),
-	INITIATE(1),
-	PADAWAN(2),
-	KNIGHT(3),
-	GUARDIAN(4),
-	MASTER(5),
-	FORCE_SENSITIVE(0),
-	NONE(-1);
+	STUDENT(1, "Student"),
+	APPRENTICE(2, "Apprentice"),
+	ACOLYTE(3, "Acolyte"),
+	MAURAUDER(4, "Maurauder"),
+	LORD(5, "Lord"),
+	INITIATE(1, "Initiate"),
+	PADAWAN(2, "Padawan"),
+	KNIGHT(3, "Knight"),
+	GUARDIAN(4, "Guardian"),
+	MASTER(5, "Master"),
+	FORCE_SENSITIVE(0, "Force Sensitive"),
+	NONE(-1, "None");
 
-	private Ranks(int rank) {
+	private Ranks(int rank, String label) {
 		this.rank = rank;
+		this.label = label;
 	}
 
 	private int rank;
-	private static final Map<Integer, Ranks> lookupTable = new HashMap<Integer, Ranks>();
+	private String label;
+	private static final Map<Integer, Ranks> lookupTableInt = new HashMap<Integer, Ranks>();
+	private static final Map<String, Ranks> lookupTableString = new HashMap<String, Ranks>();
 
 	public int getRankNr() {
 		return rank;
 	}
 
+	public String getLabel() {
+		return label;
+	}
+
 	public static Ranks getRank(int number) {
-		if (lookupTable.containsKey(number))
-			return lookupTable.get(number);
+		if (lookupTableInt.containsKey(number))
+			return lookupTableInt.get(number);
+		else
+			return Ranks.NONE;
+	}
+
+	public static Ranks getRank(String label) {
+		if (lookupTableString.containsKey(label))
+			return lookupTableString.get(label);
 		else
 			return Ranks.NONE;
 	}
 
 	static {
 		for (Ranks rank : values()) {
-			lookupTable.put(rank.rank, rank);
+			lookupTableInt.put(rank.rank, rank);
+			lookupTableString.put(rank.label, rank);
 		}
 	}
 }

@@ -49,6 +49,7 @@ public class ForcePlayer {
 	protected Ranks rank = Ranks.NONE;
 	protected FileConfiguration playerConfig;
 	protected int count = 0;
+	protected int mana = 0;
 	protected File playerFile;
 	protected HashMap<Keyboard, String> keys = new HashMap<Keyboard, String>();
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
@@ -84,6 +85,7 @@ public class ForcePlayer {
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 				rank = Ranks.getRank(playerConfig.getInt("Rank"));
 				alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
+				mana = playerConfig.getInt("Mana");
 				loadKeys();
 				loadAmounts();
 				if (ForcePlugin.debug)
@@ -98,6 +100,7 @@ public class ForcePlayer {
 			playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			rank = Ranks.getRank(playerConfig.getInt("Rank"));
 			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
+			mana = playerConfig.getInt("Mana");
 			loadKeys();
 			loadAmounts();
 			if (ForcePlugin.debug) {
@@ -147,13 +150,17 @@ public class ForcePlayer {
 		return rank.getRankNr();
 	}
 
+	public String getRankName() {
+		return rank.getLabel();
+	}
+
 	public void setAlignment(ForceAlignment fa) {
 		playerConfig.set("Alignment", fa.toString());
 		this.alignment = fa;
 		updateFile();
 	}
 
-	public ForceAlignment getAligment() {
+	public ForceAlignment getAlignment() {
 		return alignment;
 	}
 
@@ -189,6 +196,15 @@ public class ForcePlayer {
 		updateFile();
 	}
 
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana){
+		this.mana = mana;
+		updateFile();
+	}
+
 /*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
 
 	private void createDefaults() {
@@ -207,6 +223,7 @@ public class ForcePlayer {
 		playerConfig.addDefault("Amount.Mediation", 0);
 		playerConfig.addDefault("Amount.Lightning", 0);
 		playerConfig.addDefault("Amount.Shield", 0);
+		playerConfig.addDefault("Mana", 100);
 		playerConfig.options().copyDefaults(true);
 
 	}

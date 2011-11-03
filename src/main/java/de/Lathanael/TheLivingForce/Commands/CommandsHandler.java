@@ -21,8 +21,6 @@
 package de.Lathanael.TheLivingForce.Commands;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -62,8 +60,7 @@ public class CommandsHandler implements CommandExecutor {
 			executePower(sender, powerMap.get(cmd));
 			return true;
 		} else if (cmdMap.get(cmd) != null) {
-			executeCommand(sender, cmdMap.get(cmd), args);
-			return true;
+			return executeCommand(sender, cmdMap.get(cmd), args);
 		}
 		return false;
 	}
@@ -77,7 +74,17 @@ public class CommandsHandler implements CommandExecutor {
 		}
 	}
 
-	private void executeCommand(CommandSender sender, BaseCommand cmd, String[] args) {
+	private boolean executeCommand(CommandSender sender, BaseCommand cmd, String[] args) {
+		if (PermissionsHandler.getInstance().hasPerm(sender, cmd.permNode)) {
+			if (cmd.checkArgs(args)) {
+				cmd.execute(sender, args);
+				return true;
+			} else
+				return false;
+		} else {
+			sender.sendMessage(ChatColor.RED + "You do not have the permission to use the " + cmd.name + " Power!");
+			return true;
+		}
 	}
 
 	public void registerPower(Class<? extends BasePower> class1) {

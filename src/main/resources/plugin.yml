@@ -12,9 +12,9 @@ commands:
         aliases: [force]
         usage: /<command>
     tlf_info:
-        description: Creates an info output to see if the system is working
-        aliases: [debug]
-        usage: /<command>
+        description: Gives info about the wanted player.
+        aliases: [finfo]
+        usage: /<command> [player]
 
 permissions:
     force.user:
@@ -23,14 +23,21 @@ permissions:
         children:
             force.pull: true
             force.push: true
+            force.choke: true
     force.admin:
         description: Grants access to all commands.
         default: op
         children:
             force.info: true
     force.info:
-        description: Allows usage of the /debug command.
+        description: Allows usage of the /info command.
         default: false
     force.pull:
         description: Allows usage of the Pull force.
+        default: false
+    force.choke:
+        description: Allows usage of the Push force.
+        default: false
+    force.push:
+        description: Allows usage of the Choke force.
         default: false
