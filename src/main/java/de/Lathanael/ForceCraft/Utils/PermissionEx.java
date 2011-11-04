@@ -18,24 +18,29 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Utils;
+package de.Lathanael.ForceCraft.Utils;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class BukkitPermOrOP extends AbstractPermission {
+public class PermissionEx extends AbstractPermission {
+	protected PermissionManager perm = null;
 
-	public BukkitPermOrOP() {
+	public PermissionEx(Plugin permExPLugin) {
+		perm = PermissionsEx.getPermissionManager();
 	}
 
 	@Override
-	public boolean hasPerm(Player player, String perm) {
-		if (player.hasPermission(perm) || player.isOp())
+	public boolean hasPerm(Player player, String permNode) {
+		if (perm.has((Player) player, permNode))
 			return true;
 		else
 			return false;
 	}
-
 }

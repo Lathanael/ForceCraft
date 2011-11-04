@@ -18,16 +18,18 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Commands;
+package de.Lathanael.ForceCraft.Commands;
+
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import de.Lathanael.TheLivingForce.Players.ForcePlayer;
-import de.Lathanael.TheLivingForce.Players.PlayerHandler;
-import de.Lathanael.TheLivingForce.Utils.Tools;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -49,17 +51,23 @@ public class Info extends BaseCommand {
 				sender.sendMessage(ChatColor.RED + "Could not find a ForcePlayer with the name: " + args[0]);
 			return;
 		}
-		// TODO: Amounts-info
 		if (Tools.isPLayer(sender, false)) {
 			sender.sendMessage(ChatColor.GREEN + "Information on ForcePlayer " + args[0] + ":");
 			sender.sendMessage(ChatColor.GREEN + "Alignment: " + ChatColor.GOLD + player.getAlignment().toString());
 			sender.sendMessage(ChatColor.GREEN + "Rank: " + ChatColor.GOLD + player.getRankName());
 			sender.sendMessage(ChatColor.GREEN + "Mana: " + ChatColor.GOLD + String.valueOf(player.getMana()));
+			sender.sendMessage(ChatColor.GREEN + "Power -- times used");
+			for (Map.Entry<String, Integer> keys : player.getPowerAmounts().entrySet())
+				sender.sendMessage(ChatColor.AQUA + keys.getKey() + ChatColor.GREEN + " -- "
+						+ ChatColor.GOLD + keys.getValue());
 		} else {
 			sender.sendMessage("Information on ForcePlayer " + args[0] + ":");
 			sender.sendMessage("Alignment: " + player.getAlignment().toString());
 			sender.sendMessage("Rank: " + player.getRankName());
 			sender.sendMessage("Mana: " + String.valueOf(player.getMana()));
+			sender.sendMessage("Power -- times used");
+			for (Map.Entry<String, Integer> keys : player.getPowerAmounts().entrySet())
+				sender.sendMessage(keys.getKey() + " -- " + keys.getValue());
 		}
 	}
 

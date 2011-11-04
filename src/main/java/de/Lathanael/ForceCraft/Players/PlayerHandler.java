@@ -18,7 +18,7 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Players;
+package de.Lathanael.ForceCraft.Players;
 
 import java.io.File;
 import java.io.FilenameFilter;

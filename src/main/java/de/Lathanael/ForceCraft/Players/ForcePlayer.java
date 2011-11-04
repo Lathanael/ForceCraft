@@ -18,7 +18,7 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Players;
+package de.Lathanael.ForceCraft.Players;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,10 +34,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
-import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
-import de.Lathanael.TheLivingForce.Utils.Ranks;
-import de.Lathanael.TheLivingForce.Utils.Tools;
-import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.Utils.Ranks;
+import de.Lathanael.ForceCraft.Utils.Tools;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -183,12 +183,16 @@ public class ForcePlayer {
 		updateFile(true);
 	}
 
-	public boolean containsKey(String key) {
+	public boolean containsKey(Keyboard key) {
 		return keys.containsKey(key);
 	}
 
 	public int getPowerAmount(String power) {
 		return amounts.get(power);
+	}
+
+	public HashMap<String, Integer> getPowerAmounts() {
+		return amounts;
 	}
 
 	public void setPowerAmount(String power, int value) {

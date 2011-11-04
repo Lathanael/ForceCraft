@@ -18,29 +18,44 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Utils;
+package de.Lathanael.ForceCraft.Powers;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
-import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
+import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class PermissionEx extends AbstractPermission {
-	protected PermissionManager perm = null;
+public class Pull extends BasePower {
 
-	public PermissionEx(Plugin permExPLugin) {
-		perm = PermissionsEx.getPermissionManager();
+	public Pull() {
+		name = "Pull";
+		cmdName = "tlf_pull";
+		perm = "force.pull";
+		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
+		rank = instance.config.getInt("Power." + name + ".rank");
+		delay = instance.config.getLong("Power." + name + ".delay");
+		manaCost = instance.config.getInt("Power." + name + ".mana");
 	}
 
 	@Override
-	public boolean hasPerm(Player player, String permNode) {
-		if (perm.has((Player) player, permNode))
-			return true;
-		else
-			return false;
+	public void execute(ForcePlayer player) {
+		// TODO Auto-generated method stub
+
 	}
+
+	@Override
+	public boolean checkPerm(CommandSender sender) {
+		if (!Tools.isPLayer(sender, true))
+			return false;
+		else if (PermissionsHandler.getInstance().hasPerm((Player) sender, perm))
+			return true;
+		return false;
+	}
+
 }

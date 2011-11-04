@@ -18,44 +18,33 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Powers;
+package de.Lathanael.ForceCraft.Utils;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
-import de.Lathanael.TheLivingForce.Players.ForcePlayer;
-import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
-import de.Lathanael.TheLivingForce.Utils.Tools;
+import org.getspout.spoutapi.keyboard.Keyboard;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
+ *
+ * Some code-ideas in here are from AdminCmd!
  */
-public class Pull extends BasePower {
-
-	public Pull() {
-		name = "Pull";
-		cmdName = "tlf_pull";
-		perm = "force.pull";
-		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
-		rank = instance.config.getInt("Power." + name + ".rank");
-		delay = instance.config.getLong("Power." + name + ".delay");
-		manaCost = instance.config.getInt("Power." + name + ".mana");
+public class Tools {
+	public static Keyboard getKey(int keyNr) {
+		return Keyboard.getKey(keyNr);
 	}
 
-	@Override
-	public void execute(ForcePlayer player) {
-		// TODO Auto-generated method stub
-
+	public static Keyboard getKey(String keyName) {
+		return Keyboard.valueOf("KEY_" + keyName.toUpperCase());
 	}
 
-	@Override
-	public boolean checkPerm(CommandSender sender) {
-		if (!Tools.isPLayer(sender, true))
-			return false;
-		else if (PermissionsHandler.getInstance().hasPerm((Player) sender, perm))
+	public static boolean isPLayer(CommandSender sender, boolean errorMsg) {
+		if (sender instanceof Player)
 			return true;
-		return false;
+		else {
+			if (errorMsg)
+				sender.sendMessage("[TheLivingForce] You must be a player to use this command!");
+			return false;
+		}
 	}
-
 }

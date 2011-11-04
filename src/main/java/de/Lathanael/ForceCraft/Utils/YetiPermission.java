@@ -18,23 +18,30 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Utils;
+package de.Lathanael.ForceCraft.Utils;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 /**
- * @authors Balor, Lathanael
- *
+ * @author Lathanael (aka Philippe Leipold)
  */
-public abstract class AbstractPermission {
+public class YetiPermission extends AbstractPermission {
+	protected PermissionHandler permH = null;
 
-	/**
-	 * Check the permission with the possibility to disable the error msg
-	 *
-	 * @param player
-	 * @param perm
-	 * @return
-	 */
-	public abstract boolean hasPerm(Player player, String perm);
+	public YetiPermission(Plugin perm) {
+		permH = ((Permissions) perm).getHandler();
+	}
+
+	@Override
+	public boolean hasPerm(Player player, String permNode) {
+		if (permH.has(player, permNode))
+			return true;
+		else
+			return false;
+	}
 
 }

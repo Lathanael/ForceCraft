@@ -18,22 +18,24 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Utils;
+package de.Lathanael.ForceCraft.Utils;
+
+import org.bukkit.entity.Player;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public enum ForceAlignment {
-	DARK("Dark"),
-	LIGHT("Light"),
-	NEUTRAL("Neutral");
+public class BukkitPermOrOP extends AbstractPermission {
 
-	private final String label;
-	private ForceAlignment(String label) {
-		this.label = label;
+	public BukkitPermOrOP() {
 	}
 
-	public String toString() {
-		return label;
+	@Override
+	public boolean hasPerm(Player player, String perm) {
+		if (player.hasPermission(perm) || player.isOp())
+			return true;
+		else
+			return false;
 	}
+
 }

@@ -18,13 +18,13 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Powers;
+package de.Lathanael.ForceCraft.Powers;
 
 import org.bukkit.command.CommandSender;
 
-import de.Lathanael.TheLivingForce.Players.ForcePlayer;
-import de.Lathanael.TheLivingForce.Utils.ForceAlignment;
-import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)

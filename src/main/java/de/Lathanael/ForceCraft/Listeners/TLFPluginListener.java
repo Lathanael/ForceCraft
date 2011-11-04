@@ -18,14 +18,14 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Listeners;
+package de.Lathanael.ForceCraft.Listeners;
 
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 
-import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
-import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)

@@ -18,17 +18,22 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Listeners;
-
-import org.getspout.spoutapi.event.input.InputListener;
-import org.getspout.spoutapi.event.input.KeyPressedEvent;
+package de.Lathanael.ForceCraft.Utils;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class TLFInputListener extends InputListener {
+public enum ForceAlignment {
+	DARK("Dark"),
+	LIGHT("Light"),
+	NEUTRAL("Neutral");
 
-	@Override
-	public void onKeyPressedEvent(KeyPressedEvent event) {
+	private final String label;
+	private ForceAlignment(String label) {
+		this.label = label;
+	}
+
+	public String toString() {
+		return label;
 	}
 }

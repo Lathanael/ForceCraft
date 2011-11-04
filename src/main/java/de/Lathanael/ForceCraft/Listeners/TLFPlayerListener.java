@@ -18,30 +18,32 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Utils;
+package de.Lathanael.ForceCraft.Listeners;
 
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class YetiPermission extends AbstractPermission {
-	protected PermissionHandler permH = null;
+public class TLFPlayerListener extends PlayerListener {
 
-	public YetiPermission(Plugin perm) {
-		permH = ((Permissions) perm).getHandler();
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		PlayerHandler.getInstance().createForcePlayer(event.getPlayer().getName());
 	}
 
-	@Override
-	public boolean hasPerm(Player player, String permNode) {
-		if (permH.has(player, permNode))
-			return true;
-		else
-			return false;
+	public void onPlayerKick(PlayerKickEvent event) {
+		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
+		fPlayer.updateFile(true);
 	}
 
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
+		fPlayer.updateFile(true);
+	}
 }

@@ -18,7 +18,7 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Utils;
+package de.Lathanael.ForceCraft.Utils;
 
 import java.util.HashMap;
 import java.util.Map;

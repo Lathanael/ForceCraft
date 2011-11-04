@@ -1,4 +1,4 @@
-package de.Lathanael.TheLivingForce.Commands;
+package de.Lathanael.ForceCraft.Commands;
 
 import org.bukkit.command.CommandSender;
 

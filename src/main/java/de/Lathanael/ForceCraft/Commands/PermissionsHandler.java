@@ -18,18 +18,18 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Commands;
+package de.Lathanael.ForceCraft.Commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import de.Lathanael.TheLivingForce.Utils.AbstractPermission;
-import de.Lathanael.TheLivingForce.Utils.BukkitPermOrOP;
-import de.Lathanael.TheLivingForce.Utils.PermissionEx;
-import de.Lathanael.TheLivingForce.Utils.YetiPermission;
-import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.Utils.AbstractPermission;
+import de.Lathanael.ForceCraft.Utils.BukkitPermOrOP;
+import de.Lathanael.ForceCraft.Utils.PermissionEx;
+import de.Lathanael.ForceCraft.Utils.YetiPermission;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)

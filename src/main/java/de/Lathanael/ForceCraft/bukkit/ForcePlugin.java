@@ -16,7 +16,7 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.bukkit;
+package de.Lathanael.ForceCraft.bukkit;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,14 +30,14 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.Lathanael.TheLivingForce.Commands.CommandsHandler;
-import de.Lathanael.TheLivingForce.Commands.Info;
-import de.Lathanael.TheLivingForce.Commands.PermissionsHandler;
-import de.Lathanael.TheLivingForce.Listeners.TLFInputListener;
-import de.Lathanael.TheLivingForce.Listeners.TLFPlayerListener;
-import de.Lathanael.TheLivingForce.Listeners.TLFPluginListener;
-import de.Lathanael.TheLivingForce.Players.PlayerHandler;
-import de.Lathanael.TheLivingForce.Powers.Pull;
+import de.Lathanael.ForceCraft.Commands.CommandsHandler;
+import de.Lathanael.ForceCraft.Commands.Info;
+import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
+import de.Lathanael.ForceCraft.Listeners.TLFInputListener;
+import de.Lathanael.ForceCraft.Listeners.TLFPlayerListener;
+import de.Lathanael.ForceCraft.Listeners.TLFPluginListener;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Powers.Pull;
 
 /**
  * @author Lathanael (aka Philippe Leipold)

@@ -18,32 +18,25 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Listeners;
+package de.Lathanael.ForceCraft.Listeners;
 
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.getspout.spoutapi.event.input.InputListener;
+import org.getspout.spoutapi.event.input.KeyPressedEvent;
 
-import de.Lathanael.TheLivingForce.Players.ForcePlayer;
-import de.Lathanael.TheLivingForce.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class TLFPlayerListener extends PlayerListener {
+public class TLFInputListener extends InputListener {
 
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		PlayerHandler.getInstance().createForcePlayer(event.getPlayer().getName());
-	}
-
-	public void onPlayerKick(PlayerKickEvent event) {
-		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
-		fPlayer.updateFile(true);
-	}
-
-	public void onPlayerQuit(PlayerQuitEvent event) {
-		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
-		fPlayer.updateFile(true);
+	@Override
+	public void onKeyPressedEvent(KeyPressedEvent event) {
+		ForcePlayer player = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
+		if (player == null)
+			return;
+		if (!player.containsKey(event.getKey()))
+			return;
 	}
 }

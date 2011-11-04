@@ -18,7 +18,7 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Commands;
+package de.Lathanael.ForceCraft.Commands;
 
 import java.util.HashMap;
 
@@ -28,11 +28,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.Lathanael.TheLivingForce.Players.PlayerHandler;
-import de.Lathanael.TheLivingForce.Powers.BasePower;
-import de.Lathanael.TheLivingForce.Utils.Tools;
-import de.Lathanael.TheLivingForce.bukkit.ForcePlugin;
-import de.Lathanael.TheLivingForce.Commands.BaseCommand;
+import de.Lathanael.ForceCraft.Commands.BaseCommand;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Powers.BasePower;
+import de.Lathanael.ForceCraft.Utils.Tools;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -70,7 +70,8 @@ public class CommandsHandler implements CommandExecutor {
 			if (PermissionsHandler.getInstance().hasPerm((Player) sender, power.perm))
 				power.execute(PlayerHandler.getInstance().getPlayer(((Player) sender).getName()));
 			else
-				sender.sendMessage(ChatColor.RED + "You do not have the permission to use the " + power.name + " Power!");
+				sender.sendMessage(ChatColor.RED + "You do not have the permission to use the following power: "
+						+ ChatColor.AQUA + power.name + ChatColor.RED + "!");
 		}
 	}
 
@@ -82,7 +83,8 @@ public class CommandsHandler implements CommandExecutor {
 			} else
 				return false;
 		} else {
-			sender.sendMessage(ChatColor.RED + "You do not have the permission to use the " + cmd.name + " Power!");
+			sender.sendMessage(ChatColor.RED + "You do not have the permission to use the following command: "
+					+ ChatColor.AQUA + cmd.name + ChatColor.RED + "!");
 			return true;
 		}
 	}

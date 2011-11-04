@@ -18,33 +18,23 @@
  *
  **************************************************************************/
 
-package de.Lathanael.TheLivingForce.Utils;
+package de.Lathanael.ForceCraft.Utils;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.getspout.spoutapi.keyboard.Keyboard;
 
 /**
- * @author Lathanael (aka Philippe Leipold)
+ * @authors Balor, Lathanael
  *
- * Some code-ideas in here are from AdminCmd!
  */
-public class Tools {
-	public static Keyboard getKey(int keyNr) {
-		return Keyboard.getKey(keyNr);
-	}
+public abstract class AbstractPermission {
 
-	public static Keyboard getKey(String keyName) {
-		return Keyboard.valueOf("KEY_" + keyName.toUpperCase());
-	}
+	/**
+	 * Check the permission with the possibility to disable the error msg
+	 *
+	 * @param player
+	 * @param perm
+	 * @return
+	 */
+	public abstract boolean hasPerm(Player player, String perm);
 
-	public static boolean isPLayer(CommandSender sender, boolean errorMsg) {
-		if (sender instanceof Player)
-			return true;
-		else {
-			if (errorMsg)
-				sender.sendMessage("[TheLivingForce] You must be a player to use this command!");
-			return false;
-		}
-	}
 }
