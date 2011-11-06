@@ -183,6 +183,10 @@ public class ForcePlayer {
 		updateFile(true);
 	}
 
+	public String getKey(Keyboard key) {
+		return keys.get(key);
+	}
+
 	public boolean containsKey(Keyboard key) {
 		return keys.containsKey(key);
 	}
@@ -207,6 +211,10 @@ public class ForcePlayer {
 	public void setMana(int mana){
 		this.mana = mana;
 		updateFile();
+	}
+
+	public Player getHandler() {
+		return handler;
 	}
 
 /*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
