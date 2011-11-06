@@ -20,6 +20,7 @@
 
 package de.Lathanael.ForceCraft.Powers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -47,4 +48,13 @@ public abstract class BasePower {
 	public abstract void execute(ForcePlayer player);
 
 	public abstract boolean checkPerm(CommandSender sender);
+
+	public boolean checkRank(ForcePlayer player) {
+		if (player.getRank() < rank) {
+			player.getHandler().sendMessage(ChatColor.RED +
+					"You need to advance further in the Force to use this power!");
+			return false;
+		}
+		return true;
+	}
 }
