@@ -81,7 +81,7 @@ public class ForcePlugin extends JavaPlugin {
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_QUIT, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_KICK, tlfPL, Priority.Normal, this);
-		pm.registerEvent(Type.CUSTOM_EVENT, new TLFInputListener(), Priority.Normal, this);
+		pm.registerEvent(Type.CUSTOM_EVENT, new TLFInputListener(this), Priority.Normal, this);
 		pm.registerEvent(Type.PLUGIN_DISABLE, tlfPluL, Priority.Normal, this);
 		pm.registerEvent(Type.PLUGIN_ENABLE, tlfPluL, Priority.Normal, this);
 		PluginDescriptionFile pdf = getDescription();
@@ -101,17 +101,16 @@ public class ForcePlugin extends JavaPlugin {
 		if (!ranksInfoFile.exists()) {
 			try {
 				ranksInfoFile.createNewFile();
-
-			ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
-			ranksInfo.options().copyDefaults(true);
-			ranksInfo.save(ranksInfoFile);
-			ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+				ranksInfo.options().copyDefaults(true);
+				ranksInfo.save(ranksInfoFile);
+				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
 			} catch (IOException e) {
 				log.info("[TheLivingForce] Failed to create ranksInfo.yml!");
 				e.printStackTrace();
 			}
 		} else {
-				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+			ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
 		}
 	}
 
