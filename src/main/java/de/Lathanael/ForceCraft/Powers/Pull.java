@@ -45,13 +45,12 @@ public class Pull extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean checkPerm(CommandSender sender) {
-		if (!Tools.isPLayer(sender, true))
+		if (!Tools.isPlayer(sender, true))
 			return false;
 		else if (PermissionsHandler.getInstance().hasPerm((Player) sender, perm))
 			return true;

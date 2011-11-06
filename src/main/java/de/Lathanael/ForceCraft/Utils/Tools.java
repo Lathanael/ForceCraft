@@ -38,7 +38,7 @@ public class Tools {
 		return Keyboard.valueOf("KEY_" + keyName.toUpperCase());
 	}
 
-	public static boolean isPLayer(CommandSender sender, boolean errorMsg) {
+	public static boolean isPlayer(CommandSender sender, boolean errorMsg) {
 		if (sender instanceof Player)
 			return true;
 		else {
@@ -46,5 +46,9 @@ public class Tools {
 				sender.sendMessage("[TheLivingForce] You must be a player to use this command!");
 			return false;
 		}
+	}
+
+	public static boolean isPlayer(CommandSender sender) {
+		return isPlayer(sender, false);
 	}
 }

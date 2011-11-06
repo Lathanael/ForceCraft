@@ -45,13 +45,13 @@ public class Info extends BaseCommand {
 	public void execute(CommandSender sender, String[] args) {
 		ForcePlayer player = PlayerHandler.getInstance().getPlayer(args[0]);
 		if (player == null) {
-			if (Tools.isPLayer(sender, false))
+			if (Tools.isPlayer(sender))
 				sender.sendMessage("Could not find a ForcePlayer with the name: " + args[0]);
 			else
 				sender.sendMessage(ChatColor.RED + "Could not find a ForcePlayer with the name: " + args[0]);
 			return;
 		}
-		if (Tools.isPLayer(sender, false)) {
+		if (Tools.isPlayer(sender)) {
 			sender.sendMessage(ChatColor.GREEN + "Information on ForcePlayer " + args[0] + ":");
 			sender.sendMessage(ChatColor.GREEN + "Alignment: " + ChatColor.GOLD + player.getAlignment().toString());
 			sender.sendMessage(ChatColor.GREEN + "Rank: " + ChatColor.GOLD + player.getRankName());

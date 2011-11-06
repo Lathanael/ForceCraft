@@ -57,7 +57,7 @@ public class CommandsHandler implements CommandExecutor {
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (powerMap.get(cmd) != null) {
-			executePower(sender, powerMap.get(cmd));
+			executePower(sender, powerMap.get(cmd), args);
 			return true;
 		} else if (cmdMap.get(cmd) != null) {
 			return executeCommand(sender, cmdMap.get(cmd), args);
@@ -65,8 +65,8 @@ public class CommandsHandler implements CommandExecutor {
 		return false;
 	}
 
-	private void executePower(CommandSender sender, BasePower power) {
-		if (Tools.isPLayer(sender, true)) {
+	public void executePower(CommandSender sender, BasePower power, String[] args) {
+		if (Tools.isPlayer(sender, true)) {
 			if (PermissionsHandler.getInstance().hasPerm((Player) sender, power.perm))
 				power.execute(PlayerHandler.getInstance().getPlayer(((Player) sender).getName()));
 			else
@@ -117,5 +117,9 @@ public class CommandsHandler implements CommandExecutor {
 			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		}
+	}
+
+	public BasePower getCmdPower(Command cmd) {
+		return powerMap.get(cmd);
 	}
 }
