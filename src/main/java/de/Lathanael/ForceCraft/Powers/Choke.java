@@ -31,12 +31,12 @@ import de.Lathanael.ForceCraft.Utils.Tools;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class Pull extends BasePower {
+public class Choke extends BasePower {
 
-	public Pull() {
-		name = "Pull";
-		cmdName = "tlf_pull";
-		perm = "force.pull";
+	public Choke() {
+		name = "Choke";
+		cmdName = "tlf_choke";
+		perm = "force.choke";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");
 		delay = instance.config.getLong("Power." + name + ".delay");
