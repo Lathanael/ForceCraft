@@ -49,7 +49,7 @@ public class TLFInputListener extends InputListener {
 		if (!fPlayer.containsKey(event.getKey()))
 			return;
 		Command cmd = instance.getCommand(fPlayer.getKey(event.getKey()));
-		sPlayer.getTargetBlock(null, 600);
+		sPlayer.getTargetBlock(null, 50);
 		BasePower power = instance.commandsHandler.getCmdPower(cmd);
 		if (power != null)
 			instance.commandsHandler.executePower(sPlayer.getPlayer(), power, null);
