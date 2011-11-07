@@ -33,6 +33,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.Lathanael.ForceCraft.Commands.CommandsHandler;
 import de.Lathanael.ForceCraft.Commands.Info;
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
+import de.Lathanael.ForceCraft.Listeners.TLFEntityListener;
 import de.Lathanael.ForceCraft.Listeners.TLFInputListener;
 import de.Lathanael.ForceCraft.Listeners.TLFPlayerListener;
 import de.Lathanael.ForceCraft.Listeners.TLFPluginListener;
@@ -46,6 +47,7 @@ public class ForcePlugin extends JavaPlugin {
 
 	private TLFPlayerListener tlfPL;
 	private TLFPluginListener tlfPluL;
+	private TLFEntityListener tlfEL;
 	private static ForcePlugin instance;
 	public FileConfiguration config;
 	public FileConfiguration ranksInfo;
@@ -73,6 +75,7 @@ public class ForcePlugin extends JavaPlugin {
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		tlfPL = new TLFPlayerListener();
 		tlfPluL = new TLFPluginListener();
+		tlfEL = new TLFEntityListener();
 		commandsHandler.initInstance(this);
 		registerCommands();
 		PermissionsHandler.setInstance();
@@ -84,6 +87,7 @@ public class ForcePlugin extends JavaPlugin {
 		pm.registerEvent(Type.CUSTOM_EVENT, new TLFInputListener(this), Priority.Normal, this);
 		pm.registerEvent(Type.PLUGIN_DISABLE, tlfPluL, Priority.Normal, this);
 		pm.registerEvent(Type.PLUGIN_ENABLE, tlfPluL, Priority.Normal, this);
+		pm.registerEvent(Type.ENTITY_DAMAGE, tlfEL, Priority.Normal, this);
 		PluginDescriptionFile pdf = getDescription();
 		log.info("[" + pdf.getName() + "] Version " + pdf.getVersion() + " enabled!");
 	}
