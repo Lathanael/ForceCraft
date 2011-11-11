@@ -211,14 +211,14 @@
     <dependency>
         <groupId>org.bukkit</groupId>
         <artifactId>craftbukkit</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.8.1-R5-SNAPSHOT</version>
         <type>jar</type>
         <scope>provided</scope>
     </dependency>
     <dependency>
         <groupId>org.bukkit</groupId>
         <artifactId>bukkit</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.8.1-R5-SNAPSHOT</version>
         <scope>provided</scope>
     </dependency>
     <dependency>
@@ -231,7 +231,7 @@
     <dependency>
         <groupId>ru.tehkode</groupId>
         <artifactId>PermissionsEx</artifactId>
-        <version>1.14</version>
+        <version>1.15</version>
         <scope>provided</scope>
     </dependency>
     <dependency>
