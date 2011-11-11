@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.Utils.Ranks;
 import de.Lathanael.ForceCraft.Utils.Tools;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -51,8 +53,10 @@ public class ForcePlayer {
 	protected int count = 0;
 	protected int mana = 0;
 	protected File playerFile;
+	protected HashSet<PlayerPowerStates> powers = new HashSet<PlayerPowerStates>();
 	protected HashMap<Keyboard, String> keys = new HashMap<Keyboard, String>();
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
+	protected HashMap<String, Integer> delays = new HashMap<String, Integer>();
 
 	public ForcePlayer (String playerName, String dir) {
 		this.name = playerName;
@@ -215,6 +219,23 @@ public class ForcePlayer {
 
 	public Player getHandler() {
 		return handler;
+	}
+
+	public void setPowerState(PlayerPowerStates state) {
+		if (state != null)
+			powers.add(state);
+	}
+
+	public void removePowerState(PlayerPowerStates state) {
+		if (state != null && powers.contains(state))
+			powers.remove(state);
+	}
+
+	public boolean containsPowerState(PlayerPowerStates state) {
+		if (state != null)
+			return powers.contains(state);
+		else
+			return false;
 	}
 
 /*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
