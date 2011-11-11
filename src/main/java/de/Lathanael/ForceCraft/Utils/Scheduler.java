@@ -20,39 +20,20 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.getspout.spoutapi.keyboard.Keyboard;
-
 /**
  * @author Lathanael (aka Philippe Leipold)
- *
- * Some code-ideas in here are from AdminCmd!
  */
-public class Tools {
-	public static Keyboard getKey(int keyNr) {
-		return Keyboard.getKey(keyNr);
+public class Scheduler {
+
+	private static Scheduler instance = null;
+
+	public static Scheduler initInstance() {
+		if (instance == null)
+			instance = new Scheduler();
+		return instance;
 	}
 
-	public static Keyboard getKey(String keyName) {
-		return Keyboard.valueOf("KEY_" + keyName.toUpperCase());
-	}
+	public void scheduleHealTask(int rank) {
 
-	public static boolean isPlayer(CommandSender sender, boolean errorMsg) {
-		if (sender instanceof Player)
-			return true;
-		else {
-			if (errorMsg)
-				sender.sendMessage("[TheLivingForce] You must be a player to use this command!");
-			return false;
-		}
-	}
-
-	public static boolean isPlayer(CommandSender sender) {
-		return isPlayer(sender, false);
-	}
-
-	public static Player getTarget(Player player) {
-		return null;
 	}
 }

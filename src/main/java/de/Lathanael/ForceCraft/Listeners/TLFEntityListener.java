@@ -20,6 +20,7 @@
 
 package de.Lathanael.ForceCraft.Listeners;
 
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
 
 /**
@@ -27,4 +28,7 @@ import org.bukkit.event.entity.EntityListener;
  */
 public class TLFEntityListener extends EntityListener{
 
+	public void onEntityDamageEvent(EntityDamageEvent event) {
+
+	}
 }

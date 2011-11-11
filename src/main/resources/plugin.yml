@@ -7,11 +7,11 @@ description: >
              A plugin to implement the "Force" in Minecraft!
 
 commands:
-    tlf_force:
+    fc_force:
         description: Basic plugin Info
         aliases: [force]
         usage: /<command>
-    tlf_info:
+    fc_info:
         description: Gives info about the wanted player.
         aliases: [finfo]
         usage: /<command> [player]
