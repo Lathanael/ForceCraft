@@ -1,18 +1,18 @@
 /*************************************************************************
  * Copyright (C) 2011  Philippe Leipold
  *
- * TheLivingForce is free software: you can redistribute it and/or modify
+ * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * TheLivingForce is distributed in the hope that it will be useful,
+ * ForceCraft is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
+ * along with ForceCraft. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
@@ -57,6 +57,7 @@ public class ForcePlugin extends JavaPlugin {
 	public static Logger log = Logger.getLogger("Minecraft");
 	public PluginManager pm;
 	public static boolean debug = false;
+	public static boolean sensitiveonJoin = false;
 
 	public void onDisable() {
 		PluginDescriptionFile pdf = getDescription();
@@ -99,6 +100,7 @@ public class ForcePlugin extends JavaPlugin {
 
 	private void loadConfig(FileConfiguration config) {
 		debug = config.getBoolean("DebugMessages");
+		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin");
 	}
 
 	private void loadRanksInfo() {
@@ -111,7 +113,7 @@ public class ForcePlugin extends JavaPlugin {
 				ranksInfo.save(ranksInfoFile);
 				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
 			} catch (IOException e) {
-				log.info("[TheLivingForce] Failed to create ranksInfo.yml!");
+				log.info("[ForceCraft] Failed to create ranksInfo.yml!");
 				e.printStackTrace();
 			}
 		} else {

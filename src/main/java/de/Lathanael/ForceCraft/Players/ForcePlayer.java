@@ -1,20 +1,20 @@
 /*************************************************************************
  * Copyright (C) 2011  Philippe Leipold
  *
- * This file is part of TheLivingForce.
+ * This file is part of ForceCraft.
  *
- * TheLivingForce is free software: you can redistribute it and/or modify
+ * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * TheLivingForce is distributed in the hope that it will be useful,
+ * ForceCraft is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
+ * along with ForceCraft. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
@@ -81,7 +81,7 @@ public class ForcePlayer {
 		if (!playerFile.exists()) {
 			try {
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("[TheLivingForce] Creating player file for: " + name);
+					ForcePlugin.log.info("[ForceCraft] Creating player file for: " + name);
 				playerFile.createNewFile();
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 				createDefaults();
@@ -93,14 +93,14 @@ public class ForcePlayer {
 				loadKeys();
 				loadAmounts();
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("[TheLivingForce] Player file for " + name + " created!");
+					ForcePlugin.log.info("[ForceCraft] Player file for " + name + " created!");
 			} catch (IOException e) {
-				ForcePlugin.log.info("[TheLivingForce] An error occured during the creation of the player file for: " + name);
+				ForcePlugin.log.info("[ForceCraft] An error occured during the creation of the player file for: " + name);
 				e.printStackTrace();
 			}
 		} else {
 			if (ForcePlugin.debug)
-				ForcePlugin.log.info("[TheLivingForce] Loading player file for: " + name);
+				ForcePlugin.log.info("[ForceCraft] Loading player file for: " + name);
 			playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			rank = Ranks.getRank(playerConfig.getInt("Rank"));
 			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
@@ -108,16 +108,16 @@ public class ForcePlayer {
 			loadKeys();
 			loadAmounts();
 			if (ForcePlugin.debug) {
-				ForcePlugin.log.info("[TheLivingForce] Loaded player file for: " + name);
-				ForcePlugin.log.info("[TheLivingForce] Loaded attributes are:");
-				ForcePlugin.log.info("[TheLivingForce] Alignment: " + alignment.toString());
-				ForcePlugin.log.info("[TheLivingForce] Rank: " + rank.toString());
-				ForcePlugin.log.info("[TheLivingForce] Keys:");
+				ForcePlugin.log.info("[ForceCraft] Loaded player file for: " + name);
+				ForcePlugin.log.info("[ForceCraft] Loaded attributes are:");
+				ForcePlugin.log.info("[ForceCraft] Alignment: " + alignment.toString());
+				ForcePlugin.log.info("[ForceCraft] Rank: " + rank.toString());
+				ForcePlugin.log.info("[ForceCraft] Keys:");
 				for (Map.Entry<Keyboard, String> entries : keys.entrySet()) {
-						ForcePlugin.log.info("[TheLivingForce] Key: " + entries.getKey().toString());
-						ForcePlugin.log.info("[TheLivingForce] Power: " + entries.getValue());
+						ForcePlugin.log.info("[ForceCraft] Key: " + entries.getKey().toString());
+						ForcePlugin.log.info("[ForceCraft] Power: " + entries.getValue());
 				}
-				ForcePlugin.log.info("[TheLivingForce] Loaded player file for: " + name);
+				ForcePlugin.log.info("[ForceCraft] Loaded player file for: " + name);
 			}
 		}
 	}
@@ -126,12 +126,12 @@ public class ForcePlayer {
 		if (count == 5 || forceSave) {
 			try {
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("[TheLivingForce] Saving player file for: " + name);
+					ForcePlugin.log.info("[ForceCraft] Saving player file for: " + name);
 				updateKeysInFile();
 				saveAmounts();
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
-				ForcePlugin.log.info("[TheLivingForce] Failed to save player file for: " + name);
+				ForcePlugin.log.info("[ForceCraft] Failed to save player file for: " + name);
 				e.printStackTrace();
 			}
 			count = 0;

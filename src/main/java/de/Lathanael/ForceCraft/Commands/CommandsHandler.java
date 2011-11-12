@@ -1,20 +1,20 @@
 /*************************************************************************
  * Copyright (C) 2011  Philippe Leipold
  *
- * This file is part of TheLivingForce.
+ * This file is part of ForceCraft.
  *
- * TheLivingForce is free software: you can redistribute it and/or modify
+ * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * TheLivingForce is distributed in the hope that it will be useful,
+ * ForceCraft is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
+ * along with ForceCraft. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
@@ -96,10 +96,10 @@ public class CommandsHandler implements CommandExecutor {
 			plugin.getCommand(power.cmdName).setExecutor(instance);
 			powerMap.put(plugin.getCommand(power.cmdName), power);
 		} catch (InstantiationException e) {
-			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		}
 	}
@@ -111,10 +111,10 @@ public class CommandsHandler implements CommandExecutor {
 			plugin.getCommand(cmd.name).setExecutor(instance);
 			cmdMap.put(plugin.getCommand(cmd.name), cmd);
 		} catch (InstantiationException e) {
-			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			ForcePlugin.log.info("[TheLivingForce] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		}
 	}

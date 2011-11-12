@@ -1,20 +1,20 @@
 /*************************************************************************
  * Copyright (C) 2011  Philippe Leipold
  *
- * This file is part of TheLivingForce.
+ * This file is part of ForceCraft.
  *
- * TheLivingForce is free software: you can redistribute it and/or modify
+ * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * TheLivingForce is distributed in the hope that it will be useful,
+ * ForceCraft is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with TheLivingForce. If not, see <http://www.gnu.org/licenses/>.
+ * along with ForceCraft. If not, see <http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
 
@@ -103,16 +103,16 @@ public class PermissionsHandler {
 	public static void ressetPerm(String name) {
 		if (name.equalsIgnoreCase("Permissions")) {
 			yetiPerm = false;
-			ForcePlugin.log.info("[TheLivingForce] Permissions 2.x/3.x disabled, using OP system!");
+			ForcePlugin.log.info("[ForceCraft] Permissions 2.x/3.x disabled, using OP system!");
 		} else if (name.equalsIgnoreCase("bPermissions")) {
 			bPerm = false;
-			ForcePlugin.log.info("[TheLivingForce] bPermissions disabled, using OP system!");
+			ForcePlugin.log.info("[ForceCraft] bPermissions disabled, using OP system!");
 		} else if (name.equalsIgnoreCase("PermissionsEx")) {
 			permEx = false;
-			ForcePlugin.log.info("[TheLivingForce] PermissionsEx disabled, using OP system!");
+			ForcePlugin.log.info("[ForceCraft] PermissionsEx disabled, using OP system!");
 		} else if (name.equalsIgnoreCase("PermissionsBukkit")) {
 			permBukkit = false;
-			ForcePlugin.log.info("[TheLivingForce] PermissionsBukkit disabled, using OP system!");
+			ForcePlugin.log.info("[ForceCraft] PermissionsBukkit disabled, using OP system!");
 		}
 		perm = new BukkitPermOrOP();
 	}
