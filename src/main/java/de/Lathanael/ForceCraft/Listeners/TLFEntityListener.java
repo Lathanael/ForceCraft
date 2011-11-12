@@ -20,8 +20,16 @@
 
 package de.Lathanael.ForceCraft.Listeners;
 
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.ProjectileHitEvent;
+
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -29,6 +37,30 @@ import org.bukkit.event.entity.EntityListener;
 public class TLFEntityListener extends EntityListener{
 
 	public void onEntityDamageEvent(EntityDamageEvent event) {
+		if (!(event instanceof EntityDamageByEntityEvent))
+			return;
+
+		EntityDamageByEntityEvent newEvent = (EntityDamageByEntityEvent)event;
+		Entity attacker = newEvent.getDamager();
+		if (!(attacker instanceof Player))
+			return;
+		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) attacker).getName());
+		if (fPlayer == null)
+			return;
+		// TODO: Rage Code
+		if (fPlayer.containsPowerState(PlayerPowerStates.RAGE))
+			newEvent.setDamage(newEvent.getDamage());
+	}
+
+	public void onProjectileHit(ProjectileHitEvent event) {
+		Entity attacked = event.getEntity();
+		if (!(attacked instanceof Player))
+			return;
+		Player damaged = (Player) attacked;
+		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(damaged.getName());
+		// TODO: Shield code
+		if (fPlayer.containsPowerState(PlayerPowerStates.SHIELD))
+			return;
 
 	}
 }

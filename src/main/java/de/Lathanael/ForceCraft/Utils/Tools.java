@@ -20,7 +20,9 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
@@ -67,7 +69,7 @@ public class Tools {
 	}
 
 	/**
-	 * @see Tools#isPlayer(CommandSender, boolean) isPlayer
+	 * @see Tools#isPlayer(CommandSender, boolean) isPlayer(sender, false)
 	 */
 	public static boolean isPlayer(CommandSender sender) {
 		return isPlayer(sender, false);
@@ -75,15 +77,14 @@ public class Tools {
 
 	/**
 	 * Gets the targeted Entity a player is facing!
+	 * The entity is not guaranteed to be a Player!
 	 */
-	public static Player getTargetedEntity(Player player) {
-		return null;
-	}
-
-	/**
-	 * Gets the targeted Block a player is facing!
-	 */
-	public static Player getTargetedBlock(Player player) {
+	public static Entity getTargetedEntity(Block block) {
+		Entity[] list = block.getChunk().getEntities();
+		if (list.length > 0)
+			for (Entity entity : list)
+				if (entity.getLocation().equals(block.getLocation()))
+					return entity;
 		return null;
 	}
 }

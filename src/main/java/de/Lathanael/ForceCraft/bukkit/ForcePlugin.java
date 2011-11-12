@@ -88,6 +88,7 @@ public class ForcePlugin extends JavaPlugin {
 		pm.registerEvent(Type.PLUGIN_DISABLE, tlfPluL, Priority.Normal, this);
 		pm.registerEvent(Type.PLUGIN_ENABLE, tlfPluL, Priority.Normal, this);
 		pm.registerEvent(Type.ENTITY_DAMAGE, tlfEL, Priority.Normal, this);
+		pm.registerEvent(Type.PROJECTILE_HIT, tlfEL, Priority.Normal, this);
 		PluginDescriptionFile pdf = getDescription();
 		log.info("[" + pdf.getName() + "] Version " + pdf.getVersion() + " enabled!");
 	}
