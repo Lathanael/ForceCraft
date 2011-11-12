@@ -30,14 +30,32 @@ import org.getspout.spoutapi.keyboard.Keyboard;
  * Some code-ideas in here are from AdminCmd!
  */
 public class Tools {
+
+	/**
+	 * Gets the Spout Keyboard.KEY Enum corresponding to the given key-Integer
+	 * @param keyNr
+	 * @return
+	 */
 	public static Keyboard getKey(int keyNr) {
 		return Keyboard.getKey(keyNr);
 	}
 
+	/**
+	 * Gets the Spout Keyboard.KEY Enum corresponding to the given key-String
+	 * @param keyName
+	 * @return
+	 */
 	public static Keyboard getKey(String keyName) {
 		return Keyboard.valueOf("KEY_" + keyName.toUpperCase());
 	}
 
+	/**
+	 * Checks if a CommandSender instance is an instance of a Player instance.
+	 *
+	 * @param sender - The CommandSender to be checked
+	 * @param errorMsg - Should an error Message be displayed?
+	 * @return True if it is a Player instance, else false.
+	 */
 	public static boolean isPlayer(CommandSender sender, boolean errorMsg) {
 		if (sender instanceof Player)
 			return true;
@@ -48,11 +66,24 @@ public class Tools {
 		}
 	}
 
+	/**
+	 * @see Tools#isPlayer(CommandSender, boolean) isPlayer
+	 */
 	public static boolean isPlayer(CommandSender sender) {
 		return isPlayer(sender, false);
 	}
 
-	public static Player getTarget(Player player) {
+	/**
+	 * Gets the targeted Entity a player is facing!
+	 */
+	public static Player getTargetedEntity(Player player) {
+		return null;
+	}
+
+	/**
+	 * Gets the targeted Block a player is facing!
+	 */
+	public static Player getTargetedBlock(Player player) {
 		return null;
 	}
 }
