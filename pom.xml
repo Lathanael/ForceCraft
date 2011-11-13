@@ -3,16 +3,16 @@
   <groupId>de.Lathanael.TheLivingForce</groupId>
   <version>0.0.1-SNAPSHOT</version>
   <artifactId>bukkit</artifactId>
-  <name>The Living Force</name>
+  <name>ForceCraft</name>
   <scm>
-        <connection>scm:git:git@github.com:Lathanael/TheLivingForce.git</connection>
-        <url>scm:git:git@github.com:Lathanael/TheLivingForce.git</url>
-        <developerConnection>scm:git:git@github.com:Lathanael/TheLivingForce.git</developerConnection>
+        <connection>scm:git:git@github.com:Lathanael/ForceCraft.git</connection>
+        <url>scm:git:git@github.com:Lathanael/ForceCraft.git</url>
+        <developerConnection>scm:git:git@github.com:Lathanael/ForceCraft.git</developerConnection>
   </scm>
   <build>
     <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
     <defaultGoal>clean install</defaultGoal>
-    <finalName>TheLivingForce</finalName>
+    <finalName>ForceCraft</finalName>
     <resources>
         <resource>
             <targetPath>.</targetPath>
@@ -29,10 +29,10 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Implementation-Title>TheLivingForce</Implementation-Title>
+                            <Implementation-Title>ForceCraft</Implementation-Title>
                             <Implementation-Version>${project.version}</Implementation-Version>
                             <Implementation-Vendor>Lathanael</Implementation-Vendor>
-                            <Specification-Title>TheLivingForce</Specification-Title>
+                            <Specification-Title>ForceCraft</Specification-Title>
                             <Specification-Version>${project.version}</Specification-Version>
                             <Specification-Vendor>Lathanael</Specification-Vendor>
                             <Sealed>true</Sealed>
