@@ -48,8 +48,9 @@ public class TLFEntityListener extends EntityListener{
 		if (fPlayer == null)
 			return;
 		// TODO: Rage Code
-		if (fPlayer.containsPowerState(PlayerPowerStates.RAGE))
-			newEvent.setDamage(newEvent.getDamage());
+		if (fPlayer.containsPowerState(PlayerPowerStates.RAGE)) {
+			newEvent.setDamage(newEvent.getDamage()*2);
+		}
 	}
 
 	public void onProjectileHit(ProjectileHitEvent event) {
