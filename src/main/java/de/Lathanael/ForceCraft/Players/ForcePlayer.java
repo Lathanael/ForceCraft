@@ -56,7 +56,7 @@ public class ForcePlayer {
 	protected HashSet<PlayerPowerStates> powers = new HashSet<PlayerPowerStates>();
 	protected HashMap<Keyboard, String> keys = new HashMap<Keyboard, String>();
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
-	protected HashMap<String, Integer> delays = new HashMap<String, Integer>();
+	protected HashMap<String, Long> times = new HashMap<String, Long>();
 
 	public ForcePlayer (String playerName, String dir) {
 		this.name = playerName;
@@ -236,6 +236,19 @@ public class ForcePlayer {
 			return powers.contains(state);
 		else
 			return false;
+	}
+
+	public void setLastTimeUsed(String powerName, long time) {
+		times.put(powerName, time);
+	}
+
+	public long getLastTimeUsed(String powerName) {
+		if (times.containsKey(powerName)) {
+			long time = times.get(powerName);
+			return time;
+		}
+		else
+			return 0L;
 	}
 
 /*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
