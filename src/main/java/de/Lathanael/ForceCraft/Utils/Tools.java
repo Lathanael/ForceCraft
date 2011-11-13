@@ -78,13 +78,26 @@ public class Tools {
 	/**
 	 * Gets the targeted Entity a player is facing!
 	 * The entity is not guaranteed to be a Player!
+	 *
+	 * @param block - The block the Player is looking at
+	 * @param mustBePlayer - Must the entity returned be a Player?
+	 * @return The entity found or null if no entity found.
 	 */
-	public static Entity getTargetedEntity(Block block) {
+	public static Entity getTargetedEntity(Block block, boolean mustBePlayer) {
+		if (block == null)
+			return null;
 		Entity[] list = block.getChunk().getEntities();
 		if (list.length > 0)
 			for (Entity entity : list)
+				// TODO: better Location check code
 				if (entity.getLocation().equals(block.getLocation()))
-					return entity;
+					if (mustBePlayer)
+						if (entity instanceof Player)
+							return entity;
+						else
+							return null;
+					else
+						return entity;
 		return null;
 	}
 }
