@@ -47,6 +47,7 @@ public class Run extends BasePower {
 	@Override
 	public void execute(ForcePlayer player) {
 		player.setPowerState(PlayerPowerStates.RUN);
+		player.setLastTimeUsed(name, System.currentTimeMillis());
 	}
 
 	@Override

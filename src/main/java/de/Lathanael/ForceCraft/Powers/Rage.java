@@ -27,6 +27,7 @@ import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
+import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
@@ -46,7 +47,8 @@ public class Rage extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player) {
-		player.setPowerState(PlayerPowerStates.RAGE);
+			player.setPowerState(PlayerPowerStates.RAGE);
+			player.setLastTimeUsed(name, System.currentTimeMillis());
 	}
 
 	@Override

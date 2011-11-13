@@ -47,6 +47,7 @@ public class Jump extends BasePower {
 	@Override
 	public void execute(ForcePlayer player) {
 		player.setPowerState(PlayerPowerStates.JUMP);
+		player.setLastTimeUsed(name, System.currentTimeMillis());
 	}
 
 	@Override

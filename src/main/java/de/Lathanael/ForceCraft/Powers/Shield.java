@@ -47,6 +47,7 @@ public class Shield extends BasePower {
 	@Override
 	public void execute(ForcePlayer player) {
 		player.setPowerState(PlayerPowerStates.SHIELD);
+		player.setLastTimeUsed(name, System.currentTimeMillis());
 	}
 
 	@Override

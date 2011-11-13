@@ -45,7 +45,7 @@ public class Choke extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player) {
-
+		player.setLastTimeUsed(name, System.currentTimeMillis());
 	}
 
 	@Override
