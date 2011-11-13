@@ -39,6 +39,7 @@ import de.Lathanael.ForceCraft.Listeners.TLFPlayerListener;
 import de.Lathanael.ForceCraft.Listeners.TLFPluginListener;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Powers.Pull;
+import de.Lathanael.ForceCraft.Utils.Scheduler;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -80,6 +81,7 @@ public class ForcePlugin extends JavaPlugin {
 		commandsHandler.initInstance(this);
 		registerCommands();
 		PermissionsHandler.setInstance();
+		Scheduler.initInstance(this);
 		tlfPluL.hook();
 		pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
@@ -121,6 +123,7 @@ public class ForcePlugin extends JavaPlugin {
 		}
 	}
 
+	// TODO: registering all commands and powers
 	private void registerCommands() {
 		if (config.getBoolean("Power.Pull.enabled"))
 			commandsHandler.registerPower(Pull.class);

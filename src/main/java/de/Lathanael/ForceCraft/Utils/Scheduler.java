@@ -20,20 +20,92 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
 public class Scheduler {
 
 	private static Scheduler instance = null;
+	private static ForcePlugin plugin;
 
-	public static Scheduler initInstance() {
+	public static void initInstance(ForcePlugin newPlugin) {
 		if (instance == null)
 			instance = new Scheduler();
+		plugin = newPlugin;
+	}
+
+	public static Scheduler getInstance() {
 		return instance;
 	}
 
-	public void scheduleHealTask(int rank) {
+	/**
+	 * Starts a SyncRepeatingTask healing a ForcePlayer 2 times per second for different
+	 * amounts(min 1 which equals to half a Heart) depending on their rank.
+	 * Task is stopped after 10 seconds!
+	 *
+	 * @param player - The ForcePlayer object to be healed
+	 */
+	public void scheduleHealTask(final ForcePlayer player) {
+		final int playerRank = player.getRank();
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(
+				plugin,
+				new Runnable() {
+					public void run() {
+						int health = player.getHandler().getHealth();
+						int amount = plugin.ranksInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
+						if (health >= 20)
+							return;
+						else
+							player.getHandler().setHealth(health + amount);
+					}
+				}
+				, 0 , 10);
 
+		// Stops Force Heal after 10 seconds
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(
+				plugin,
+				new Runnable() {
+					public void run() {
+						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
+					}
+				}
+				, 200L);
+	}
+
+	/**
+	 * Starts a SyncRepeatingTask refilling the Players FoodBar 2 times
+	 * a second for amounts(min 1 which equals to half a "chickenleg")
+	 * depending on their rank. Task is stopped after 10 seconds!
+	 *
+	 * @param player - The ForcePlayer object to be filled
+	 */
+	public void scheduleMediationTask(final ForcePlayer player) {
+		final int playerRank = player.getRank();
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(
+				plugin,
+				new Runnable() {
+					public void run() {
+						int foodLevel = player.getHandler().getFoodLevel();
+						int amount = plugin.ranksInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
+						if (foodLevel >= 20)
+							return;
+						else
+							player.getHandler().setFoodLevel(foodLevel + amount);
+					}
+				}
+				, 0 , 10);
+
+		// Stops Force Mediation after 10 seconds
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(
+				plugin,
+				new Runnable() {
+					public void run() {
+						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
+					}
+				}
+				, 200L);
 	}
 }
