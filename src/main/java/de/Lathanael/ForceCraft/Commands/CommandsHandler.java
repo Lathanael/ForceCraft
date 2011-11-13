@@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.ForceCraft.Commands.BaseCommand;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Powers.BasePower;
 import de.Lathanael.ForceCraft.Utils.Tools;
@@ -67,8 +68,16 @@ public class CommandsHandler implements CommandExecutor {
 
 	public void executePower(CommandSender sender, BasePower power, String[] args) {
 		if (Tools.isPlayer(sender, true)) {
-			if (PermissionsHandler.getInstance().hasPerm((Player) sender, power.perm))
-				power.execute(PlayerHandler.getInstance().getPlayer(((Player) sender).getName()));
+			if (PermissionsHandler.getInstance().hasPerm((Player) sender, power.perm)) {
+				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) sender).getName());
+				if (fPlayer == null){
+					sender.sendMessage(ChatColor.RED + "Could not find your ForcePlayer object, please contact your ServerAdmin with this error!");
+					return;
+				}
+
+				if (power.checkRank(fPlayer) && power.checkTime(fPlayer))
+					power.execute(fPlayer);
+			}
 			else
 				sender.sendMessage(ChatColor.RED + "You do not have the permission to use the following power: "
 						+ ChatColor.AQUA + power.name + ChatColor.RED + "!");

@@ -52,9 +52,21 @@ public abstract class BasePower {
 	public boolean checkRank(ForcePlayer player) {
 		if (player.getRank() < rank) {
 			player.getHandler().sendMessage(ChatColor.RED +
-					"You need to advance further in the Force to use this power!");
+					"You need to advance further in the Force to use Force " + name + " !");
 			return false;
 		}
 		return true;
+	}
+
+	public boolean checkTime(ForcePlayer player) {
+		long time = 0;
+		if (player.getLastTimeUsed(name) > 0)
+			time = (System.currentTimeMillis() - player.getLastTimeUsed(name))/1000;
+
+		if (time == 0 || time <= delay) {
+			return true;
+		}
+		player.getHandler().sendMessage(ChatColor.RED + "You need to wait to use Force " + name + " again!");
+		return false;
 	}
 }
