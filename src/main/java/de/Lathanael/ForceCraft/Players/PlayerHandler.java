@@ -62,22 +62,32 @@ public class PlayerHandler {
 			return null;
 	}
 
-	private ForcePlayer callForcePlayer(String playerName) {
-		if (ForcePlugin.sensitiveonJoin) {
+	private ForcePlayer callForcePlayer(String playerName, boolean join) {
+		if (filePlayers.contains(playerName))
+			return new ForcePlayer(playerName);
+		if (ForcePlugin.sensitiveonJoin && join) {
 			if (ForcePlugin.debug)
-				ForcePlugin.log.info("[ForceCraft]");
+				ForcePlugin.log.info("[ForceCraft] Creating  of a ForcePlayer object if a new player joins is disabled!");
 			return null;
 		}
-		if (!filePlayers.contains(playerName)) {
-			return new ForcePlayer(playerName);
-		} else {
-			filePlayers.add(playerName);
-			return new ForcePlayer(playerName, playerFolder.getPath());
-		}
+		filePlayers.add(playerName);
+		return new ForcePlayer(playerName, playerFolder.getPath());
 	}
 
 	public void createForcePlayer(String playerName) {
-		players.put(playerName, callForcePlayer(playerName));
+		ForcePlayer fPlayer = callForcePlayer(playerName, false);
+		if (fPlayer != null)
+			players.put(playerName, fPlayer);
+		if (ForcePlugin.debug && fPlayer == null)
+			ForcePlugin.log.info("[ForceCraft] FocrePlayer object is null, creation failed.");
+	}
+
+	public void createForcePlayer(String playerName, boolean join) {
+		ForcePlayer fPlayer = callForcePlayer(playerName, join);
+		if (fPlayer != null)
+			players.put(playerName, fPlayer);
+		if (ForcePlugin.debug && fPlayer == null)
+			ForcePlugin.log.info("[ForceCraft] FocrePlayer object is null, creation failed.");
 	}
 
 	public static void setInstance() {

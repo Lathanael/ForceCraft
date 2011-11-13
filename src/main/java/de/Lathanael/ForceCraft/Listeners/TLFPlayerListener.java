@@ -34,7 +34,7 @@ import de.Lathanael.ForceCraft.Players.PlayerHandler;
 public class TLFPlayerListener extends PlayerListener {
 
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		PlayerHandler.getInstance().createForcePlayer(event.getPlayer().getName());
+		PlayerHandler.getInstance().createForcePlayer(event.getPlayer().getName(), true);
 	}
 
 	public void onPlayerKick(PlayerKickEvent event) {
