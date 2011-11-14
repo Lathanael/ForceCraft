@@ -20,11 +20,16 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.keyboard.Keyboard;
+
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -90,7 +95,10 @@ public class Tools {
 		if (list.length > 0)
 			for (Entity entity : list)
 				// TODO: better Location check code
-				if (entity.getLocation().equals(block.getLocation()))
+				if (entity.getLocation().equals(block.getLocation()) && entity instanceof LivingEntity) {
+					entity = (LivingEntity) entity;
+					if (ForcePlugin.debug)
+						ForcePlugin.log.info("[ForceCraft] Found target, ID is: " + entity.getEntityId());
 					if (mustBePlayer)
 						if (entity instanceof Player)
 							return entity;
@@ -98,6 +106,40 @@ public class Tools {
 							return null;
 					else
 						return entity;
+				}
 		return null;
+	}
+
+	/**
+	 * Parses and returns a given String s to an Integer, default value depends on type.
+	 *
+	 * @param sender - The Command sender
+	 * @param player - The ForcePlayer object whose value should be set
+	 * @param s - The String to be parsed
+	 * @param type - String to define the default value
+	 * @return The parsed Integer or default value of the given type
+	 * (if no matching type is found 0) if failed.
+	 */
+	public static int parseInteger(CommandSender sender, ForcePlayer player, String s, String type) {
+		int value = 0;
+
+		try {
+			value = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			if (Tools.isPlayer(sender))
+				sender.sendMessage(ChatColor.RED + "Could not parse the provided number!");
+			else
+				sender.sendMessage("[ForceCraft] Could not parse the provided number!");
+
+			if (type.equalsIgnoreCase("rank"))
+				value = player.getRank();
+			else if (type.equalsIgnoreCase("alignment"))
+				value = player.getAlignment().getNumber();
+			else if (type.equalsIgnoreCase("mana"))
+				value = player.getMana();
+			else
+				value = 0;
+		}
+		return value;
 	}
 }

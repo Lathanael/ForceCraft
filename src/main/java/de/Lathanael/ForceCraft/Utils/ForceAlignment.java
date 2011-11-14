@@ -20,20 +20,44 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
 public enum ForceAlignment {
-	DARK("Dark"),
-	LIGHT("Light"),
-	NEUTRAL("Neutral");
+	DARK("Dark", 2),
+	LIGHT("Light", 1),
+	NEUTRAL("Neutral", 0);
 
 	private final String label;
-	private ForceAlignment(String label) {
+	private final int number;
+	private static final Map<Integer, ForceAlignment> lookupTableInt = new HashMap<Integer, ForceAlignment>();
+
+	private ForceAlignment(String label, int number) {
 		this.label = label;
+		this.number = number;
 	}
 
 	public String toString() {
 		return label;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public static ForceAlignment getAlignmentByNr(int number) {
+		if (lookupTableInt.containsKey(number))
+			return lookupTableInt.get(number);
+		else
+			return ForceAlignment.NEUTRAL;
+	}
+
+	static {
+		for (ForceAlignment fal : values()) {
+			lookupTableInt.put(fal.number, fal);
+		}
 	}
 }

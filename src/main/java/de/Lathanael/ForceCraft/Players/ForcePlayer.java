@@ -251,6 +251,10 @@ public class ForcePlayer {
 			return 0L;
 	}
 
+	public void resetLastTimeUsed() {
+		times.clear();
+	}
+
 /*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
 
 	private void createDefaults() {
