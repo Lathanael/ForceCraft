@@ -20,6 +20,8 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
@@ -107,5 +109,22 @@ public class Scheduler {
 					}
 				}
 				, 200L);
+	}
+
+	/**
+	 * Cancels the power Force Rage a player has. It is canceld after a
+	 * given time, depending on the players Rank.
+	 *
+	 * @param player - The ForcePlayer object the Force Rage should be canceled
+	 */
+	public void scheduleCancelRageTask(final ForcePlayer player) {
+		int rank = player.getRank();
+		long delay = plugin.ranksInfo.getLong("Rage." + String.valueOf(rank), 200);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						player.removePowerState(PlayerPowerStates.RAGE);
+					}
+				}, delay);
 	}
 }

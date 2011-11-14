@@ -49,6 +49,7 @@ public class Rage extends BasePower {
 	public void execute(ForcePlayer player) {
 			player.setPowerState(PlayerPowerStates.RAGE);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
+			Scheduler.getInstance().scheduleCancelRageTask(player);
 	}
 
 	@Override
