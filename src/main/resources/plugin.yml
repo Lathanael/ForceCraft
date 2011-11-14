@@ -15,22 +15,47 @@ commands:
         description: Gives info about the wanted player.
         aliases: [finfo]
         usage: /<command> [player]
+    fc_set:
+        description: Sets different properties for a given player.
+        aliases: [fset]
+        usage: /<command> [type] [player] <number>
 
 permissions:
-    force.user:
-        description: Grants access to all user related commands.
-        default: true
+    force.*:
+        description: Grants access to all ForceCraft commands and powers.
+        default: op
+        children:
+            force.admin: true
+            force.user.*: true
+    force.user.dark:
+        description: Grants access to all Darkside Forces.
+        default: false
         children:
             force.pull: true
             force.push: true
             force.choke: true
+    force.user.light:
+        description: Grants access to all Lightside Forces.
+        default: false
+        children:
+            force.flash: true
+    force.user.*:
+        description: Grants access to all Forces.
+        default: false
+        children:
+            force.user.dark: true
+            force.user.light: true
     force.admin:
         description: Grants access to all commands.
-        default: op
+        default: false
         children:
             force.info: true
+            force.set: true
     force.info:
-        description: Allows usage of the /info command.
+        description: Allows usage of the /finfo command.
+        default: false
+    force.set:
+        description: Allows usage of the /fset command
         default: false
     force.pull:
         description: Allows usage of the Pull force.
