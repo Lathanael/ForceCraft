@@ -55,7 +55,7 @@ public class ForcePlugin extends JavaPlugin {
 	public String directory;
 	public PlayerHandler playerHandler;
 	public CommandsHandler commandsHandler;
-	public static Logger log = Logger.getLogger("Minecraft");
+	public static Logger log = Logger.getLogger("ForceCraft");
 	public PluginManager pm;
 	public static boolean debug = false;
 	public static boolean sensitiveonJoin = false;
