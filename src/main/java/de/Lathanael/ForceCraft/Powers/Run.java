@@ -27,6 +27,7 @@ import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
+import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
@@ -48,6 +49,7 @@ public class Run extends BasePower {
 	public void execute(ForcePlayer player) {
 		player.setPowerState(PlayerPowerStates.RUN);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
+		Scheduler.getInstance().scheduleCancelRunTask(player);
 	}
 
 	@Override
