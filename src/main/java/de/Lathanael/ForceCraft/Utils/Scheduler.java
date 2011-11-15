@@ -20,8 +20,6 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
-import javax.swing.text.StyledEditorKit.ForegroundAction;
-
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
@@ -115,7 +113,7 @@ public class Scheduler {
 	 * Cancels the power Force Rage a player has. It is canceld after a
 	 * given time, depending on the players Rank.
 	 *
-	 * @param player - The ForcePlayer object the Force Rage should be canceled
+	 * @param player - The ForcePlayer object for whom the Force Rage should be canceled
 	 */
 	public void scheduleCancelRageTask(final ForcePlayer player) {
 		int rank = player.getRank();
@@ -124,6 +122,57 @@ public class Scheduler {
 				new Runnable() {
 					public void run() {
 						player.removePowerState(PlayerPowerStates.RAGE);
+					}
+				}, delay);
+	}
+
+	/**
+	 * Cancels the power Force Jump a player has. It is canceld after a
+	 * given time, depending on the players Rank.
+	 *
+	 * @param player - The ForcePlayer object for home the Force Jump should be canceled
+	 */
+	public void scheduleCancelJumpTask(final ForcePlayer player) {
+		int rank = player.getRank();
+		long delay = plugin.ranksInfo.getLong("Jump." + String.valueOf(rank), 200);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						player.removePowerState(PlayerPowerStates.JUMP);
+					}
+				}, delay);
+	}
+
+	/**
+	 * Cancels the power Force Run a player has. It is canceld after a
+	 * given time, depending on the players Rank.
+	 *
+	 * @param player - The ForcePlayer object for whom the Force Run should be canceled
+	 */
+	public void scheduleCancelRunTask(final ForcePlayer player) {
+		int rank = player.getRank();
+		long delay = plugin.ranksInfo.getLong("Run." + String.valueOf(rank), 200);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						player.removePowerState(PlayerPowerStates.RUN);
+					}
+				}, delay);
+	}
+
+	/**
+	 * Cancels the power Force Shield a player has. It is canceld after a
+	 * given time, depending on the players Rank.
+	 *
+	 * @param player - The ForcePlayer object for whom the Force Shield should be canceled
+	 */
+	public void scheduleCancelShieldTask(final ForcePlayer player) {
+		int rank = player.getRank();
+		long delay = plugin.ranksInfo.getLong("Shield." + String.valueOf(rank), 200);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						player.removePowerState(PlayerPowerStates.SHIELD);
 					}
 				}, delay);
 	}
