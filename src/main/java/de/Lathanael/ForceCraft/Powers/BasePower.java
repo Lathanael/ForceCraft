@@ -22,6 +22,7 @@ package de.Lathanael.ForceCraft.Powers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
@@ -45,7 +46,7 @@ public abstract class BasePower {
 		instance = ForcePlugin.getInstance();
 	}
 
-	public abstract void execute(ForcePlayer player);
+	public abstract void execute(ForcePlayer player, Entity target);
 
 	public abstract boolean checkPerm(CommandSender sender);
 

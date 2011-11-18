@@ -21,7 +21,9 @@
 package de.Lathanael.ForceCraft.Powers;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -46,10 +48,12 @@ public class Shield extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer player) {
+	public void execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.SHIELD);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		Scheduler.getInstance().scheduleCancelShieldTask(player);
+		// TODO: Colouring of the shielded player
+		SpoutPlayer sPlayer = (SpoutPlayer) player.getHandler();
 	}
 
 	@Override

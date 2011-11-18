@@ -26,6 +26,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.ForceCraft.Commands.BaseCommand;
@@ -58,7 +59,14 @@ public class CommandsHandler implements CommandExecutor {
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (powerMap.get(cmd) != null) {
-			executePower(sender, powerMap.get(cmd), args);
+			if (args.length > 0) {
+				Player player = plugin.getServer().getPlayer(args[0]);
+				if (player == null)
+					executePower(sender, powerMap.get(cmd), null);
+				else
+					executePower(sender, powerMap.get(cmd), player);
+			} else
+				executePower(sender, powerMap.get(cmd), null);
 			return true;
 		} else if (cmdMap.get(cmd) != null) {
 			return executeCommand(sender, cmdMap.get(cmd), args);
@@ -66,7 +74,7 @@ public class CommandsHandler implements CommandExecutor {
 		return false;
 	}
 
-	public void executePower(CommandSender sender, BasePower power, String[] args) {
+	public void executePower(CommandSender sender, BasePower power, Entity target) {
 		if (Tools.isPlayer(sender, true)) {
 			if (PermissionsHandler.getInstance().hasPerm((Player) sender, power.perm)) {
 				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) sender).getName());
@@ -75,8 +83,8 @@ public class CommandsHandler implements CommandExecutor {
 					return;
 				}
 
-				if (power.checkRank(fPlayer) && power.checkTime(fPlayer))
-					power.execute(fPlayer);
+				if (power.checkRank(fPlayer) && power.checkTime(fPlayer) && Tools.checkDistance((Player) sender, target, 20) )
+					power.execute(fPlayer, target);
 			}
 			else
 				sender.sendMessage(ChatColor.RED + "You do not have the permission to use the following power: "
@@ -128,7 +136,11 @@ public class CommandsHandler implements CommandExecutor {
 		}
 	}
 
-	public BasePower getCmdPower(Command cmd) {
+	public BasePower getPower(Command cmd) {
 		return powerMap.get(cmd);
+	}
+
+	public BaseCommand getCmd(Command cmd) {
+		return cmdMap.get(cmd);
 	}
 }

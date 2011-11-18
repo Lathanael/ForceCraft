@@ -21,6 +21,7 @@
 package de.Lathanael.ForceCraft.Powers;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
@@ -44,7 +45,7 @@ public class Pull extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer player) {
+	public void execute(ForcePlayer player, Entity target) {
 
 	}
 

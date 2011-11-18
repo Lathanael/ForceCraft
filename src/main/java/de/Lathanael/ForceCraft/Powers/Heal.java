@@ -21,6 +21,7 @@
 package de.Lathanael.ForceCraft.Powers;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
@@ -46,15 +47,15 @@ public class Heal extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer fPlayer) {
+	public void execute(ForcePlayer fPlayer, Entity target) {
 		fPlayer.setLastTimeUsed(name, System.currentTimeMillis());
-		Player player = fPlayer.getHandler();
-		Player target = (Player) Tools.getTargetedEntity(player.getTargetBlock(null, 20), true);
-
+		Player pTarget = null;
+		if (target != null && target instanceof Player)
+			pTarget = (Player) target;
 		if (target == null)
 			Scheduler.getInstance().scheduleHealTask(fPlayer);
 		else
-			Scheduler.getInstance().scheduleHealTask(PlayerHandler.getInstance().getPlayer(target.getName()));
+			Scheduler.getInstance().scheduleHealTask(PlayerHandler.getInstance().getPlayer(pTarget.getName()));
 	}
 
 	@Override

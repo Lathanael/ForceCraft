@@ -21,6 +21,7 @@
 package de.Lathanael.ForceCraft.Powers;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
@@ -46,7 +47,7 @@ public class Run extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer player) {
+	public void execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.RUN);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		Scheduler.getInstance().scheduleCancelRunTask(player);
