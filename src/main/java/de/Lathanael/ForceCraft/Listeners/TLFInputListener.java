@@ -21,6 +21,7 @@
 package de.Lathanael.ForceCraft.Listeners;
 
 import org.bukkit.command.Command;
+import org.bukkit.entity.Entity;
 import org.getspout.spoutapi.event.input.InputListener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
@@ -30,6 +31,7 @@ import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Powers.BasePower;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
+import de.Lathanael.ForceCraft.Utils.Tools;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
@@ -51,32 +53,38 @@ public class TLFInputListener extends InputListener {
 
 		// Player pressed Jump
 		if (event.getKey().equals(Keyboard.KEY_SPACE)) {
-			if (!fPlayer.containsPowerState(PlayerPowerStates.JUMP))
+			if (!fPlayer.hasPowerState(PlayerPowerStates.JUMP))
 				return;
 			Command cmd = instance.getCommand("fc_jump");
-			BasePower power = instance.commandsHandler.getCmdPower(cmd);
-			if (power != null)
+			BasePower power = instance.commandsHandler.getPower(cmd);
+			if (power == null)
 				return;
+			double mult = instance.ranksInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
+			// TODO: Proper jump code?!
+			sPlayer.setJumpingMultiplier(mult);
 		}
 
 		// Player pressed any of the Movement-Keys
 		if (event.getKey().equals(Keyboard.KEY_W) || event.getKey().equals(Keyboard.KEY_S) || event.getKey().equals(Keyboard.KEY_A)
 				|| event.getKey().equals(Keyboard.KEY_D)) {
-			if (!fPlayer.containsPowerState(PlayerPowerStates.RUN))
+			if (!fPlayer.hasPowerState(PlayerPowerStates.RUN))
 				return;
 			Command cmd = instance.getCommand("fc_run");
-			BasePower power = instance.commandsHandler.getCmdPower(cmd);
-			if (power != null)
+			BasePower power = instance.commandsHandler.getPower(cmd);
+			if (power == null)
 				return;
+			double mult = instance.ranksInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
+			// TODO: Proper run code?!
+			sPlayer.setWalkingMultiplier(mult);
 		}
 
-		// Did the player press any button bound to a power?
+		// Did the player press any button bound to a power? If yes, execute it.
 		if (!fPlayer.containsKey(event.getKey()))
 			return;
 		Command cmd = instance.getCommand("fc_" + fPlayer.getKey(event.getKey()));
-		sPlayer.getTargetBlock(null, 50);
-		BasePower power = instance.commandsHandler.getCmdPower(cmd);
+		Entity target = Tools.getTargetedEntity(sPlayer.getTargetBlock(null, 20), false);
+		BasePower power = instance.commandsHandler.getPower(cmd);
 		if (power != null)
-			instance.commandsHandler.executePower(sPlayer.getPlayer(), power, null);
+			instance.commandsHandler.executePower(sPlayer.getPlayer(), power, target);
 	}
 }
