@@ -18,7 +18,6 @@
  *
  **************************************************************************/
 
-
 package de.Lathanael.ForceCraft.Commands;
 
 import org.bukkit.command.CommandSender;
