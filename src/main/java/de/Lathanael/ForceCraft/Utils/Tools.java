@@ -21,6 +21,7 @@
 package de.Lathanael.ForceCraft.Utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -141,5 +142,24 @@ public class Tools {
 				value = 0;
 		}
 		return value;
+	}
+
+	/**
+	 * Checks if one entity is within the range of another one (in the xz-plane)
+	 *
+	 * @param ent1 - First Entity
+	 * @param ent2 - Second Entity
+	 * @param checkDist - The maximum distance they are allowed to be apart
+	 * @return True if (dist < checkDist) else false
+	 */
+	public static boolean checkDistance (Entity ent1, Entity ent2, double checkDist) {
+		if (!ent1.getWorld().equals(ent2.getWorld()))
+			return false;
+		Location loc1 = ent1.getLocation();
+		Location loc2 = ent2.getLocation();
+		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2));
+		if (dist > checkDist)
+			return true;
+		return false;
 	}
 }
