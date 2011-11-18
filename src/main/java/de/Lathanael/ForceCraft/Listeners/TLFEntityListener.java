@@ -30,6 +30,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -47,8 +48,7 @@ public class TLFEntityListener extends EntityListener{
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) attacker).getName());
 		if (fPlayer == null)
 			return;
-		// TODO: Rage Code
-		if (fPlayer.containsPowerState(PlayerPowerStates.RAGE)) {
+		if (fPlayer.hasPowerState(PlayerPowerStates.RAGE)) {
 			newEvent.setDamage(newEvent.getDamage()*2);
 		}
 	}
@@ -59,9 +59,12 @@ public class TLFEntityListener extends EntityListener{
 			return;
 		Player damaged = (Player) attacked;
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(damaged.getName());
-		// TODO: Shield code
-		if (fPlayer.containsPowerState(PlayerPowerStates.SHIELD))
+		if (fPlayer == null)
 			return;
-
+		if (fPlayer.hasPowerState(PlayerPowerStates.SHIELD)) {
+			double shieldDmgRed = ForcePlugin.getInstance().ranksInfo.
+								getDouble("Shield." + String.valueOf(fPlayer.getRank()), 1);
+			damaged.setLastDamage((int) (damaged.getLastDamage()*shieldDmgRed));
+		}
 	}
 }
