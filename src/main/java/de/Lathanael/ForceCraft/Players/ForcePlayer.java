@@ -231,7 +231,7 @@ public class ForcePlayer {
 			powers.remove(state);
 	}
 
-	public boolean containsPowerState(PlayerPowerStates state) {
+	public boolean hasPowerState(PlayerPowerStates state) {
 		if (state != null)
 			return powers.contains(state);
 		else
