@@ -20,6 +20,8 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import org.getspout.spoutapi.player.SpoutPlayer;
+
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
@@ -139,6 +141,7 @@ public class Scheduler {
 				new Runnable() {
 					public void run() {
 						player.removePowerState(PlayerPowerStates.JUMP);
+						((SpoutPlayer) player).setJumpingMultiplier(1);
 					}
 				}, delay);
 	}
@@ -156,6 +159,7 @@ public class Scheduler {
 				new Runnable() {
 					public void run() {
 						player.removePowerState(PlayerPowerStates.RUN);
+						((SpoutPlayer) player).setWalkingMultiplier(1);
 					}
 				}, delay);
 	}
