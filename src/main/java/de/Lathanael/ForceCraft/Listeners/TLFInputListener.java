@@ -48,7 +48,7 @@ public class TLFInputListener extends InputListener {
 	public void onKeyPressedEvent(KeyPressedEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
 		SpoutPlayer sPlayer = event.getPlayer();
-		if (fPlayer == null)
+		if (fPlayer == null || sPlayer == null)
 			return;
 
 		// Player pressed Jump
@@ -60,7 +60,6 @@ public class TLFInputListener extends InputListener {
 			if (power == null)
 				return;
 			double mult = instance.ranksInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
-			// TODO: Proper jump code?!
 			sPlayer.setJumpingMultiplier(mult);
 		}
 
@@ -74,7 +73,6 @@ public class TLFInputListener extends InputListener {
 			if (power == null)
 				return;
 			double mult = instance.ranksInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
-			// TODO: Proper run code?!
 			sPlayer.setWalkingMultiplier(mult);
 		}
 
