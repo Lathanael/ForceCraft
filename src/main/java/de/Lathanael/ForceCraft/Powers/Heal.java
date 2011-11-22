@@ -47,15 +47,16 @@ public class Heal extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer fPlayer, Entity target) {
-		fPlayer.setLastTimeUsed(name, System.currentTimeMillis());
+	public void execute(ForcePlayer player, Entity target) {
+		player.setLastTimeUsed(name, System.currentTimeMillis());
+		player.increasePwrAmount(name);
 		Player pTarget = null;
 		if (target != null && target instanceof Player)
 			pTarget = (Player) target;
 		if (target == null)
-			Scheduler.getInstance().scheduleHealTask(fPlayer);
+			Scheduler.getInstance().scheduleHealTask(player, player);
 		else
-			Scheduler.getInstance().scheduleHealTask(PlayerHandler.getInstance().getPlayer(pTarget.getName()));
+			Scheduler.getInstance().scheduleHealTask(player, PlayerHandler.getInstance().getPlayer(pTarget.getName()));
 	}
 
 	@Override

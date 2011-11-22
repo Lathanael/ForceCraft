@@ -50,6 +50,7 @@ public class Rage extends BasePower {
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 			player.setPowerState(PlayerPowerStates.RAGE);
+			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
 			Scheduler.getInstance().scheduleCancelRageTask(player);
 			// TODO: Colouring of the raged player

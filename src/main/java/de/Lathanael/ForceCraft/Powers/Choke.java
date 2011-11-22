@@ -47,6 +47,12 @@ public class Choke extends BasePower {
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 		player.setLastTimeUsed(name, System.currentTimeMillis());
+		Player pTarget = null;
+		if (target instanceof Player) {
+			pTarget = (Player) target;
+		}
+		player.increasePwrAmount(name);
+
 	}
 
 	@Override

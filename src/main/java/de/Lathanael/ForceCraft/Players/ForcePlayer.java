@@ -53,10 +53,13 @@ public class ForcePlayer {
 	protected int count = 0;
 	protected int mana = 0;
 	protected File playerFile;
+	protected long lastTimeCasted = 0;
+	protected boolean mediation = false;
 	protected HashSet<PlayerPowerStates> powers = new HashSet<PlayerPowerStates>();
 	protected HashMap<Keyboard, String> keys = new HashMap<Keyboard, String>();
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
 	protected HashMap<String, Long> times = new HashMap<String, Long>();
+	protected HashMap<String, Integer> skillRanks = new HashMap<String, Integer>();
 
 	public ForcePlayer (String playerName, String dir) {
 		this.name = playerName;
@@ -92,6 +95,7 @@ public class ForcePlayer {
 				mana = playerConfig.getInt("Mana");
 				loadKeys();
 				loadAmounts();
+				loadSkillRanks();
 				if (ForcePlugin.debug)
 					ForcePlugin.log.info("[ForceCraft] Player file for " + name + " created!");
 			} catch (IOException e) {
@@ -107,6 +111,7 @@ public class ForcePlayer {
 			mana = playerConfig.getInt("Mana");
 			loadKeys();
 			loadAmounts();
+			loadSkillRanks();
 			if (ForcePlugin.debug) {
 				ForcePlugin.log.info("[ForceCraft] Loaded player file for: " + name);
 				ForcePlugin.log.info("[ForceCraft] Loaded attributes are:");
@@ -129,6 +134,7 @@ public class ForcePlayer {
 					ForcePlugin.log.info("[ForceCraft] Saving player file for: " + name);
 				updateKeysInFile();
 				saveAmounts();
+				saveSkillRanks();
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
 				ForcePlugin.log.info("[ForceCraft] Failed to save player file for: " + name);
@@ -152,6 +158,16 @@ public class ForcePlayer {
 
 	public int getRank() {
 		return rank.getRankNr();
+	}
+
+	public void setSkillRank(String power, int rank) {
+		updateFile();
+	}
+
+	public int getSkillRank(String power) {
+		if (skillRanks.containsKey(power))
+			return skillRanks.get(power);
+		return 0;
 	}
 
 	public String getRankName() {
@@ -208,6 +224,17 @@ public class ForcePlayer {
 		updateFile();
 	}
 
+
+	public void increasePwrAmount(String powerName) {
+		int amount = -1;
+		if (amounts.containsKey(powerName))
+			amount = amounts.get(powerName);
+		if (amount != -1) {
+			amounts.put(powerName, amount + 1);
+			updateFile();
+		}
+	}
+
 	public int getMana() {
 		return mana;
 	}
@@ -255,6 +282,14 @@ public class ForcePlayer {
 		times.clear();
 	}
 
+	public void setLastTimeCasted(long time) {
+		lastTimeCasted = time;
+	}
+
+	public long getLastTimeCasted() {
+		return lastTimeCasted;
+	}
+
 /*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
 
 	private void createDefaults() {
@@ -273,6 +308,18 @@ public class ForcePlayer {
 		playerConfig.addDefault("Amount.Mediation", 0);
 		playerConfig.addDefault("Amount.Lightning", 0);
 		playerConfig.addDefault("Amount.Shield", 0);
+		playerConfig.addDefault("Skillrank.Pull", 0);
+		playerConfig.addDefault("Skillrank.Push", 0);
+		playerConfig.addDefault("Skillrank.Run", 0);
+		playerConfig.addDefault("Skillrank.Jump", 0);
+		playerConfig.addDefault("Skillrank.Heal", 0);
+		playerConfig.addDefault("Skillrank.Lift", 0);
+		playerConfig.addDefault("Skillrank.Choke", 0);
+		playerConfig.addDefault("Skillrank.Rage", 0);
+		playerConfig.addDefault("Skillrank.Flash", 0);
+		playerConfig.addDefault("Skillrank.Mediation", 0);
+		playerConfig.addDefault("Skillrank.Lightning", 0);
+		playerConfig.addDefault("Skillrank.Shield", 0);
 		playerConfig.addDefault("Mana", 100);
 		playerConfig.options().copyDefaults(true);
 
@@ -297,6 +344,13 @@ public class ForcePlayer {
 		}
 	}
 
+	private void loadSkillRanks() {
+		Map<String, Object> tempList = playerConfig.getConfigurationSection("Skillrank").getValues(false);
+		for (Map.Entry<String, Object> entries : tempList.entrySet()) {
+			skillRanks.put(entries.getKey(), (Integer) entries.getValue());
+		}
+	}
+
 	private void updateKeysInFile() {
 		List<String> temp = new ArrayList<String>();
 		for(Map.Entry<Keyboard, String> entries : keys.entrySet()) {
@@ -309,6 +363,12 @@ public class ForcePlayer {
 	private void saveAmounts() {
 		for (Map.Entry<String, Integer> entries : amounts.entrySet()) {
 			playerConfig.set("Amount." + entries.getKey(), entries.getValue());
+		}
+	}
+
+	private void saveSkillRanks() {
+		for (Map.Entry<String, Integer> entries : skillRanks.entrySet()) {
+			playerConfig.set("Skillrank." + entries.getKey(), entries.getValue());
 		}
 	}
 }

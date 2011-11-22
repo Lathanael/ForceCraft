@@ -49,6 +49,7 @@ public class Jump extends BasePower {
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.JUMP);
+		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		Scheduler.getInstance().scheduleCancelJumpTask(player);
 	}

@@ -87,6 +87,7 @@ public class ForcePlugin extends JavaPlugin {
 		pm.registerEvent(Type.PLAYER_JOIN, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_QUIT, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.PLAYER_KICK, tlfPL, Priority.Normal, this);
+		pm.registerEvent(Type.PLAYER_MOVE, tlfPL, Priority.Normal, this);
 		pm.registerEvent(Type.CUSTOM_EVENT, new TLFInputListener(this), Priority.Normal, this);
 		pm.registerEvent(Type.PLUGIN_DISABLE, tlfPluL, Priority.Normal, this);
 		pm.registerEvent(Type.PLUGIN_ENABLE, tlfPluL, Priority.Normal, this);

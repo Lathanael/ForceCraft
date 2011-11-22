@@ -27,5 +27,8 @@ public enum PlayerPowerStates {
 	RAGE,
 	SHIELD,
 	JUMP,
-	RUN;
+	RUN,
+	CHOKED,
+	LIFTED,
+	SHOCKED;
 }

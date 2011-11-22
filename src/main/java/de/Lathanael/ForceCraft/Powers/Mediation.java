@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
@@ -46,7 +47,9 @@ public class Mediation extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
-
+		player.increasePwrAmount(name);
+		player.setLastTimeUsed(name, System.currentTimeMillis());
+		Scheduler.getInstance().scheduleMediationTask(player);
 	}
 
 	@Override

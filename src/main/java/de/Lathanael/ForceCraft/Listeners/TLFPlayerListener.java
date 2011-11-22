@@ -23,10 +23,12 @@ package de.Lathanael.ForceCraft.Listeners;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -39,11 +41,21 @@ public class TLFPlayerListener extends PlayerListener {
 
 	public void onPlayerKick(PlayerKickEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
-		fPlayer.updateFile(true);
+		if (fPlayer != null)
+			fPlayer.updateFile(true);
 	}
 
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
-		fPlayer.updateFile(true);
+		if (fPlayer != null)
+			fPlayer.updateFile(true);
+	}
+
+	public void onPlayerMove(PlayerMoveEvent event) {
+		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
+		if (fPlayer != null && (fPlayer.hasPowerState(PlayerPowerStates.CHOKED)
+				|| fPlayer.hasPowerState(PlayerPowerStates.SHOCKED)
+				|| fPlayer.hasPowerState(PlayerPowerStates.LIFTED)))
+			event.setCancelled(true);
 	}
 }
