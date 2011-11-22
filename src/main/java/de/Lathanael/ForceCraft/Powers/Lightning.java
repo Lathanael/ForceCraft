@@ -22,6 +22,7 @@ package de.Lathanael.ForceCraft.Powers;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
@@ -31,6 +32,7 @@ import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
 * @author Lathanael (aka Philippe Leipold)
@@ -47,25 +49,29 @@ public class Lightning extends BasePower {
 		manaCost = instance.config.getInt("Power." + name + ".mana");
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 		if (target == null)
 			return;
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
-		target.getWorld().strikeLightning(target.getLocation());
-		Player pTarget = null;
-		if (target instanceof Player)
-			pTarget = (Player) target;
-		if (pTarget == null) {
-			target.getWorld().strikeLightning(target.getLocation());
-			return;
+		if (target instanceof Player) {
+			Player pTarget = (Player) target;
+			if (pTarget == null)
+				return;
+			ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(pTarget.getName());
+			if (fPlayer == null)
+				return;
+			fPlayer.setPowerState(PlayerPowerStates.SHOCKED);
+			Scheduler.getInstance().scheduleLightningTask(player, fPlayer);
+		} else if (target instanceof LivingEntity) {
+			LivingEntity eTarget = (LivingEntity) target;
+			if (eTarget == null)
+				return;
+			ForcePlugin.setStrokedEntity(eTarget);
+			Scheduler.getInstance().scheduleLivingEntityLightningTask(player, eTarget);
 		}
-		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(pTarget.getName());
-		if (fPlayer == null)
-			return;
-		fPlayer.setPowerState(PlayerPowerStates.SHOCKED);
-		Scheduler.getInstance().scheduleLightningTask(player, fPlayer);
 	}
 
 	@Override

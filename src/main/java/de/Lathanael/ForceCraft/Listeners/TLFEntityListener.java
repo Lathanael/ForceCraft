@@ -21,6 +21,7 @@
 package de.Lathanael.ForceCraft.Listeners;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -60,6 +61,10 @@ public class TLFEntityListener extends EntityListener{
 				event.setDamage(0);
 				return;
 			}
+			if ((event.getEntity() instanceof LivingEntity)
+					&& ForcePlugin.containsStrokedEntity(event.getEntity().getUniqueId()))
+				event.setDamage(0);
+
 		}
 	}
 

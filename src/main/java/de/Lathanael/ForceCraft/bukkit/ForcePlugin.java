@@ -20,10 +20,13 @@ package de.Lathanael.ForceCraft.bukkit;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -59,6 +62,7 @@ public class ForcePlugin extends JavaPlugin {
 	public PluginManager pm;
 	public static boolean debug = false;
 	public static boolean sensitiveonJoin = false;
+	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 
 	public void onDisable() {
 		PluginDescriptionFile pdf = getDescription();
@@ -99,6 +103,26 @@ public class ForcePlugin extends JavaPlugin {
 
 	public static ForcePlugin getInstance() {
 		return instance;
+	}
+
+	public static void setStrokedEntity(LivingEntity entity) {
+		entitiesStroked.put(entity.getUniqueId(), entity);
+	}
+
+	public  static LivingEntity getStrokedEntity(UUID entityID) {
+		if (entitiesStroked.containsKey(entityID))
+			return entitiesStroked.get(entityID);
+		return null;
+	}
+
+	public static void removeStrokedEntity(UUID entityID) {
+		if (entitiesStroked.containsKey(entityID))
+			entitiesStroked.remove(entityID);
+	}
+
+
+	public static boolean containsStrokedEntity(UUID uniqueId) {
+		return entitiesStroked.containsKey(uniqueId);
 	}
 
 	private void loadConfig(FileConfiguration config) {

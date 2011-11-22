@@ -21,6 +21,8 @@
 package de.Lathanael.ForceCraft.Utils;
 
 import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -214,7 +216,7 @@ public class Scheduler {
 	}
 
 	/**
-	 * "Strikes" the provided player with lightnings and damages him every  second for half a heart.
+	 * "Strikes" the provided player with lightnings and damages him every second for half a heart.
 	 * Durations depend on the players Skill rank.
 	 *
 	 * @param player - ForcePlayer object who casted Lightnings.
@@ -228,13 +230,14 @@ public class Scheduler {
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						World targetWorld = target.getHandler().getWorld();
-						targetWorld.strikeLightning(target.getHandler().getLocation());
-						int health = target.getHandler().getHealth();
+						Player pTarget = target.getHandler();
+						World targetWorld = pTarget.getWorld();
+						targetWorld.strikeLightning(pTarget.getLocation());
+						int health = pTarget.getHealth();
 						int amount = plugin.ranksInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
-						target.getHandler().setHealth(health - amount);
+						pTarget.setHealth(health - amount);
 						if ((health - amount) < 0)
-							target.getHandler().setHealth(0);
+							pTarget.setHealth(0);
 					}
 				}, 0, 20);
 
@@ -244,6 +247,41 @@ public class Scheduler {
 					public void run() {
 						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
 						target.removePowerState(PlayerPowerStates.SHOCKED);
+					}
+				}, delay);
+	}
+
+	/**
+	 * "Strikes" the provided living entity with lightnings and damages it every second for half a heart.
+	 * Durations depend on the players Skill rank.
+	 *
+	 * @param player - ForcePlayer object who casted Lightnings.
+	 * @param target - LivingEntity to be hit.
+	 */
+	public void scheduleLivingEntityLightningTask(final ForcePlayer player, final LivingEntity target) {
+		final int playerRank = player.getSkillRank("Lightning");
+		if (playerRank == 0)
+			return;
+		long delay = plugin.ranksInfo.getLong("Lightning." + String.valueOf(playerRank), 20);
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
+				new Runnable() {
+					public void run() {
+						World targetWorld = target.getWorld();
+						targetWorld.strikeLightning(target.getLocation());
+						int health = target.getHealth();
+						int amount = plugin.ranksInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
+						target.setHealth(health - amount);
+						if ((health - amount) < 0)
+							target.setHealth(0);
+					}
+				}, 0, 20);
+
+		// Stops the lightning after xx seceonds
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
+						ForcePlugin.removeStrokedEntity(target.getUniqueId());
 					}
 				}, delay);
 	}
