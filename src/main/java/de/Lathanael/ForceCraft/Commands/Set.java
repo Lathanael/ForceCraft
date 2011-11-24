@@ -55,9 +55,10 @@ public class Set extends BaseCommand {
 				return;
 
 		if (args.length >= 3) {
-			if (args[0].equalsIgnoreCase("rank")) {
+			if (args[0].equalsIgnoreCase("rank") && args.length >= 4) {
 				int rank = Tools.parseInteger(sender, fPlayer, args[2], "rank");
-				fPlayer.setRank(Ranks.getRank(rank));
+				String side = args[3];
+				fPlayer.setRank(Ranks.getRank(side, rank));
 			} else if (args[0].equalsIgnoreCase("alignment")) {
 				int al = Tools.parseInteger(sender, fPlayer, args[2], "alignment");
 				fPlayer.setAlignment(ForceAlignment.getAlignmentByNr(al));

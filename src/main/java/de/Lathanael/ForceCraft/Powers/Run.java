@@ -49,9 +49,10 @@ public class Run extends BasePower {
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.RUN);
+		Scheduler.getInstance().scheduleCancelRunTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
-		Scheduler.getInstance().scheduleCancelRunTask(player);
+		player.decMana(manaCost);
 	}
 
 	@Override

@@ -47,9 +47,10 @@ public class Mediation extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
+		Scheduler.getInstance().scheduleMediationTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
-		Scheduler.getInstance().scheduleMediationTask(player);
+		player.decMana(manaCost);
 	}
 
 	@Override

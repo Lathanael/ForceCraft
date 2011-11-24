@@ -49,12 +49,13 @@ public class Rage extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
-			player.setPowerState(PlayerPowerStates.RAGE);
-			player.increasePwrAmount(name);
-			player.setLastTimeUsed(name, System.currentTimeMillis());
-			Scheduler.getInstance().scheduleCancelRageTask(player);
-			// TODO: Colouring of the raged player
-			SpoutPlayer sPlayer = (SpoutPlayer) player.getHandler();
+		player.setPowerState(PlayerPowerStates.RAGE);
+		Scheduler.getInstance().scheduleCancelRageTask(player);
+		// TODO: Colouring of the raged player
+		SpoutPlayer sPlayer = (SpoutPlayer) player.getHandler();
+		player.increasePwrAmount(name);
+		player.setLastTimeUsed(name, System.currentTimeMillis());
+		player.decMana(manaCost);
 	}
 
 	@Override

@@ -50,11 +50,12 @@ public class Shield extends BasePower {
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.SHIELD);
-		player.increasePwrAmount(name);
-		player.setLastTimeUsed(name, System.currentTimeMillis());
 		Scheduler.getInstance().scheduleCancelShieldTask(player);
 		// TODO: Colouring of the shielded player
 		SpoutPlayer sPlayer = (SpoutPlayer) player.getHandler();
+		player.increasePwrAmount(name);
+		player.setLastTimeUsed(name, System.currentTimeMillis());
+		player.decMana(manaCost);
 	}
 
 	@Override

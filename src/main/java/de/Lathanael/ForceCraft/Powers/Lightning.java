@@ -49,7 +49,6 @@ public class Lightning extends BasePower {
 		manaCost = instance.config.getInt("Power." + name + ".mana");
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 		if (target == null)
@@ -58,8 +57,6 @@ public class Lightning extends BasePower {
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		if (target instanceof Player) {
 			Player pTarget = (Player) target;
-			if (pTarget == null)
-				return;
 			ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(pTarget.getName());
 			if (fPlayer == null)
 				return;
@@ -67,8 +64,6 @@ public class Lightning extends BasePower {
 			Scheduler.getInstance().scheduleLightningTask(player, fPlayer);
 		} else if (target instanceof LivingEntity) {
 			LivingEntity eTarget = (LivingEntity) target;
-			if (eTarget == null)
-				return;
 			ForcePlugin.setStrokedEntity(eTarget);
 			Scheduler.getInstance().scheduleLivingEntityLightningTask(player, eTarget);
 		}

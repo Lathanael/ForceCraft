@@ -48,6 +48,7 @@ public class Push extends BasePower {
 	public void execute(ForcePlayer player, Entity target) {
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
+		player.decMana(manaCost);
 	}
 
 	@Override

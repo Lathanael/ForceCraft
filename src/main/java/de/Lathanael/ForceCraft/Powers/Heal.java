@@ -48,8 +48,6 @@ public class Heal extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
-		player.setLastTimeUsed(name, System.currentTimeMillis());
-		player.increasePwrAmount(name);
 		Player pTarget = null;
 		if (target != null && target instanceof Player)
 			pTarget = (Player) target;
@@ -57,6 +55,9 @@ public class Heal extends BasePower {
 			Scheduler.getInstance().scheduleHealTask(player, player);
 		else
 			Scheduler.getInstance().scheduleHealTask(player, PlayerHandler.getInstance().getPlayer(pTarget.getName()));
+		player.increasePwrAmount(name);
+		player.setLastTimeUsed(name, System.currentTimeMillis());
+		player.decMana(manaCost);
 	}
 
 	@Override

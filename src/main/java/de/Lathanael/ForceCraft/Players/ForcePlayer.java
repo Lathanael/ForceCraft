@@ -52,6 +52,7 @@ public class ForcePlayer {
 	protected FileConfiguration playerConfig;
 	protected int count = 0;
 	protected int mana = 0;
+	protected int maxMana = 100;
 	protected File playerFile;
 	protected long lastTimeCasted = 0;
 	protected boolean mediation = false;
@@ -90,9 +91,10 @@ public class ForcePlayer {
 				createDefaults();
 				playerConfig.save(playerFile);
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-				rank = Ranks.getRank(playerConfig.getInt("Rank"));
+				rank = Ranks.getRank(playerConfig.getString("Alignment").toLowerCase(), playerConfig.getInt("Rank"));
 				alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
 				mana = playerConfig.getInt("Mana");
+				maxMana = playerConfig.getInt("MaxMana");
 				loadKeys();
 				loadAmounts();
 				loadSkillRanks();
@@ -106,9 +108,10 @@ public class ForcePlayer {
 			if (ForcePlugin.debug)
 				ForcePlugin.log.info("[ForceCraft] Loading player file for: " + name);
 			playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-			rank = Ranks.getRank(playerConfig.getInt("Rank"));
+			rank = Ranks.getRank(playerConfig.getString("Alignment").toLowerCase(), playerConfig.getInt("Rank"));;
 			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
 			mana = playerConfig.getInt("Mana");
+			maxMana = playerConfig.getInt("MaxMana");
 			loadKeys();
 			loadAmounts();
 			loadSkillRanks();
@@ -158,6 +161,15 @@ public class ForcePlayer {
 
 	public int getRank() {
 		return rank.getRankNr();
+	}
+
+	public void incRank() {
+		int rank = this.rank.getRankNr();
+		if (rank <= 4)
+			rank++;
+		playerConfig.set("Rank", rank);
+		this.rank = Ranks.getRank(alignment.toString().toLowerCase(), rank);
+		updateFile();
 	}
 
 	public void setSkillRank(String power, int rank) {
@@ -241,6 +253,22 @@ public class ForcePlayer {
 
 	public void setMana(int mana){
 		this.mana = mana;
+		if (mana < maxMana)
+			mana = maxMana;
+		updateFile();
+	}
+
+	public void incMana(int mana){
+		this.mana = this.mana + mana;
+		if (mana < maxMana)
+			mana = maxMana;
+		updateFile();
+	}
+
+	public void decMana(int mana){
+		this.mana = this.mana - mana;
+		if (mana < 0)
+			mana = 0;
 		updateFile();
 	}
 
@@ -290,6 +318,16 @@ public class ForcePlayer {
 		return lastTimeCasted;
 	}
 
+	public void setMaxMana(int mana) {
+		maxMana = mana;
+		updateFile();
+	}
+
+	public void incMaxMana(int mana) {
+		maxMana = maxMana + mana;
+		updateFile();
+	}
+
 /*--------------------------------------------------Private functions------------------------------------------------------------------------------*/
 
 	private void createDefaults() {
@@ -321,8 +359,8 @@ public class ForcePlayer {
 		playerConfig.addDefault("Skillrank.Lightning", 0);
 		playerConfig.addDefault("Skillrank.Shield", 0);
 		playerConfig.addDefault("Mana", 100);
+		playerConfig.addDefault("MaxMana", 100);
 		playerConfig.options().copyDefaults(true);
-
 	}
 
 	private void loadKeys() {

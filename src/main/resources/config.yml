@@ -74,3 +74,9 @@ Power:
     alignment: light
     delay: 0
     mana: 10
+ManaInc:
+    '1': 0
+    '2': 50
+    '3': 50
+    '4': 50
+    '5': 50

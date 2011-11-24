@@ -20,9 +20,11 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -207,11 +209,63 @@ public class Scheduler {
 		if (playerRank == 0)
 			return;
 		long delay = plugin.ranksInfo.getLong("Choke." + String.valueOf(playerRank), 200);
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						// TODO: Choke code!
+						SpoutPlayer pTarget = (SpoutPlayer) target.getHandler();
+						if (pTarget == null)
+							return;
+						pTarget.setGravityMultiplier(0);
+						int health = pTarget.getHealth();
+						if (health - 1 < 0)
+							pTarget.setHealth(0);
+						else
+							pTarget.setHealth(health - 1);
 					}
+				}, 10, 20);
+
+		// Cancel the Choke task after xx seconds(delay)
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+						public void run() {
+							plugin.getServer().getScheduler().cancelTask(taskID);
+							((SpoutPlayer) target.getHandler()).setGravityMultiplier(1);
+						}
+				}, delay);
+	}
+
+	/**
+	 * Chokes a given target. Force is cancel after a xx seconds, depending on
+	 * the players Skill rank.
+	 *
+	 * @param player - The ForcePlayer object for whom the Force Shield should be cancelled
+	 */
+	public void scheduleChokeLivingEntityTask(final ForcePlayer player, final LivingEntity target) {
+		int playerRank = player.getSkillRank("Choke");
+		if (playerRank == 0)
+			return;
+		long delay = plugin.ranksInfo.getLong("Choke." + String.valueOf(playerRank), 200);
+		target.setVelocity(new Vector(0, 0, 0));
+		final Location flying = target.getLocation();
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
+				new Runnable() {
+					public void run() {
+						if (!target.getLocation().equals(flying))
+							target.teleport(flying);
+						int health = target.getHealth();
+						if (health - 1 < 0)
+							target.setHealth(0);
+						else
+							target.setHealth(health - 1);
+					}
+				}, 10, 20);
+
+		// Cancel the Choke task after xx seconds(delay)
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+						public void run() {
+							plugin.getServer().getScheduler().cancelTask(taskID);
+						}
 				}, delay);
 	}
 
@@ -235,9 +289,10 @@ public class Scheduler {
 						targetWorld.strikeLightning(pTarget.getLocation());
 						int health = pTarget.getHealth();
 						int amount = plugin.ranksInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
-						pTarget.setHealth(health - amount);
 						if ((health - amount) < 0)
 							pTarget.setHealth(0);
+						else
+							pTarget.setHealth(health - amount);
 					}
 				}, 0, 20);
 
@@ -270,9 +325,10 @@ public class Scheduler {
 						targetWorld.strikeLightning(target.getLocation());
 						int health = target.getHealth();
 						int amount = plugin.ranksInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
-						target.setHealth(health - amount);
 						if ((health - amount) < 0)
 							target.setHealth(0);
+						else
+							target.setHealth(health - amount);
 					}
 				}, 0, 20);
 
@@ -284,5 +340,13 @@ public class Scheduler {
 						ForcePlugin.removeStrokedEntity(target.getUniqueId());
 					}
 				}, delay);
+	}
+
+	public void scheduleLiftTask(final ForcePlayer player, final ForcePlayer target) {
+
+	}
+
+	public void scheduleEntityLiftTask(final ForcePlayer player, final LivingEntity target) {
+
 	}
 }
