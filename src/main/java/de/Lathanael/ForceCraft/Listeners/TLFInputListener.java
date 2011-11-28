@@ -24,7 +24,6 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Entity;
 import org.getspout.spoutapi.event.input.InputListener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
-import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -52,7 +51,7 @@ public class TLFInputListener extends InputListener {
 			return;
 
 		// Player pressed Jump
-		if (event.getKey().equals(Keyboard.KEY_SPACE)) {
+		if (event.getKey().equals(sPlayer.getJumpKey())) {
 			if (!fPlayer.hasPowerState(PlayerPowerStates.JUMP))
 				return;
 			Command cmd = instance.getCommand("fc_jump");
@@ -64,8 +63,8 @@ public class TLFInputListener extends InputListener {
 		}
 
 		// Player pressed any of the Movement-Keys
-		if (event.getKey().equals(Keyboard.KEY_W) || event.getKey().equals(Keyboard.KEY_S) || event.getKey().equals(Keyboard.KEY_A)
-				|| event.getKey().equals(Keyboard.KEY_D)) {
+		if (event.getKey().equals(sPlayer.getForwardKey()) || event.getKey().equals(sPlayer.getBackwardKey()) || event.getKey().equals(sPlayer.getLeftKey())
+				|| event.getKey().equals(sPlayer.getRightKey())) {
 			if (!fPlayer.hasPowerState(PlayerPowerStates.RUN))
 				return;
 			Command cmd = instance.getCommand("fc_run");
@@ -76,7 +75,7 @@ public class TLFInputListener extends InputListener {
 			sPlayer.setWalkingMultiplier(mult);
 		}
 
-		// Did the player press any button bound to a power? If yes, execute it.
+		// Did the player press any button bound to a power? If yes, execute it else return.
 		if (!fPlayer.containsKey(event.getKey()))
 			return;
 		Command cmd = instance.getCommand("fc_" + fPlayer.getKey(event.getKey()));

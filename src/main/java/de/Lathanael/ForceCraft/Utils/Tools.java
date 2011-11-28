@@ -30,7 +30,6 @@ import org.bukkit.entity.Player;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
-import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -95,18 +94,24 @@ public class Tools {
 		Entity[] list = block.getChunk().getEntities();
 		if (list.length > 0)
 			for (Entity entity : list)
-				// TODO: better Location check code
-				if (entity.getLocation().equals(block.getLocation()) && entity instanceof LivingEntity) {
-					entity = (LivingEntity) entity;
-					if (ForcePlugin.debug)
-						ForcePlugin.log.info("[ForceCraft] Found target, ID is: " + entity.getEntityId());
+				if (entity instanceof LivingEntity) {
+					LivingEntity lEntity = (LivingEntity) entity;
+					LivingEntity target = null;
+					Block newBlock = block;
+					for (int i = -1; i < 1; i++) {
+						newBlock.getLocation().setY(block.getLocation().getY() + i);
+						if (checkDistance(entity.getLocation(), newBlock.getLocation(), 1))
+							target = lEntity;
+					}
+					if (target == null)
+						return target;
 					if (mustBePlayer)
-						if (entity instanceof Player)
-							return entity;
+						if (target instanceof Player)
+							return target;
 						else
 							return null;
 					else
-						return entity;
+						return target;
 				}
 		return null;
 	}
@@ -145,6 +150,24 @@ public class Tools {
 	}
 
 	/**
+<<<<<<< Updated upstream
+=======
+	 * Checks if Location 1 is within the range of Location 2 (xz plane!)
+	 *
+	 * @param loc1 - First Location
+	 * @param loc2 - Second Location
+	 * @param checkDist - The maximum distance they are allowed to be apart
+	 * @return True if (dist < checkDist) else false
+	 */
+	public static boolean checkDistance (Location loc1, Location loc2, double checkDist) {
+		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2));
+		if (dist > checkDist)
+			return true;
+		return false;
+	}
+
+	/**
+>>>>>>> Stashed changes
 	 * Checks if one entity is within the range of another one (in the xz-plane)
 	 *
 	 * @param ent1 - First Entity

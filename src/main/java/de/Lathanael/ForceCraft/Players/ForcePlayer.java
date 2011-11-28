@@ -172,6 +172,15 @@ public class ForcePlayer {
 		updateFile();
 	}
 
+	public void decRank() {
+		int rank = this.rank.getRankNr();
+		if (rank >= 2)
+			rank--;
+		playerConfig.set("Rank", rank);
+		this.rank = Ranks.getRank(alignment.toString().toLowerCase(), rank);
+		updateFile();
+	}
+
 	public void setSkillRank(String power, int rank) {
 		updateFile();
 	}

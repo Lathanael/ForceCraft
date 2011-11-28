@@ -53,8 +53,6 @@ public class Lightning extends BasePower {
 	public void execute(ForcePlayer player, Entity target) {
 		if (target == null)
 			return;
-		player.increasePwrAmount(name);
-		player.setLastTimeUsed(name, System.currentTimeMillis());
 		if (target instanceof Player) {
 			Player pTarget = (Player) target;
 			ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(pTarget.getName());
@@ -62,10 +60,16 @@ public class Lightning extends BasePower {
 				return;
 			fPlayer.setPowerState(PlayerPowerStates.SHOCKED);
 			Scheduler.getInstance().scheduleLightningTask(player, fPlayer);
+			player.increasePwrAmount(name);
+			player.setLastTimeUsed(name, System.currentTimeMillis());
+			player.decMana(manaCost);
 		} else if (target instanceof LivingEntity) {
 			LivingEntity eTarget = (LivingEntity) target;
 			ForcePlugin.setStrokedEntity(eTarget);
 			Scheduler.getInstance().scheduleLivingEntityLightningTask(player, eTarget);
+			player.increasePwrAmount(name);
+			player.setLastTimeUsed(name, System.currentTimeMillis());
+			player.decMana(manaCost);
 		}
 	}
 
