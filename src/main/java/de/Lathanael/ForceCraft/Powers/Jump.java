@@ -38,7 +38,7 @@ public class Jump extends BasePower {
 
 	public Jump() {
 		name = "Jump";
-		cmdName = "tlf_jump";
+		cmdName = "fc_jump";
 		perm = "force.jump";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

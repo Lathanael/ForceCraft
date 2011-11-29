@@ -36,7 +36,7 @@ public class Flash extends BasePower {
 
 	public Flash() {
 		name = "Flash";
-		cmdName = "tlf_flash";
+		cmdName = "fc_flash";
 		perm = "force.flash";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

@@ -36,7 +36,7 @@ public class Push extends BasePower {
 
 	public Push() {
 		name = "Push";
-		cmdName = "tlf_push";
+		cmdName = "fc_push";
 		perm = "force.push";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

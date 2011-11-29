@@ -40,7 +40,7 @@ public class Choke extends BasePower {
 
 	public Choke() {
 		name = "Choke";
-		cmdName = "tlf_choke";
+		cmdName = "fc_choke";
 		perm = "force.choke";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

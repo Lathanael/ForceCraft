@@ -41,7 +41,7 @@ public class Lightning extends BasePower {
 
 	public Lightning() {
 		name = "Lightning";
-		cmdName = "tlf_lightning";
+		cmdName = "fc_lightning";
 		perm = "force.lightning";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

@@ -35,7 +35,7 @@ import de.Lathanael.ForceCraft.Utils.Tools;
 public class BindKey extends BaseCommand {
 
 	public BindKey() {
-		name = "force_bind";
+		name = "fc_bind";
 		permNode = "force.bind";
 	}
 	@Override

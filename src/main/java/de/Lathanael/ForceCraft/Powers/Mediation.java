@@ -37,7 +37,7 @@ public class Mediation extends BasePower {
 
 	public Mediation() {
 		name = "Mediation";
-		cmdName = "tlf_mediation";
+		cmdName = "fc_mediation";
 		perm = "force.mediation";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

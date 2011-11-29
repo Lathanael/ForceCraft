@@ -37,7 +37,7 @@ import de.Lathanael.ForceCraft.Utils.Tools;
 public class Info extends BaseCommand {
 
 	public Info() {
-		name = "force_info";
+		name = "fc_info";
 		permNode = "force.info";
 	}
 

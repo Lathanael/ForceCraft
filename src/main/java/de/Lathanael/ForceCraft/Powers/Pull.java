@@ -20,6 +20,11 @@
 
 package de.Lathanael.ForceCraft.Powers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -36,9 +41,9 @@ public class Pull extends BasePower {
 
 	public Pull() {
 		name = "Pull";
-		cmdName = "tlf_pull";
+		cmdName = "fc_pull";
 		perm = "force.pull";
-		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
+		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment").toUpperCase());
 		rank = instance.config.getInt("Power." + name + ".rank");
 		delay = instance.config.getLong("Power." + name + ".delay");
 		manaCost = instance.config.getInt("Power." + name + ".mana");
@@ -46,6 +51,14 @@ public class Pull extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
+		Block block = (player.getHandler()).getTargetBlock(null, 20);
+		if (block.getType().equals(Material.AIR) || block == null)
+			return;
+		int rank = player.getSkillRank(name);
+		int amount = instance.ranksInfo.getInt(name + "." + String.valueOf(rank), 1);
+		List<Block> blocks = new ArrayList<Block>();
+		for (int i = 0; i < amount; i++)
+			continue;
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost);

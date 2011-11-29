@@ -38,7 +38,7 @@ public class Heal extends BasePower {
 
 	public Heal() {
 		name = "Heal";
-		cmdName = "tlf_heal";
+		cmdName = "fc_heal";
 		perm = "force.heal";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

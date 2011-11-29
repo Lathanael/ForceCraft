@@ -39,7 +39,7 @@ public class Rage extends BasePower {
 
 	public Rage() {
 		name = "Rage";
-		cmdName = "tlf_rage";
+		cmdName = "fc_rage";
 		perm = "force.Rage";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

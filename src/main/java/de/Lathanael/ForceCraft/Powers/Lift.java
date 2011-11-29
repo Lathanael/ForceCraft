@@ -40,7 +40,7 @@ public class Lift extends BasePower {
 
 	public Lift() {
 		name = "Lift";
-		cmdName = "tlf_lift";
+		cmdName = "fc_lift";
 		perm = "force.lift";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

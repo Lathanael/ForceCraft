@@ -12,7 +12,7 @@ import de.Lathanael.ForceCraft.Utils.Tools;
 public class Demote extends BaseCommand {
 
 	public Demote() {
-		name = "force_demote";
+		name = "fc_demote";
 		permNode = "force.demote";
 	}
 

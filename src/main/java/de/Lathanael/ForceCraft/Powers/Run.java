@@ -38,7 +38,7 @@ public class Run extends BasePower {
 
 	public Run() {
 		name = "Run";
-		cmdName = "tlf_run";
+		cmdName = "fc_run";
 		perm = "force.run";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

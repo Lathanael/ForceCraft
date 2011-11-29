@@ -12,7 +12,7 @@ import de.Lathanael.ForceCraft.Utils.Tools;
 public class Promote extends BaseCommand {
 
 	public Promote() {
-		name = "force_promote";
+		name = "fc_promote";
 		permNode = "force.promote";
 	}
 

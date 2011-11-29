@@ -39,7 +39,7 @@ public class Shield extends BasePower {
 
 	public Shield() {
 		name = "Shield";
-		cmdName = "tlf_shield";
+		cmdName = "fc_shield";
 		perm = "force.shield";
 		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
 		rank = instance.config.getInt("Power." + name + ".rank");

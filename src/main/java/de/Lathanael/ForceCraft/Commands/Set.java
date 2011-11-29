@@ -38,7 +38,7 @@ public class Set extends BaseCommand {
 
 
 	public Set() {
-		name = "force_set";
+		name = "fc_set";
 		permNode = "force.set";
 	}
 
