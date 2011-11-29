@@ -152,7 +152,7 @@ public class Tools {
 	/**
 <<<<<<< Updated upstream
 =======
-	 * Checks if Location 1 is within the range of Location 2 (xz plane!)
+	 * Checks if Location 1 is within the range of Location 2
 	 *
 	 * @param loc1 - First Location
 	 * @param loc2 - Second Location
@@ -160,7 +160,8 @@ public class Tools {
 	 * @return True if (dist < checkDist) else false
 	 */
 	public static boolean checkDistance (Location loc1, Location loc2, double checkDist) {
-		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2));
+		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
+				+ Math.pow(loc1.getY() - loc2.getY(), 2));
 		if (dist > checkDist)
 			return true;
 		return false;
