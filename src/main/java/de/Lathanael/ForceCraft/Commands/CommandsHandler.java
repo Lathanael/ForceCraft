@@ -43,7 +43,7 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
  */
 public class CommandsHandler implements CommandExecutor {
 
-	private ForcePlugin plugin;
+	private static ForcePlugin plugin;
 	private static CommandsHandler instance = null;
 	private HashMap<Command, BasePower> powerMap = new HashMap<Command, BasePower>();
 	private HashMap<Command, BaseCommand> cmdMap = new HashMap<Command, BaseCommand>();
@@ -51,8 +51,8 @@ public class CommandsHandler implements CommandExecutor {
 	public CommandsHandler(){
 	}
 
-	public CommandsHandler initInstance(ForcePlugin plugin) {
-		this.plugin = plugin;
+	public static CommandsHandler initInstance(ForcePlugin fplugin) {
+		plugin = fplugin;
 		if (instance == null)
 			instance = new CommandsHandler();
 		return instance;

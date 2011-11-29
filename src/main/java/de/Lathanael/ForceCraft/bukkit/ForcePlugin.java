@@ -56,7 +56,6 @@ public class ForcePlugin extends JavaPlugin {
 	public FileConfiguration config;
 	public FileConfiguration ranksInfo;
 	public String directory;
-	public PlayerHandler playerHandler;
 	public CommandsHandler commandsHandler;
 	public static Logger log = Logger.getLogger("ForceCraft");
 	public PluginManager pm;
@@ -82,7 +81,7 @@ public class ForcePlugin extends JavaPlugin {
 		tlfPL = new TLFPlayerListener();
 		tlfPluL = new TLFPluginListener();
 		tlfEL = new TLFEntityListener();
-		commandsHandler.initInstance(this);
+		commandsHandler = CommandsHandler.initInstance(this);
 		registerCommands();
 		PermissionsHandler.setInstance();
 		Scheduler.initInstance(this);
