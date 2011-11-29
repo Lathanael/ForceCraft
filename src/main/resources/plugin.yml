@@ -26,23 +26,27 @@ commands:
     fc_choke:
         description: Chokes the targeted player if he is within your range.
         aliases: [choke]
-        usage /<command> [target]
+        usage: /<command> [target]
     fc_run:
         description: Lets you run faster for a given time depending on your rank.
         aliases: [run]
-        usage /<command>
+        usage: /<command>
     fc_jump:
         description: Lets you jump higher for a given time depending on your rank.
         aliases: [jump]
-        usage /<command>
+        usage: /<command>
     fc_shield:
         description: Surrounds you with a shield, protecting you against projectiles for a given amount depending on your rank.
         aliases: [shield]
-        usage /<command>
+        usage: /<command>
     fc_rage:
         description: Use Rage to deal double the amount of damage for a given time depending on your rank.
         aliases: [rage]
-        usage /<command>
+        usage: /<command>
+    fc_pull:
+        description: Use Force Pull to pull a certain amount of blocks towards you, amount depends on rank.
+        aliases: [pull]
+        usage: /<command>
 permissions:
     force.*:
         description: Grants access to all ForceCraft commands and powers.
