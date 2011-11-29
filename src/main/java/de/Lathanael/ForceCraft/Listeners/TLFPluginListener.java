@@ -23,6 +23,7 @@ package de.Lathanael.ForceCraft.Listeners;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
+import org.bukkit.plugin.Plugin;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
@@ -41,15 +42,16 @@ public class TLFPluginListener extends ServerListener {
 			}
 		}
 
-		if (instance.getServer().getPluginManager().getPlugin("PermissionsEx").isEnabled())
+		Plugin plugin = instance.getServer().getPluginManager().getPlugin("PermissionsEx");
+		if (plugin != null)
 			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("PermissionsEx")))
 				ForcePlugin.log.info("[ForceCraft] Found PermissionsEx, hooking in!");
-
-		if (instance.getServer().getPluginManager().getPlugin("bPermissions").isEnabled())
+		plugin = instance.getServer().getPluginManager().getPlugin("bPermissions");
+		if (plugin != null)
 			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("bPermissions")))
 				ForcePlugin.log.info("[ForceCraft] Found bPermissions, hooking in!");
-
-		if (instance.getServer().getPluginManager().getPlugin("PermissionsBukkit").isEnabled())
+		plugin = instance.getServer().getPluginManager().getPlugin("PermissionsBukkit");
+		if (plugin != null)
 			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("PermissionsBukkit")))
 				ForcePlugin.log.info("[ForceCraft] Found PermissionsBukkit, hooking in!");
 	}
