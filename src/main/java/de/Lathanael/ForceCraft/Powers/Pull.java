@@ -28,6 +28,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -57,8 +58,17 @@ public class Pull extends BasePower {
 		int rank = player.getSkillRank(name);
 		int amount = instance.ranksInfo.getInt(name + "." + String.valueOf(rank), 1);
 		List<Block> blocks = new ArrayList<Block>();
-		for (int i = 0; i < amount; i++)
-			continue;
+		blocks.add(block);
+		Vector facing = player.getHandler().getLocation().getDirection().normalize();
+		for (int i = 1; i < amount; i++) {
+			Block nthBlock = null;
+			if (facing.getX() >= facing.getZ())
+				nthBlock = block.getRelative(i,0,0);
+			else
+				nthBlock = block.getRelative(0, 0, i);
+			blocks.add(nthBlock);
+		}
+		Tools.moveBlocks(blocks, false);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost);

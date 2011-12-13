@@ -20,6 +20,8 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -185,5 +187,19 @@ public class Tools {
 		if (dist > checkDist)
 			return true;
 		return false;
+	}
+
+	/**
+	 * Moves a set of Blocks forward or backward. If the blocks hit another one they stop!
+	 * @param blocks
+	 * @param pushing
+	 */
+	public static void moveBlocks(List<Block> blocks, boolean pushing) {
+		if (pushing) {
+
+		} else {
+
+		}
+
 	}
 }
