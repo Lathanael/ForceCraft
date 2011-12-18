@@ -60,6 +60,8 @@ public class Pull extends BasePower {
 		List<Block> blocks = new ArrayList<Block>();
 		blocks.add(block);
 		Vector facing = player.getHandler().getLocation().getDirection().normalize();
+		player.getHandler().sendMessage("x=" + facing.getX() + ", y=" + facing.getY() + ", z=" + facing.getZ());
+		/*
 		for (int i = 1; i < amount; i++) {
 			Block nthBlock = null;
 			if (facing.getX() >= facing.getZ())
@@ -68,10 +70,11 @@ public class Pull extends BasePower {
 				nthBlock = block.getRelative(0, 0, i);
 			blocks.add(nthBlock);
 		}
-		Tools.moveBlocks(blocks, false);
+		Tools.moveBlocks(blocks, player.getHandler().getWorld(), false, facing);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost);
+		*/
 	}
 
 	@Override

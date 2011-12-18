@@ -1,4 +1,4 @@
-name: TheLivingForce
+name: ForceCraft
 main: de.Lathanael.ForceCraft.bukkit.ForcePlugin
 version: ${project.version} (BUILD ${git.build.time})
 author: Lathanael
@@ -16,13 +16,13 @@ commands:
         aliases: [finfo]
         usage: /<command> [player]
     fc_set:
-        description: Sets different properties for a given player.
+        description: Sets different properties for a given player, name is case SENSITIVE!
         aliases: [fset]
-        usage: /<command> [type] [player] <number>
+        usage: /<command> [player] [type] <number>
     fc_bind:
         description: Binds a Force Power the given key.
         aliases: [fbind]
-        usage: /<command> [key] [power] - key maybe a number or the name definde by Spout!
+        usage: /<command> [key] [power] - key maybe a number or the name defined by Spout!
     fc_choke:
         description: Chokes the targeted player if he is within your range.
         aliases: [choke]
@@ -70,6 +70,8 @@ permissions:
         description: Grants access to all Lightside Forces.
         default: false
         children:
+            force.pull: true
+            force.push: true
             force.flash: true
             force.bind: true
             force.run: true

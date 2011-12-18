@@ -44,7 +44,7 @@ public class Set extends BaseCommand {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(args[1]);
+		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(args[0]);
 		if (fPlayer == null)
 			if (ForcePlugin.debug) {
 				ForcePlugin.log.info("[ForceCraft] A ForcePlayer with the name "
@@ -55,18 +55,18 @@ public class Set extends BaseCommand {
 				return;
 
 		if (args.length >= 3) {
-			if (args[0].equalsIgnoreCase("rank") && args.length >= 4) {
+			if (args[1].equalsIgnoreCase("rank") && args.length >= 4) {
 				int rank = Tools.parseInteger(sender, fPlayer, args[2], "rank");
 				String side = args[3];
 				fPlayer.setRank(Ranks.getRank(side, rank));
-			} else if (args[0].equalsIgnoreCase("alignment")) {
+			} else if (args[1].equalsIgnoreCase("alignment")) {
 				int al = Tools.parseInteger(sender, fPlayer, args[2], "alignment");
 				fPlayer.setAlignment(ForceAlignment.getAlignmentByNr(al));
-			} else if (args[0].equalsIgnoreCase("mana")) {
+			} else if (args[1].equalsIgnoreCase("mana")) {
 				int mana = Tools.parseInteger(sender, fPlayer, args[2], "mana");
 				fPlayer.setMana(mana);
 			}
-		} else if (args[0].equalsIgnoreCase("reset")) {
+		} else if (args[1].equalsIgnoreCase("reset")) {
 			fPlayer.resetLastTimeUsed();
 		}
 	}

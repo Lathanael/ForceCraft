@@ -83,7 +83,7 @@ public class CommandsHandler implements CommandExecutor {
 					return;
 				}
 
-				if (power.checkRank(fPlayer) && power.checkTime(fPlayer) && Tools.checkDistance((Player) sender, target, 20) )
+				if (power.checkRank(fPlayer) && power.checkTime(fPlayer) && Tools.checkDistance((Player) sender, target, 20, sender) )
 					power.execute(fPlayer, target);
 			}
 			else

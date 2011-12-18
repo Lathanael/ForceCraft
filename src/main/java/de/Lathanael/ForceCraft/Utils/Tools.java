@@ -20,18 +20,23 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -152,25 +157,26 @@ public class Tools {
 	}
 
 	/**
-<<<<<<< Updated upstream
-=======
-	 * Checks if Location 1 is within the range of Location 2
+	 * Print a Debug Message to the console and if command/power preformed by a player to the player!
 	 *
-	 * @param loc1 - First Location
-	 * @param loc2 - Second Location
-	 * @param checkDist - The maximum distance they are allowed to be apart
-	 * @return True if (dist < checkDist) else false
+	 * @param message - The message to be printed
+	 * @param sender - The Object which did call the command/power, null if none!
 	 */
-	public static boolean checkDistance (Location loc1, Location loc2, double checkDist) {
-		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
-				+ Math.pow(loc1.getY() - loc2.getY(), 2));
-		if (dist > checkDist)
-			return true;
-		return false;
+	public static void debugMsg(String message, CommandSender sender) {
+		if (!ForcePlugin.debug)
+			return;
+		if (sender == null)
+			ForcePlugin.log.info("[ForceCraft] " + message);
+		else if (sender instanceof ConsoleCommandSender){
+			ForcePlugin.log.info("[ForceCraft] " + message);
+		}
+		else {
+			ForcePlugin.log.info("[ForceCraft] " + message);
+			sender.sendMessage(ChatColor.RED + message);
+		}
 	}
 
 	/**
->>>>>>> Stashed changes
 	 * Checks if one entity is within the range of another one (in the xz-plane)
 	 *
 	 * @param ent1 - First Entity
@@ -178,12 +184,35 @@ public class Tools {
 	 * @param checkDist - The maximum distance they are allowed to be apart
 	 * @return True if (dist < checkDist) else false
 	 */
-	public static boolean checkDistance (Entity ent1, Entity ent2, double checkDist) {
+	public static boolean checkDistance (Entity ent1, Entity ent2, double checkDist, CommandSender sender) {
+		if (ent1 == null) {
+			debugMsg("NPE in checkDistance, Entity 1 is null.", sender);
+			return false;
+		} else if (ent2 == null) {
+			debugMsg("NPE in checkDistance, Entity 2 is null.", sender);
+			return false;
+		}
 		if (!ent1.getWorld().equals(ent2.getWorld()))
 			return false;
 		Location loc1 = ent1.getLocation();
 		Location loc2 = ent2.getLocation();
-		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2));
+		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
+				+ Math.pow(loc1.getY() - loc2.getY(), 2));
+		if (dist > checkDist)
+			return true;
+		return false;
+	}
+
+	public static boolean checkDistance (Location loc1, Location loc2, double checkDist) {
+		if (loc1 == null) {
+			debugMsg("NPE in checkDistance, Location 1 is null.", null);
+			return false;
+		} else if (loc2 == null) {
+			debugMsg("NPE in checkDistance, Location 2 is null.", null);
+			return false;
+		}
+		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
+				+ Math.pow(loc1.getY() - loc2.getY(), 2));
 		if (dist > checkDist)
 			return true;
 		return false;
@@ -194,12 +223,22 @@ public class Tools {
 	 * @param blocks
 	 * @param pushing
 	 */
-	public static void moveBlocks(List<Block> blocks, boolean pushing) {
+	public static void moveBlocks(List<Block> blocks, World world, boolean pushing, Vector direction) {
+		int x = (int) Math.abs(direction.getX());
+		double z = (int) Math.abs(direction.getZ());
+		int length = blocks.size();
+		int counter = 0;
 		if (pushing) {
 
 		} else {
-
+			for (Block block : blocks) {
+				Location loc = block.getRelative(length-counter, 0, 0).getLocation();
+				counter++;
+			}
 		}
+	}
+
+	public static void savePlayerFiles (HashMap<String, ForcePlayer> onlinePlayers) {
 
 	}
 }

@@ -33,9 +33,11 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.Lathanael.ForceCraft.Commands.BindKey;
 import de.Lathanael.ForceCraft.Commands.CommandsHandler;
 import de.Lathanael.ForceCraft.Commands.Info;
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
+import de.Lathanael.ForceCraft.Commands.Set;
 import de.Lathanael.ForceCraft.Listeners.TLFEntityListener;
 import de.Lathanael.ForceCraft.Listeners.TLFInputListener;
 import de.Lathanael.ForceCraft.Listeners.TLFPlayerListener;
@@ -43,6 +45,7 @@ import de.Lathanael.ForceCraft.Listeners.TLFPluginListener;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Powers.Pull;
 import de.Lathanael.ForceCraft.Utils.Scheduler;
+import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -64,6 +67,7 @@ public class ForcePlugin extends JavaPlugin {
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 
 	public void onDisable() {
+		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
 		PluginDescriptionFile pdf = getDescription();
 		log.info("[" + pdf.getName() + "] Version " + pdf.getVersion() + " disabled!");
 	}
@@ -152,5 +156,7 @@ public class ForcePlugin extends JavaPlugin {
 		if (config.getBoolean("Power.Pull.enabled"))
 			commandsHandler.registerPower(Pull.class);
 		commandsHandler.registerCommand(Info.class);
+		commandsHandler.registerCommand(Set.class);
+		commandsHandler.registerCommand(BindKey.class);
 	}
 }

@@ -134,6 +134,9 @@ public class PlayerHandler {
 		return handler;
 	}
 
+	public HashMap<String, ForcePlayer> getPlayerList() {
+		return players;
+	}
 /*-----------------------------FilenameFilter-------------------------------------*/
 
 	/*

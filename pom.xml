@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.Lathanael.TheLivingForce</groupId>
+  <groupId>de.Lathanael</groupId>
   <version>0.0.1-SNAPSHOT</version>
-  <artifactId>bukkit</artifactId>
+  <artifactId>ForceCraft</artifactId>
   <name>ForceCraft</name>
   <scm>
         <connection>scm:git:git@github.com:Lathanael/ForceCraft.git</connection>
@@ -184,13 +184,21 @@
             <url>http://www.gestdown.info:8888/nexus/content/groups/BukkitDev/</url>
         </pluginRepository>
     </pluginRepositories>
-    <distributionManagement>
-    <snapshotRepository>
-        <id>Gestdown</id>
-        <name>Gestdown-snapshots</name>
-        <url>http://www.gestdown.info:8888/artifactory/libs-snapshot-local</url>
-    </snapshotRepository>
-</distributionManagement>
+<distributionManagement>
+        <!-- Publish the versioned releases here -->
+        <repository>
+            <id>bukkit-plugin-release</id>
+            <name>Bukkit Plugins Release</name>
+            <url>http://www.gestdown.info:8888/nexus/content/repositories/bukkit-plugin-release/</url>
+        </repository>
+
+        <!-- Publish the versioned releases here -->
+        <snapshotRepository>
+            <id>bukkit-plugin-snapshot</id>
+            <name>Bukkit Plugins Snapshot</name>
+            <url>http://www.gestdown.info:8888/nexus/content/repositories/bukkit-plugin-snapshot/</url>
+        </snapshotRepository>
+    </distributionManagement>
   <dependencies>
     <dependency>
             <groupId>org.bukkit</groupId>

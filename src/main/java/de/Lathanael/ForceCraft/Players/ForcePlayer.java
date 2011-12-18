@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -57,7 +58,7 @@ public class ForcePlayer {
 	protected long lastTimeCasted = 0;
 	protected boolean mediation = false;
 	protected HashSet<PlayerPowerStates> powers = new HashSet<PlayerPowerStates>();
-	protected HashMap<Keyboard, String> keys = new HashMap<Keyboard, String>();
+	protected TreeMap<Keyboard, String> keys = new TreeMap<Keyboard, String>();
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
 	protected HashMap<String, Long> times = new HashMap<String, Long>();
 	protected HashMap<String, Integer> skillRanks = new HashMap<String, Integer>();
@@ -207,18 +208,17 @@ public class ForcePlayer {
 
 	public void setKey(Keyboard key, String power) {
 		Iterator<Map.Entry<Keyboard, String>> entries = keys.entrySet().iterator();
-		int i = 1;
 		while (entries.hasNext()) {
-				Map.Entry<Keyboard, String> entry = entries.next();
-				if (entry.getKey() == key)
-					entry.setValue(power);
-				else {
-					if (i == 1) {
-						i = 0;
-						entries.remove();
-						keys.put(key, power);
-					}
-				}
+			if (entries.next().getKey() == key) {
+				entries.remove();
+				break;
+			}
+		}
+		if (keys.size() < 3)
+			keys.put(key, power);
+		else {
+			keys.remove(keys.firstKey());
+			keys.put(key, power);
 		}
 		updateKeysInFile();
 		updateFile(true);
