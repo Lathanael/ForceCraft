@@ -33,7 +33,7 @@ import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class TLFPlayerListener extends PlayerListener {
+public class FCPlayerListener extends PlayerListener {
 
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		PlayerHandler.getInstance().createForcePlayer(event.getPlayer().getName(), true);

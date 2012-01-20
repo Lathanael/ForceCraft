@@ -31,7 +31,7 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class TLFPluginListener extends ServerListener {
+public class FCPluginListener extends ServerListener {
 
 	public void hook() {
 		ForcePlugin instance = ForcePlugin.getInstance();

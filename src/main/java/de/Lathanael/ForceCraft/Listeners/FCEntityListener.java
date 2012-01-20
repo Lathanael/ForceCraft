@@ -37,7 +37,7 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class TLFEntityListener extends EntityListener{
+public class FCEntityListener extends EntityListener{
 
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		if (event instanceof EntityDamageByEntityEvent) {
