@@ -30,6 +30,7 @@ import org.bukkit.entity.Player;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Utils.Tools;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -51,6 +52,7 @@ public class Info extends BaseCommand {
 				sender.sendMessage(ChatColor.RED + "Could not find a ForcePlayer with the name: " + args[0]);
 			return;
 		}
+		sender.sendMessage(String.valueOf(ForcePlugin.debug));
 		if (Tools.isPlayer(sender)) {
 			sender.sendMessage(ChatColor.GREEN + "Information on ForcePlayer " + args[0] + ":");
 			sender.sendMessage(ChatColor.GREEN + "Alignment: " + ChatColor.GOLD + player.getAlignment().toString());

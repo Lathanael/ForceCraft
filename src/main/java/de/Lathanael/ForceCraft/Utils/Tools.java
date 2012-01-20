@@ -20,6 +20,7 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
@@ -91,35 +93,46 @@ public class Tools {
 	 * Gets the targeted Entity a player is facing!
 	 * The entity is not guaranteed to be a Player!
 	 *
-	 * @param block - The block the Player is looking at
+	 * @param player - The player whos target is to be found
 	 * @param mustBePlayer - Must the entity returned be a Player?
+	 * @param range - The range in which a target is searched
 	 * @return The entity found or null if no entity found.
+	 * @author DirtyStarfish, Lathanael
 	 */
-	public static Entity getTargetedEntity(Block block, boolean mustBePlayer) {
-		if (block == null)
+	public static Entity getTargetedEntity(Player player, boolean mustBePlayer, int range) {
+		if (player == null)
 			return null;
-		Entity[] list = block.getChunk().getEntities();
-		if (list.length > 0)
-			for (Entity entity : list)
-				if (entity instanceof LivingEntity) {
-					LivingEntity lEntity = (LivingEntity) entity;
-					LivingEntity target = null;
-					Block newBlock = block;
-					for (int i = -1; i < 1; i++) {
-						newBlock.getLocation().setY(block.getLocation().getY() + i);
-						if (checkDistance(entity.getLocation(), newBlock.getLocation(), 1))
-							target = lEntity;
-					}
-					if (target == null)
-						return target;
-					if (mustBePlayer)
-						if (target instanceof Player)
-							return target;
-						else
-							return null;
-					else
-						return target;
+		List<Entity> nearbyE = player.getNearbyEntities(range, range, range);
+		ArrayList<LivingEntity> livingE = new ArrayList<LivingEntity>();
+		for (Entity e : nearbyE) {
+			if (e instanceof LivingEntity) {
+				livingE.add((LivingEntity) e);
+			}
+		}
+
+		BlockIterator bItr = new BlockIterator(player, range);
+		Block block;
+		Location loc;
+		int bx, by, bz;
+		double ex, ey, ez;
+		//loop through player's line of sight
+		while (bItr.hasNext()) {
+			block = bItr.next();
+			bx = block.getX();
+			by = block.getY();
+			bz = block.getZ();
+			// check for entities near this block in the line of sight
+			for (LivingEntity e : livingE) {
+				loc = e.getLocation();
+				ex = loc.getX();
+				ey = loc.getY();
+				ez = loc.getZ();
+				if ((bx-.75 <= ex && ex <= bx+1.75) && (bz-.75 <= ez && ez <= bz+1.75) && (by-1 <= ey && ey <= by+2.5)) {
+					// entity is close enough, return the target
+					return e;
 				}
+			}
+		}
 		return null;
 	}
 
@@ -186,24 +199,29 @@ public class Tools {
 	 */
 	public static boolean checkDistance (Entity ent1, Entity ent2, double checkDist, CommandSender sender) {
 		if (ent1 == null) {
-			debugMsg("NPE in checkDistance, Entity 1 is null.", sender);
+			debugMsg("[Forceraft] NPE in checkDistance, Entity 1 is null.", sender);
 			return false;
 		} else if (ent2 == null) {
-			debugMsg("NPE in checkDistance, Entity 2 is null.", sender);
+			debugMsg("[Forceraft] NPE in checkDistance, Entity 2 is null.", sender);
 			return false;
 		}
-		if (!ent1.getWorld().equals(ent2.getWorld()))
+		if (!ent1.getWorld().equals(ent2.getWorld())) {
+			debugMsg("[Forceraft] Target is not in the same world as you are!", sender);
 			return false;
+		}
 		Location loc1 = ent1.getLocation();
 		Location loc2 = ent2.getLocation();
 		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
 				+ Math.pow(loc1.getY() - loc2.getY(), 2));
-		if (dist > checkDist)
+		if (dist < checkDist)
 			return true;
+		debugMsg("[Forceraft] Target is to far away from you!", sender);
+		debugMsg(String.valueOf(Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
+				+ Math.pow(loc1.getY() - loc2.getY(), 2))) + " > " + String.valueOf(checkDist), sender);
 		return false;
 	}
 
-	public static boolean checkDistance (Location loc1, Location loc2, double checkDist) {
+	public static boolean checkDistance (Location loc1, Location loc2, double checkDist, CommandSender sender) {
 		if (loc1 == null) {
 			debugMsg("NPE in checkDistance, Location 1 is null.", null);
 			return false;
@@ -213,8 +231,11 @@ public class Tools {
 		}
 		double dist = Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
 				+ Math.pow(loc1.getY() - loc2.getY(), 2));
-		if (dist > checkDist)
+		if (dist < checkDist)
 			return true;
+		debugMsg("[Forceraft] Target is to far away from you!", sender);
+		debugMsg(String.valueOf(Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
+				+ Math.pow(loc1.getY() - loc2.getY(), 2))) + " > " + String.valueOf(checkDist), sender);
 		return false;
 	}
 

@@ -53,14 +53,12 @@ public class Pull extends BasePower {
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
 		Block block = (player.getHandler()).getTargetBlock(null, 20);
-		if (block.getType().equals(Material.AIR) || block == null)
+		if (block.getType().equals(Material.AIR) || block == null) {
+			Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());
 			return;
+		}
 		int rank = player.getSkillRank(name);
 		int amount = instance.ranksInfo.getInt(name + "." + String.valueOf(rank), 1);
-		List<Block> blocks = new ArrayList<Block>();
-		blocks.add(block);
-		Vector facing = player.getHandler().getLocation().getDirection().normalize();
-		player.getHandler().sendMessage("x=" + facing.getX() + ", y=" + facing.getY() + ", z=" + facing.getZ());
 		/*
 		for (int i = 1; i < amount; i++) {
 			Block nthBlock = null;

@@ -373,8 +373,7 @@ public class ForcePlayer {
 	}
 
 	private void loadKeys() {
-		@SuppressWarnings("unchecked")
-		List<String> tempKeys = playerConfig.getList("Keys");
+		List<String> tempKeys = playerConfig.getStringList("Keys");
 		if (tempKeys.size() > 3)
 			tempKeys = tempKeys.subList(0, 4);
 		for (String key : tempKeys) {

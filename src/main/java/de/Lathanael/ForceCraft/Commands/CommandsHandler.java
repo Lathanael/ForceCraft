@@ -23,6 +23,7 @@ package de.Lathanael.ForceCraft.Commands;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -78,13 +79,31 @@ public class CommandsHandler implements CommandExecutor {
 		if (Tools.isPlayer(sender, true)) {
 			if (PermissionsHandler.getInstance().hasPerm((Player) sender, power.perm)) {
 				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) sender).getName());
-				if (fPlayer == null){
+				if (fPlayer == null) {
 					sender.sendMessage(ChatColor.RED + "Could not find your ForcePlayer object, please contact your ServerAdmin with this error!");
 					return;
 				}
+				if (power.checkRank(fPlayer) && power.checkTime(fPlayer)) {
+					Player executor = (Player) sender;
+					Block block = null;
+					if (power.name.equalsIgnoreCase("pull")) {
+						block = executor.getTargetBlock(null, 20);
+						if (block == null)
+							return;
+						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), 20, executor))
+							power.execute(fPlayer, null);
+					}
+					else if (power.name.equalsIgnoreCase("push")) {
+						block = executor.getTargetBlock(null, 20);
+						if (block == null)
+							return;
+						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), 20, executor))
+							power.execute(fPlayer, null);
+					}
+					else if (Tools.checkDistance(executor, target, 20, executor))
+						power.execute(fPlayer, target);
+				}
 
-				if (power.checkRank(fPlayer) && power.checkTime(fPlayer) && Tools.checkDistance((Player) sender, target, 20, sender) )
-					power.execute(fPlayer, target);
 			}
 			else
 				sender.sendMessage(ChatColor.RED + "You do not have the permission to use the following power: "

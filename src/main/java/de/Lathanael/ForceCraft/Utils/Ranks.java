@@ -37,8 +37,8 @@ public enum Ranks {
 	KNIGHT(3, "Knight", "3light"),
 	GUARDIAN(4, "Guardian", "4light"),
 	MASTER(5, "Master", "5light"),
-	FORCE_SENSITIVE(0, "Force Sensitive", "neutral"),
-	NONE(-1, "None", "none");
+	FORCE_SENSITIVE(0, "Force Sensitive", "0neutral"),
+	NONE(-1, "None", "-1none");
 
 	private Ranks(int rank, String label, String side) {
 		this.rank = rank;
