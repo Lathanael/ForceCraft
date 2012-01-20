@@ -23,6 +23,7 @@ package de.Lathanael.ForceCraft.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -259,7 +260,13 @@ public class Tools {
 		}
 	}
 
+	/**
+	 * Saves all files of the players beeing online, if the server is shut-down and the are still connected.
+	 *
+	 * @param onlinePlayers
+	 */
 	public static void savePlayerFiles (HashMap<String, ForcePlayer> onlinePlayers) {
-
+		for (Map.Entry<String, ForcePlayer> map: onlinePlayers.entrySet())
+			map.getValue().updateFile(true);
 	}
 }
