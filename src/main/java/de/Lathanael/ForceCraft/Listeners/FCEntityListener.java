@@ -23,10 +23,12 @@ package de.Lathanael.ForceCraft.Listeners;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -37,8 +39,9 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class FCEntityListener extends EntityListener{
+public class FCEntityListener implements Listener{
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		if (event instanceof EntityDamageByEntityEvent) {
 			EntityDamageByEntityEvent newEvent = (EntityDamageByEntityEvent)event;
@@ -68,6 +71,7 @@ public class FCEntityListener extends EntityListener{
 		}
 	}
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onProjectileHit(ProjectileHitEvent event) {
 		Entity attacked = event.getEntity();
 		if (!(attacked instanceof Player))

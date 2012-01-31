@@ -20,9 +20,11 @@
 
 package de.Lathanael.ForceCraft.Listeners;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -33,24 +35,28 @@ import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class FCPlayerListener extends PlayerListener {
+public class FCPlayerListener implements Listener {
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		PlayerHandler.getInstance().createForcePlayer(event.getPlayer().getName(), true);
 	}
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPlayerKick(PlayerKickEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
 		if (fPlayer != null)
 			fPlayer.updateFile(true);
 	}
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
 		if (fPlayer != null)
 			fPlayer.updateFile(true);
 	}
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPlayerMove(PlayerMoveEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
 		if (fPlayer != null && (fPlayer.hasPowerState(PlayerPowerStates.CHOKED)

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (C) 2011  Philippe Leipold
+ * Copyright (C) 2011-2012  Philippe Leipold
  *
  * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,6 @@ import java.util.logging.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -52,9 +50,7 @@ import de.Lathanael.ForceCraft.Utils.Tools;
  */
 public class ForcePlugin extends JavaPlugin {
 
-	private FCPlayerListener fcPL;
-	private FCPluginListener fcPluL;
-	private FCEntityListener fcEL;
+	private FCPluginListener fcPluL = new FCPluginListener();
 	private static ForcePlugin instance;
 	public FileConfiguration config;
 	public FileConfiguration ranksInfo;
@@ -65,6 +61,7 @@ public class ForcePlugin extends JavaPlugin {
 	public static boolean debug = false;
 	public static boolean sensitiveonJoin = false;
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
+	public static int checkDist = 0;
 
 	public void onDisable() {
 		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
@@ -82,24 +79,16 @@ public class ForcePlugin extends JavaPlugin {
 		loadRanksInfo();
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
-		fcPL = new FCPlayerListener();
-		fcPluL = new FCPluginListener();
-		fcEL = new FCEntityListener();
 		commandsHandler = CommandsHandler.initInstance(this);
 		registerCommands();
 		PermissionsHandler.setInstance();
 		Scheduler.initInstance(this);
 		fcPluL.hook();
 		pm = getServer().getPluginManager();
-		pm.registerEvent(Type.PLAYER_JOIN, fcPL, Priority.Normal, this);
-		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.Normal, this);
-		pm.registerEvent(Type.PLAYER_KICK, fcPL, Priority.Normal, this);
-		pm.registerEvent(Type.PLAYER_MOVE, fcPL, Priority.Normal, this);
-		pm.registerEvent(Type.CUSTOM_EVENT, new FCInputListener(this), Priority.Normal, this);
-		pm.registerEvent(Type.PLUGIN_DISABLE, fcPluL, Priority.Normal, this);
-		pm.registerEvent(Type.PLUGIN_ENABLE, fcPluL, Priority.Normal, this);
-		pm.registerEvent(Type.ENTITY_DAMAGE, fcEL, Priority.Normal, this);
-		pm.registerEvent(Type.PROJECTILE_HIT, fcEL, Priority.Normal, this);
+		pm.registerEvents(new FCPlayerListener(), this);
+		pm.registerEvents(new FCInputListener(this), this);
+		pm.registerEvents(new FCPluginListener(), this);
+		pm.registerEvents(new FCEntityListener(), this);
 		PluginDescriptionFile pdf = getDescription();
 		log.info("[" + pdf.getName() + "] Version " + pdf.getVersion() + " enabled!");
 	}
@@ -131,6 +120,7 @@ public class ForcePlugin extends JavaPlugin {
 	private void loadConfig(FileConfiguration config) {
 		debug = config.getBoolean("DebugMessages");
 		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin");
+		checkDist = config.getInt("checkDistance");
 	}
 
 	private void loadRanksInfo() {

@@ -20,9 +20,11 @@
 
 package de.Lathanael.ForceCraft.Listeners;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
@@ -31,7 +33,7 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class FCPluginListener extends ServerListener {
+public class FCPluginListener implements Listener {
 
 	public void hook() {
 		ForcePlugin instance = ForcePlugin.getInstance();
@@ -56,6 +58,7 @@ public class FCPluginListener extends ServerListener {
 				ForcePlugin.log.info("[ForceCraft] Found PermissionsBukkit, hooking in!");
 	}
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPluginEnable(PluginEnableEvent event) {
 		ForcePlugin instance = ForcePlugin.getInstance();
 		if (!instance.config.getBoolean("IgnorePermissionBridge")) {
@@ -78,6 +81,7 @@ public class FCPluginListener extends ServerListener {
 				ForcePlugin.log.info("[ForceCraft] Found PermissionsBukkit, hooking in!");
 	}
 
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPluginDisable(PluginDisableEvent event) {
 		PermissionsHandler.ressetPerm(event.getPlugin().getDescription().getName());
 	}

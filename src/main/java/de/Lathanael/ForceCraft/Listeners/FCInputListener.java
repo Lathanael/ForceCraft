@@ -22,7 +22,9 @@ package de.Lathanael.ForceCraft.Listeners;
 
 import org.bukkit.command.Command;
 import org.bukkit.entity.Entity;
-import org.getspout.spoutapi.event.input.InputListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
@@ -36,14 +38,14 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class FCInputListener extends InputListener {
+public class FCInputListener implements Listener {
 	protected final ForcePlugin instance;
 
 	public FCInputListener(ForcePlugin instance) {
 		this.instance = instance;
 	}
 
-	@Override
+	@EventHandler (priority = EventPriority.NORMAL)
 	public void onKeyPressedEvent(KeyPressedEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
 		SpoutPlayer sPlayer = event.getPlayer();
@@ -79,7 +81,7 @@ public class FCInputListener extends InputListener {
 		if (!fPlayer.containsKey(event.getKey()))
 			return;
 		Command cmd = instance.getCommand("fc_" + fPlayer.getKey(event.getKey()));
-		Entity target = Tools.getTargetedEntity(sPlayer.getPlayer(), false, 20);
+		Entity target = Tools.getTargetedEntity(sPlayer.getPlayer(), false, ForcePlugin.checkDist);
 		BasePower power = instance.commandsHandler.getPower(cmd);
 		if (power != null)
 			instance.commandsHandler.executePower(sPlayer.getPlayer(), power, target);
