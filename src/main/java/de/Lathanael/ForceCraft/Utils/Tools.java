@@ -268,5 +268,6 @@ public class Tools {
 	public static void savePlayerFiles (HashMap<String, ForcePlayer> onlinePlayers) {
 		for (Map.Entry<String, ForcePlayer> map: onlinePlayers.entrySet())
 			map.getValue().updateFile(true);
+		debugMsg("All files saved!", null);
 	}
 }

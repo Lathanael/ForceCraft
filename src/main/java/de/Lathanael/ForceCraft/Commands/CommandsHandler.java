@@ -90,17 +90,17 @@ public class CommandsHandler implements CommandExecutor {
 						block = executor.getTargetBlock(null, 20);
 						if (block == null)
 							return;
-						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), 20, executor))
+						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor))
 							power.execute(fPlayer, null);
 					}
 					else if (power.name.equalsIgnoreCase("push")) {
 						block = executor.getTargetBlock(null, 20);
 						if (block == null)
 							return;
-						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), 20, executor))
+						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor))
 							power.execute(fPlayer, null);
 					}
-					else if (Tools.checkDistance(executor, target, 20, executor))
+					else if (Tools.checkDistance(executor, target, ForcePlugin.checkDist, executor))
 						power.execute(fPlayer, target);
 				}
 

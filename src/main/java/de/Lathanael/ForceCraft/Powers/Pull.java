@@ -28,12 +28,11 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
-
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.Utils.Tools;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -52,27 +51,27 @@ public class Pull extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
-		Block block = (player.getHandler()).getTargetBlock(null, 20);
+		Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
 		if (block.getType().equals(Material.AIR) || block == null) {
 			Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());
 			return;
 		}
 		int rank = player.getSkillRank(name);
 		int amount = instance.ranksInfo.getInt(name + "." + String.valueOf(rank), 1);
-		/*
+		List<Block> blocks = new ArrayList<Block>();
 		for (int i = 1; i < amount; i++) {
 			Block nthBlock = null;
-			if (facing.getX() >= facing.getZ())
+			if (block.getX() >= block.getZ())
 				nthBlock = block.getRelative(i,0,0);
 			else
 				nthBlock = block.getRelative(0, 0, i);
 			blocks.add(nthBlock);
 		}
-		Tools.moveBlocks(blocks, player.getHandler().getWorld(), false, facing);
+		Tools.moveBlocks(blocks, player.getHandler().getWorld(), false, player.getHandler().getLocation().getDirection());
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost);
-		*/
+
 	}
 
 	@Override
