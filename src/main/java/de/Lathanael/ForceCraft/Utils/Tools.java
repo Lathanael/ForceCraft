@@ -260,6 +260,17 @@ public class Tools {
 		}
 	}
 
+
+	/**
+	 * Moves an Entity forward or backward. If the Entity hits something it stops!
+	 * @param blocks
+	 * @param pushing
+	 */
+	public static void moveEntity(Entity target, World world, boolean pushing, Vector direction) {
+		int x = (int) Math.abs(direction.getX());
+		double z = (int) Math.abs(direction.getZ());
+	}
+
 	/**
 	 * Saves all files of the players beeing online, if the server is shut-down and the are still connected.
 	 *
