@@ -1,8 +1,6 @@
 /*************************************************************************
  * Copyright (C) 2011-2012 Philippe Leipold
  *
- * This file is part of ForceCraft.
- *
  * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -18,23 +16,31 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.Commands;
+package de.Lathanael.ForceCraft.Events;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
- *
- * With help from Dark_Balors AdminCmd
  */
-public abstract class BaseCommand {
+public class PowerUsedEvent extends Event{
 
-	public String name = "";
-	public String permNode = "";
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 8605559929677712643L;
+	private static final HandlerList handlers = new HandlerList();
 
-	public abstract void execute(CommandSender sender, String[] args);
+	public PowerUsedEvent () {
 
-	public abstract boolean checkPerm(CommandSender sender);
+	}
 
-	public abstract boolean checkArgs(String[] args);
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

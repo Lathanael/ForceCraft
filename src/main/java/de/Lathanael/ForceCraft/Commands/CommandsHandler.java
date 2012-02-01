@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (C) 2011-2012  Philippe Leipold
+ * Copyright (C) 2011-2012 Philippe Leipold
  *
  * This file is part of ForceCraft.
  *
@@ -90,18 +90,24 @@ public class CommandsHandler implements CommandExecutor {
 						block = executor.getTargetBlock(null, 20);
 						if (block == null)
 							return;
-						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor))
+						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor)){
 							power.execute(fPlayer, null);
+							power.issueEvents();
+						}
 					}
 					else if (power.name.equalsIgnoreCase("push")) {
 						block = executor.getTargetBlock(null, 20);
 						if (block == null)
 							return;
-						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor))
+						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor)) {
 							power.execute(fPlayer, null);
+							power.issueEvents();
+						}
 					}
-					else if (Tools.checkDistance(executor, target, ForcePlugin.checkDist, executor))
+					else if (Tools.checkDistance(executor, target, ForcePlugin.checkDist, executor)) {
 						power.execute(fPlayer, target);
+						power.issueEvents();
+					}
 				}
 
 			}

@@ -62,6 +62,7 @@ public class ForcePlugin extends JavaPlugin {
 	public static boolean sensitiveonJoin = false;
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 	public static int checkDist = 0;
+	public static String texURL = "";
 
 	public void onDisable() {
 		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
@@ -121,6 +122,7 @@ public class ForcePlugin extends JavaPlugin {
 		debug = config.getBoolean("DebugMessages");
 		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin");
 		checkDist = config.getInt("checkDistance");
+		texURL = config.getString("manaBarTexURL", "");
 	}
 
 	private void loadRanksInfo() {

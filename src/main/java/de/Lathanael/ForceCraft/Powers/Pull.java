@@ -51,6 +51,9 @@ public class Pull extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
+		if (target != null) {
+			Tools.debugMsg("Entity targeted!", player.getHandler());
+		}
 		Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
 		if (block.getType().equals(Material.AIR) || block == null) {
 			Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());

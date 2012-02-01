@@ -1,8 +1,6 @@
 /*************************************************************************
  * Copyright (C) 2011-2012 Philippe Leipold
  *
- * This file is part of ForceCraft.
- *
  * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -18,23 +16,20 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.Commands;
+package de.Lathanael.ForceCraft.Listeners;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+import de.Lathanael.ForceCraft.Events.PowerUsedEvent;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
- *
- * With help from Dark_Balors AdminCmd
  */
-public abstract class BaseCommand {
+public class FCEventListener implements Listener{
 
-	public String name = "";
-	public String permNode = "";
+	@EventHandler
+	public void onPowerUsed(PowerUsedEvent event) {
 
-	public abstract void execute(CommandSender sender, String[] args);
-
-	public abstract boolean checkPerm(CommandSender sender);
-
-	public abstract boolean checkArgs(String[] args);
+	}
 }

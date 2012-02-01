@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (C) 2011-2012  Philippe Leipold
+ * Copyright (C) 2011-2012 Philippe Leipold
  *
  * This file is part of ForceCraft.
  *
@@ -35,8 +35,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.keyboard.Keyboard;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.Utils.ManaBarGUI;
 import de.Lathanael.ForceCraft.Utils.Ranks;
 import de.Lathanael.ForceCraft.Utils.Tools;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
@@ -62,22 +64,27 @@ public class ForcePlayer {
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
 	protected HashMap<String, Long> times = new HashMap<String, Long>();
 	protected HashMap<String, Integer> skillRanks = new HashMap<String, Integer>();
+	protected ManaBarGUI manaBar;
+	protected SpoutPlayer sPlayer;
 
 	public ForcePlayer (String playerName, String dir) {
 		this.name = playerName;
 		this.handler = ForcePlugin.getInstance().getServer().getPlayer(playerName);
+		sPlayer = (SpoutPlayer) handler;
 		initilize(dir);
 	}
 
 	public ForcePlayer (Player player, String dir) {
 		this.name = player.getName();
 		this.handler = player;
+		sPlayer = (SpoutPlayer) player;
 		initilize(dir);
 	}
 
 	public ForcePlayer (String name) {
 		this.name = name;
 		this.handler = ForcePlugin.getInstance().getServer().getPlayer(name);
+		sPlayer = (SpoutPlayer) handler;
 		initilize(ForcePlugin.getInstance().getDataFolder()	+ File.separator + "players");
 	}
 
@@ -128,6 +135,8 @@ public class ForcePlayer {
 				}
 				ForcePlugin.log.info("[ForceCraft] Loaded player file for: " + name);
 			}
+			manaBar = new ManaBarGUI((SpoutPlayer) handler, mana, maxMana);
+			sPlayer.getMainScreen().attachWidget(ForcePlugin.getInstance(), manaBar);
 		}
 	}
 
@@ -262,22 +271,25 @@ public class ForcePlayer {
 
 	public void setMana(int mana){
 		this.mana = mana;
-		if (mana < maxMana)
-			mana = maxMana;
+		if (this.mana > maxMana)
+			this.mana = maxMana;
+		manaBar.updateMana(this.mana);
 		updateFile();
 	}
 
 	public void incMana(int mana){
 		this.mana = this.mana + mana;
-		if (mana < maxMana)
-			mana = maxMana;
+		if (this.mana > maxMana)
+			this.mana = maxMana;
+		manaBar.updateMana(this.mana);
 		updateFile();
 	}
 
 	public void decMana(int mana){
 		this.mana = this.mana - mana;
-		if (mana < 0)
-			mana = 0;
+		if (this.mana < 0)
+			this.mana = 0;
+		manaBar.updateMana(this.mana);
 		updateFile();
 	}
 
@@ -329,11 +341,13 @@ public class ForcePlayer {
 
 	public void setMaxMana(int mana) {
 		maxMana = mana;
+		manaBar.updateMaxMana(this.maxMana);
 		updateFile();
 	}
 
 	public void incMaxMana(int mana) {
 		maxMana = maxMana + mana;
+		manaBar.updateMaxMana(this.maxMana);
 		updateFile();
 	}
 

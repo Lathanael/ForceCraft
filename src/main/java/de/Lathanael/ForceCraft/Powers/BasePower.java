@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (C) 2011-2012  Philippe Leipold
+ * Copyright (C) 2011-2012 Philippe Leipold
  *
  * This file is part of ForceCraft.
  *
@@ -20,10 +20,13 @@
 
 package de.Lathanael.ForceCraft.Powers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 
+import de.Lathanael.ForceCraft.Events.ManaChangeEvent;
+import de.Lathanael.ForceCraft.Events.PowerUsedEvent;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
@@ -69,5 +72,10 @@ public abstract class BasePower {
 		}
 		player.getHandler().sendMessage(ChatColor.RED + "You need to wait to use Force " + name + " again!");
 		return false;
+	}
+
+	public void issueEvents() {
+		Bukkit.getServer().getPluginManager().callEvent(new PowerUsedEvent());
+		Bukkit.getServer().getPluginManager().callEvent(new ManaChangeEvent());
 	}
 }
