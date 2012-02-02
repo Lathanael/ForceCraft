@@ -66,6 +66,8 @@ public class ForcePlayer {
 	protected HashMap<String, Integer> skillRanks = new HashMap<String, Integer>();
 	protected ManaBarGUI manaBar;
 	protected SpoutPlayer sPlayer;
+	protected int usedSP;
+	protected int availableSP;
 
 	public ForcePlayer (String playerName, String dir) {
 		this.name = playerName;
@@ -103,6 +105,8 @@ public class ForcePlayer {
 				rank = Ranks.getRank(playerConfig.getString("Alignment").toLowerCase(), playerConfig.getInt("Rank"));
 				mana = playerConfig.getInt("Mana");
 				maxMana = playerConfig.getInt("MaxMana");
+				availableSP = playerConfig.getInt("availableSkillPoints");
+				usedSP = playerConfig.getInt("usedSkillPoints");
 				loadKeys();
 				loadAmounts();
 				loadSkillRanks();
@@ -120,6 +124,8 @@ public class ForcePlayer {
 			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
 			mana = playerConfig.getInt("Mana");
 			maxMana = playerConfig.getInt("MaxMana");
+			availableSP = playerConfig.getInt("availableSkillPoints");
+			usedSP = playerConfig.getInt("usedSkillPoints");
 			loadKeys();
 			loadAmounts();
 			loadSkillRanks();
@@ -136,9 +142,9 @@ public class ForcePlayer {
 				}
 				ForcePlugin.log.info("[ForceCraft] Loaded player file for: " + name);
 			}
-			manaBar = new ManaBarGUI((SpoutPlayer) handler, mana, maxMana);
-			sPlayer.getMainScreen().attachWidget(ForcePlugin.getInstance(), manaBar);
 		}
+		manaBar = new ManaBarGUI((SpoutPlayer) handler, mana, maxMana);
+		sPlayer.getMainScreen().attachWidget(ForcePlugin.getInstance(), manaBar);
 	}
 
 	public void updateFile(boolean forceSave) {
@@ -385,6 +391,8 @@ public class ForcePlayer {
 		playerConfig.addDefault("Skillrank.Shield", 0);
 		playerConfig.addDefault("Mana", 100);
 		playerConfig.addDefault("MaxMana", 100);
+		playerConfig.addDefault("availableSkillPoints", ForcePlugin.startingSP);
+		playerConfig.addDefault("usedSkillPoints", 0);
 		playerConfig.options().copyDefaults(true);
 	}
 
@@ -439,5 +447,7 @@ public class ForcePlayer {
 		playerConfig.set("MaxMana", maxMana);
 		playerConfig.set("Rank", rank.getRankNr());
 		playerConfig.set("Alignment", alignment.toString());
+		playerConfig.set("availableSkillPoints", availableSP);
+		playerConfig.set("usedSkillPoints", usedSP);
 	}
 }

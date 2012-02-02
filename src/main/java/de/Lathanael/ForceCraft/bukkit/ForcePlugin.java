@@ -66,6 +66,8 @@ public class ForcePlugin extends JavaPlugin {
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 	public static int checkDist = 0;
 	public static String texURL = "";
+	public static int maxSP;
+	public static int startingSP;
 
 	public void onDisable() {
 		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
@@ -132,6 +134,8 @@ public class ForcePlugin extends JavaPlugin {
 		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin");
 		checkDist = config.getInt("checkDistance");
 		texURL = config.getString("manaBarTexURL", "");
+		maxSP = config.getInt("maxSkillPoints");
+		startingSP = config.getInt("startingSkillPoints");
 	}
 
 	private void loadRanksInfo() {
