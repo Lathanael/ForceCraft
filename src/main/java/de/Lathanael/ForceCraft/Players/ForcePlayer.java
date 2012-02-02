@@ -99,8 +99,8 @@ public class ForcePlayer {
 				createDefaults();
 				playerConfig.save(playerFile);
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-				rank = Ranks.getRank(playerConfig.getString("Alignment").toLowerCase(), playerConfig.getInt("Rank"));
 				alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
+				rank = Ranks.getRank(playerConfig.getString("Alignment").toLowerCase(), playerConfig.getInt("Rank"));
 				mana = playerConfig.getInt("Mana");
 				maxMana = playerConfig.getInt("MaxMana");
 				loadKeys();
@@ -128,6 +128,7 @@ public class ForcePlayer {
 				ForcePlugin.log.info("[ForceCraft] Loaded attributes are:");
 				ForcePlugin.log.info("[ForceCraft] Alignment: " + alignment.toString());
 				ForcePlugin.log.info("[ForceCraft] Rank: " + rank.toString());
+				ForcePlugin.log.info("[ForceCraft] Mana: " + mana + "/" + maxMana);
 				ForcePlugin.log.info("[ForceCraft] Keys:");
 				for (Map.Entry<Keyboard, String> entries : keys.entrySet()) {
 						ForcePlugin.log.info("[ForceCraft] Key: " + entries.getKey().toString());
@@ -148,6 +149,7 @@ public class ForcePlayer {
 				updateKeysInFile();
 				saveAmounts();
 				saveSkillRanks();
+				saveLoneValues();
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
 				ForcePlugin.log.info("[ForceCraft] Failed to save player file for: " + name);
@@ -430,5 +432,12 @@ public class ForcePlayer {
 		for (Map.Entry<String, Integer> entries : skillRanks.entrySet()) {
 			playerConfig.set("Skillrank." + entries.getKey(), entries.getValue());
 		}
+	}
+
+	private void saveLoneValues() {
+		playerConfig.set("Mana", mana);
+		playerConfig.set("MaxMana", maxMana);
+		playerConfig.set("Rank", rank.getRankNr());
+		playerConfig.set("Alignment", alignment.toString());
 	}
 }
