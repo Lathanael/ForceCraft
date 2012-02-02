@@ -42,7 +42,7 @@ public class Lift extends BasePower {
 		name = "Lift";
 		cmdName = "fc_lift";
 		perm = "force.lift";
-		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
+		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment").toUpperCase());
 		rank = instance.config.getInt("Power." + name + ".rank");
 		delay = instance.config.getLong("Power." + name + ".delay");
 		manaCost = instance.config.getInt("Power." + name + ".mana");

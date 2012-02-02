@@ -40,7 +40,7 @@ public class Jump extends BasePower {
 		name = "Jump";
 		cmdName = "fc_jump";
 		perm = "force.jump";
-		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment"));
+		alignment = ForceAlignment.valueOf(instance.config.getString("Power." + name + ".alignment").toUpperCase());
 		rank = instance.config.getInt("Power." + name + ".rank");
 		delay = instance.config.getLong("Power." + name + ".delay");
 		manaCost = instance.config.getInt("Power." + name + ".mana");
