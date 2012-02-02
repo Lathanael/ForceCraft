@@ -47,6 +47,10 @@ commands:
         description: Use Force Pull to pull a certain amount of blocks towards you, amount depends on rank.
         aliases: [pull]
         usage: /<command>
+    fc_mediation:
+        description: Use Force Mediation to increase your mana over time.
+        aliases: [mediation]
+        usage: /<command>
 permissions:
     force.*:
         description: Grants access to all ForceCraft commands and powers.
@@ -66,6 +70,7 @@ permissions:
             force.jump: true
             force.rage: true
             force.shield: true
+            force.mediation: true
     force.user.light:
         description: Grants access to all Lightside Forces.
         default: false
@@ -78,6 +83,7 @@ permissions:
             force.jump: true
             force.rage: true
             force.shield: true
+            force.mediation: true
     force.user.*:
         description: Grants access to all Forces.
         default: false
@@ -119,4 +125,7 @@ permissions:
         default: false
     force.shield:
         description: Allows usage of the Shield force.
+        default: false
+    force.mediation:
+        description: Allows usage of the Mediation force.
         default: false
