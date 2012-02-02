@@ -19,7 +19,9 @@
 package de.Lathanael.ForceCraft.bukkit;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -41,6 +43,7 @@ import de.Lathanael.ForceCraft.Listeners.FCInputListener;
 import de.Lathanael.ForceCraft.Listeners.FCPlayerListener;
 import de.Lathanael.ForceCraft.Listeners.FCPluginListener;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Powers.Mediation;
 import de.Lathanael.ForceCraft.Powers.Pull;
 import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
@@ -66,6 +69,12 @@ public class ForcePlugin extends JavaPlugin {
 
 	public void onDisable() {
 		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
+		saveConfig();
+		try {
+			ranksInfo.save(new File(getDataFolder().getPath() + File.separator + "ranksInfo.yml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		PluginDescriptionFile pdf = getDescription();
 		log.info("[" + pdf.getName() + "] Version " + pdf.getVersion() + " disabled!");
 	}
@@ -130,9 +139,14 @@ public class ForcePlugin extends JavaPlugin {
 		if (!ranksInfoFile.exists()) {
 			try {
 				ranksInfoFile.createNewFile();
-				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
-				ranksInfo.options().copyDefaults(true);
-				ranksInfo.save(ranksInfoFile);
+				InputStream in = getResource("ranksInfo.yml");
+				FileWriter writer = new FileWriter(ranksInfoFile);
+				for (int i = 0; (i = in.read()) > 0;) {
+					writer.write(i);
+				}
+				writer.flush();
+				writer.close();
+				in.close();
 				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
 			} catch (IOException e) {
 				log.info("[ForceCraft] Failed to create ranksInfo.yml!");
@@ -147,6 +161,8 @@ public class ForcePlugin extends JavaPlugin {
 	private void registerCommands() {
 		if (config.getBoolean("Power.Pull.enabled"))
 			commandsHandler.registerPower(Pull.class);
+		if (config.getBoolean("Power.Mediation.enabled"))
+			commandsHandler.registerPower(Mediation.class);
 		commandsHandler.registerCommand(Info.class);
 		commandsHandler.registerCommand(Set.class);
 		commandsHandler.registerCommand(BindKey.class);
