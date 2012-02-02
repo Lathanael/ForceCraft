@@ -26,6 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
+import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -50,6 +51,10 @@ public class FCInputListener implements Listener {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
 		SpoutPlayer sPlayer = event.getPlayer();
 		if (fPlayer == null || sPlayer == null)
+			return;
+
+		//Player is in Chat, Chest or any other Screen than the main screen!
+		if (!sPlayer.getActiveScreen().equals(ScreenType.GAME_SCREEN))
 			return;
 
 		// Player pressed Jump
