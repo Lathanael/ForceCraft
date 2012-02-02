@@ -26,12 +26,7 @@ import org.getspout.spoutapi.gui.GenericTexture;
 import org.getspout.spoutapi.gui.Gradient;
 import org.getspout.spoutapi.gui.RenderPriority;
 import org.getspout.spoutapi.gui.Widget;
-import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
-
-import de.Lathanael.ForceCraft.Players.ForcePlayer;
-import de.Lathanael.ForceCraft.Players.PlayerHandler;
-import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -41,9 +36,8 @@ public class ManaBarGUI extends GenericContainer {
 	private Gradient manaBar;
 	private GenericTexture mbTex;
 	private GenericLabel label;
+	@SuppressWarnings("unused")
 	private SpoutPlayer player;
-	private int texWidth;
-	private int texHeight;
 	private int mana;
 	private int maxMana;
 
@@ -51,27 +45,34 @@ public class ManaBarGUI extends GenericContainer {
 		this.mana = mana;
 		this.maxMana = maxMana;
 		this.player = player;
-		manaBar = new GenericGradient();
-		// TODO: Create Texture string here and make a config option!
+		int screenWidth = player.getMainScreen().getWidth();
 
 		// Setting up Manabar background
-		mbTex = new GenericTexture("");
+		mbTex = new GenericTexture("http://dl.dropbox.com/u/42731731/BarTex.jpg");
 		mbTex.setPriority(RenderPriority.High);
-		mbTex.setAnchor(WidgetAnchor.BOTTOM_CENTER);
-		mbTex.setWidth(182).setHeight(5);
+		mbTex.setX((screenWidth - 202)/2).setY(2);
+		mbTex.setWidth(202).setHeight(5);
 		mbTex.setDirty(true);
 
 		// Setting up the bar itsself
+		manaBar = new GenericGradient();
 		manaBar.setTopColor(new Color(0, 0, 1.0F, 1.0F));
 		manaBar.setBottomColor(new Color(0, 0, 1.0F, 1.0F));
-		manaBar.setWidth(mana).setHeight(5);
-		manaBar.setAnchor(WidgetAnchor.BOTTOM_CENTER);
-		//manaBar.setX(40).setY(33);
+		manaBar.setWidth(barLength()).setHeight(3);
+		manaBar.setX((screenWidth - 202)/2 + 1).setY(3);
 		manaBar.setPriority(RenderPriority.Low);
 		manaBar.setDirty(true);
 
+		// Setting up the label
+		label = new GenericLabel();
+		label.setX((screenWidth - 50)/2).setY(5);
+		label.setWidth(50).setHeight(10);
+		label.setPriority(RenderPriority.Lowest);
+		label.setText(String.valueOf(this.mana) + "/" + String.valueOf(this.maxMana));
+		label.setDirty(true);
+
 		// Setting up the container
-		addChildren(new Widget[] { manaBar, mbTex});
+		addChildren(new Widget[] {manaBar, mbTex, label});
 		setWidth(0).setHeight(0);
 	}
 
@@ -86,6 +87,11 @@ public class ManaBarGUI extends GenericContainer {
 	}
 
 	private void updateBar() {
-		manaBar.setWidth(mana).setDirty(true);
+		manaBar.setWidth(barLength()).setDirty(true);
+		label.setText(String.valueOf(this.mana) + "/" + String.valueOf(this.maxMana));
+	}
+
+	private int barLength() {
+		return (200*mana/maxMana);
 	}
 }
