@@ -42,7 +42,7 @@ public abstract class BasePower {
 	public ForceAlignment alignment = ForceAlignment.NEUTRAL;
 	public int rank = 1;
 	public final ForcePlugin instance;
-	public Long delay = 0L;
+	public long delay = 0L;
 	public int manaCost = 0;
 
 	public BasePower() {
@@ -62,12 +62,26 @@ public abstract class BasePower {
 		return true;
 	}
 
+	public boolean checkMana(ForcePlayer player) {
+		if (player.getMana() < manaCost) {
+			player.getHandler().sendMessage(ChatColor.RED +
+					"You need more Mana to use Force " + name + " !");
+			return false;
+		}
+		else if ((player.getMana() - manaCost) < 0) {
+			player.getHandler().sendMessage(ChatColor.RED +
+					"You need more Mana to use Force " + name + " !");
+			return false;
+		}
+		return true;
+	}
+
 	public boolean checkTime(ForcePlayer player) {
 		long time = 0;
-		if (player.getLastTimeUsed(name) > 0)
+		if (player.getLastTimeUsed(name) > 0) {
 			time = (System.currentTimeMillis() - player.getLastTimeUsed(name))/1000;
-
-		if (time == 0 || time <= delay) {
+		}
+		if ((int) Math.round(delay) == 0 || (int) Math.round(time) == 0 || time <= delay) {
 			return true;
 		}
 		player.getHandler().sendMessage(ChatColor.RED + "You need to wait to use Force " + name + " again!");
