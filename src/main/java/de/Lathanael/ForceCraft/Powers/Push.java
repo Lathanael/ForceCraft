@@ -20,6 +20,11 @@
 
 package de.Lathanael.ForceCraft.Powers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -28,6 +33,7 @@ import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.Utils.Tools;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -48,6 +54,27 @@ public class Push extends BasePower {
 	public void execute(ForcePlayer player, Entity target) {
 		if (target != null) {
 			Tools.debugMsg("Entity targeted!", player.getHandler());
+		}
+		int skillRank = player.getSkillRank(name);
+		double force = instance.ranksInfo.getDouble(name + "." + String.valueOf(skillRank), 1D);
+		if (target == null) {
+			Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
+			if (block.getType().equals(Material.AIR) || block == null) {
+				Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());
+				return;
+			}
+			List<Block> blocks = new ArrayList<Block>();
+			for (int i = 1; i < force; i++) {
+				Block nthBlock = null;
+				if (block.getX() >= block.getZ())
+					nthBlock = block.getRelative(i,0,0);
+				else
+					nthBlock = block.getRelative(0, 0, i);
+				blocks.add(nthBlock);
+			}
+			Tools.moveBlocks(blocks, player.getHandler().getWorld(), false, player.getHandler().getLocation().getDirection());
+		} else {
+			Tools.moveEntity(player.getHandler(), target, force);
 		}
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());

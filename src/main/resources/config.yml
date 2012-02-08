@@ -1,10 +1,13 @@
+Version: ${git.commit.id}
 ForceSensitiveOnJoin: false
 DebugMessages: false
 IgnorePermissionBridge: true
 checkDistance: 20
 manaBarTexURL: http://...
+BackgroundTexURL: http://...
 maxSkillPoints: 20
 startingSkillPoints: 5
+manaBarEnabled: true
 Power:
   Push:
     enabled: true

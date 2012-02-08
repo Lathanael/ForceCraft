@@ -83,7 +83,7 @@ public class Tools {
 		}
 	}
 
-	/**
+	/* (non-Javadoc)
 	 * @see Tools#isPlayer(CommandSender, boolean) isPlayer(sender, false)
 	 */
 	public static boolean isPlayer(CommandSender sender) {
@@ -98,7 +98,8 @@ public class Tools {
 	 * @param mustBePlayer - Must the entity returned be a Player?
 	 * @param range - The range in which a target is searched
 	 * @return The entity found or null if no entity found.
-	 * @author DirtyStarfish, Lathanael
+	 * @author DirtyStarfish
+	 * @author Lathanael
 	 */
 	public static Entity getTargetedEntity(Player player, boolean mustBePlayer, int range) {
 		if (player == null)
@@ -180,12 +181,12 @@ public class Tools {
 		if (!ForcePlugin.debug)
 			return;
 		if (sender == null)
-			ForcePlugin.log.info("[ForceCraft] " + message);
+			ForcePlugin.log.info(message);
 		else if (sender instanceof ConsoleCommandSender){
-			ForcePlugin.log.info("[ForceCraft] " + message);
+			ForcePlugin.log.info(message);
 		}
 		else {
-			ForcePlugin.log.info("[ForceCraft] " + message);
+			ForcePlugin.log.info(message);
 			sender.sendMessage(ChatColor.RED + message);
 		}
 	}
@@ -200,14 +201,14 @@ public class Tools {
 	 */
 	public static boolean checkDistance (Entity ent1, Entity ent2, double checkDist, CommandSender sender) {
 		if (ent1 == null) {
-			debugMsg("[Forceraft] NPE in checkDistance, Entity 1 is null.", sender);
+			debugMsg("NPE in checkDistance, Entity 1 is null.", sender);
 			return false;
 		} else if (ent2 == null) {
-			debugMsg("[Forceraft] NPE in checkDistance, Entity 2 is null.", sender);
+			debugMsg("NPE in checkDistance, Entity 2 is null.", sender);
 			return false;
 		}
 		if (!ent1.getWorld().equals(ent2.getWorld())) {
-			debugMsg("[Forceraft] Target is not in the same world as you are!", sender);
+			debugMsg("Target is not in the same world as you are!", sender);
 			return false;
 		}
 		Location loc1 = ent1.getLocation();
@@ -216,7 +217,7 @@ public class Tools {
 				+ Math.pow(loc1.getY() - loc2.getY(), 2));
 		if (dist < checkDist)
 			return true;
-		debugMsg("[Forceraft] Target is to far away from you!", sender);
+		debugMsg("Target is to far away from you!", sender);
 		debugMsg(String.valueOf(Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
 				+ Math.pow(loc1.getY() - loc2.getY(), 2))) + " > " + String.valueOf(checkDist), sender);
 		return false;
@@ -234,7 +235,7 @@ public class Tools {
 				+ Math.pow(loc1.getY() - loc2.getY(), 2));
 		if (dist < checkDist)
 			return true;
-		debugMsg("[Forceraft] Target is to far away from you!", sender);
+		debugMsg("Target is to far away from you!", sender);
 		debugMsg(String.valueOf(Math.sqrt(Math.pow((loc1.getX() - loc2.getX()), 2) + Math.pow((loc1.getZ() - loc2.getZ()), 2)
 				+ Math.pow(loc1.getY() - loc2.getY(), 2))) + " > " + String.valueOf(checkDist), sender);
 		return false;
@@ -263,12 +264,58 @@ public class Tools {
 
 	/**
 	 * Moves an Entity forward or backward. If the Entity hits something it stops!
+	 *
+	 * @author bergerkiller (https://github.com/bergerkiller)
+	 * @author modified by Lathanael
 	 * @param blocks
 	 * @param pushing
 	 */
-	public static void moveEntity(Entity target, World world, boolean pushing, Vector direction) {
-		int x = (int) Math.abs(direction.getX());
-		double z = (int) Math.abs(direction.getZ());
+	public static void moveEntity(Entity pusher, Entity target, double force) {
+		Vector offset = offset(target.getLocation(), pusher.getLocation());
+		setVectorLength(offset, force);
+		target.setVelocity(target.getVelocity().add(offset));
+	}
+
+	/**
+	 * Gets the offset Vector between two locations.
+	 *
+	 * @author bergerkiller (https://github.com/bergerkiller)
+	 * @author modified by Lathanael
+	 * @param to
+	 * @param from
+	 * @return
+	 */
+	public static Vector offset(Location to, Location from) {
+		return new Vector(to.getX() - from.getX(), to.getY() - from.getY(), to.getZ() - from.getZ());
+	}
+
+	/**
+	 * @author bergerkiller (https://github.com/bergerkiller)
+	 * @param vector
+	 * @param length
+	 */
+	public static void setVectorLength(Vector vector, double length) {
+		if (length >= 0) {
+			setVectorLengthSquared(vector, length * length);
+		} else {
+			setVectorLengthSquared(vector, -length * length);
+		}
+	}
+
+	/**
+	 * @author bergerkiller (https://github.com/bergerkiller)
+	 * @param vector
+	 * @param lengthsquared
+	 */
+	public static void setVectorLengthSquared(Vector vector, double lengthsquared) {
+		double vlength = vector.lengthSquared();
+		if (Math.abs(vlength) > 0.0001) {
+			if (lengthsquared < 0) {
+				vector.multiply(-Math.sqrt(-lengthsquared / vlength));
+			} else {
+				vector.multiply(Math.sqrt(lengthsquared / vlength));
+			}
+		}
 	}
 
 	/**

@@ -47,7 +47,7 @@ public class Set extends BaseCommand {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(args[0]);
 		if (fPlayer == null)
 			if (ForcePlugin.debug) {
-				ForcePlugin.log.info("[ForceCraft] A ForcePlayer with the name "
+				ForcePlugin.log.info("A ForcePlayer with the name "
 						+ args[1] + " does not exist!");
 				return;
 			}

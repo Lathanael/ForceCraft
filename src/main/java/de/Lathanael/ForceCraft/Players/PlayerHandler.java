@@ -87,7 +87,7 @@ public class PlayerHandler {
 			return new ForcePlayer(playerName);
 		if (ForcePlugin.sensitiveonJoin && join) {
 			if (ForcePlugin.debug)
-				ForcePlugin.log.info("[ForceCraft] Creating  of a ForcePlayer object if a new player joins is disabled!");
+				ForcePlugin.log.info("Creating  of a ForcePlayer object if a new player joins is disabled!");
 			return null;
 		}
 		filePlayers.add(playerName);
@@ -105,7 +105,7 @@ public class PlayerHandler {
 		if (fPlayer != null)
 			players.put(playerName, fPlayer);
 		if (ForcePlugin.debug && fPlayer == null)
-			ForcePlugin.log.info("[ForceCraft] FocrePlayer object is null, creation failed.");
+			ForcePlugin.log.info("FocrePlayer object is null, creation failed.");
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class PlayerHandler {
 		if (fPlayer != null)
 			players.put(playerName, fPlayer);
 		if (ForcePlugin.debug && fPlayer == null)
-			ForcePlugin.log.info("[ForceCraft] FocrePlayer object is null, creation failed.");
+			ForcePlugin.log.info("FocrePlayer object is null, creation failed.");
 	}
 
 	public static void setInstance() {

@@ -103,16 +103,16 @@ public class PermissionsHandler {
 	public static void ressetPerm(String name) {
 		if (name.equalsIgnoreCase("Permissions")) {
 			yetiPerm = false;
-			ForcePlugin.log.info("[ForceCraft] Permissions 2.x/3.x disabled, using OP system!");
+			ForcePlugin.log.info("Permissions 2.x/3.x disabled, using OP system!");
 		} else if (name.equalsIgnoreCase("bPermissions")) {
 			bPerm = false;
-			ForcePlugin.log.info("[ForceCraft] bPermissions disabled, using OP system!");
+			ForcePlugin.log.info("bPermissions disabled, using OP system!");
 		} else if (name.equalsIgnoreCase("PermissionsEx")) {
 			permEx = false;
-			ForcePlugin.log.info("[ForceCraft] PermissionsEx disabled, using OP system!");
+			ForcePlugin.log.info("PermissionsEx disabled, using OP system!");
 		} else if (name.equalsIgnoreCase("PermissionsBukkit")) {
 			permBukkit = false;
-			ForcePlugin.log.info("[ForceCraft] PermissionsBukkit disabled, using OP system!");
+			ForcePlugin.log.info("PermissionsBukkit disabled, using OP system!");
 		}
 		perm = new BukkitPermOrOP();
 	}

@@ -18,7 +18,26 @@
             <targetPath>.</targetPath>
             <filtering>true</filtering>
             <directory>${basedir}/src/main/resources/</directory>
-            <includes></includes>
+            <includes>
+            	<include>**/*.properties</include>
+            	<include>plugin.yml</include>
+            	<include>config.yml</include>
+            </includes>
+            <excludes>
+            	<exclude>Background_alt.png</exclude>
+            </excludes>
+        </resource>
+        <resource>
+        	<targetPath>.</targetPath>
+        	<directory>${basedir}/src/main/resources/</directory>
+        	<includes>
+        		<include>BarTex.jpg</include>
+        		<include>Background.png</include>
+        		<include>ranksInfo.yml</include>
+        	</includes>
+        	<excludes>
+                <exclude>Background_alt.png</exclude>
+            </excludes>
         </resource>
     </resources>
     <plugins>

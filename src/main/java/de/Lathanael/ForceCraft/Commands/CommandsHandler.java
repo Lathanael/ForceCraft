@@ -138,10 +138,10 @@ public class CommandsHandler implements CommandExecutor {
 			plugin.getCommand(power.cmdName).setExecutor(instance);
 			powerMap.put(plugin.getCommand(power.cmdName), power);
 		} catch (InstantiationException e) {
-			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		}
 	}
@@ -153,10 +153,10 @@ public class CommandsHandler implements CommandExecutor {
 			plugin.getCommand(cmd.name).setExecutor(instance);
 			cmdMap.put(plugin.getCommand(cmd.name), cmd);
 		} catch (InstantiationException e) {
-			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			ForcePlugin.log.info("[ForceCraft] Could not create an Instance for: " + class1.getName());
+			ForcePlugin.log.info("Could not create an Instance for: " + class1.getName());
 			e.printStackTrace();
 		}
 	}

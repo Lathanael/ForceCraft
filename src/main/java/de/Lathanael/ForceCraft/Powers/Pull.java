@@ -54,27 +54,30 @@ public class Pull extends BasePower {
 		if (target != null) {
 			Tools.debugMsg("Entity targeted!", player.getHandler());
 		}
-		Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
-		if (block.getType().equals(Material.AIR) || block == null) {
-			Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());
-			return;
+		int skillRank = player.getSkillRank(name);
+		double force = instance.ranksInfo.getDouble(name + "." + String.valueOf(skillRank), 1D);
+		if (target == null) {
+			Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
+			if (block.getType().equals(Material.AIR) || block == null) {
+				Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());
+				return;
+			}
+			List<Block> blocks = new ArrayList<Block>();
+			for (int i = 1; i < force; i++) {
+				Block nthBlock = null;
+				if (block.getX() >= block.getZ())
+					nthBlock = block.getRelative(i,0,0);
+				else
+					nthBlock = block.getRelative(0, 0, i);
+				blocks.add(nthBlock);
+			}
+			Tools.moveBlocks(blocks, player.getHandler().getWorld(), false, player.getHandler().getLocation().getDirection());
+		} else {
+			Tools.moveEntity(player.getHandler(), target, force);
 		}
-		int rank = player.getSkillRank(name);
-		int amount = instance.ranksInfo.getInt(name + "." + String.valueOf(rank), 1);
-		List<Block> blocks = new ArrayList<Block>();
-		for (int i = 1; i < amount; i++) {
-			Block nthBlock = null;
-			if (block.getX() >= block.getZ())
-				nthBlock = block.getRelative(i,0,0);
-			else
-				nthBlock = block.getRelative(0, 0, i);
-			blocks.add(nthBlock);
-		}
-		Tools.moveBlocks(blocks, player.getHandler().getWorld(), false, player.getHandler().getLocation().getDirection());
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost);
-
 	}
 
 	@Override

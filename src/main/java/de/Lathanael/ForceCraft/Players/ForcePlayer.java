@@ -38,10 +38,10 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
-import de.Lathanael.ForceCraft.Utils.ManaBarGUI;
 import de.Lathanael.ForceCraft.Utils.Ranks;
 import de.Lathanael.ForceCraft.Utils.Tools;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.gui.ManaBarGUI;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 
 /**
@@ -95,7 +95,7 @@ public class ForcePlayer {
 		if (!playerFile.exists()) {
 			try {
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("[ForceCraft] Creating player file for: " + name);
+					ForcePlugin.log.info("Creating player file for: " + name);
 				playerFile.createNewFile();
 				playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 				createDefaults();
@@ -111,14 +111,14 @@ public class ForcePlayer {
 				loadAmounts();
 				loadSkillRanks();
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("[ForceCraft] Player file for " + name + " created!");
+					ForcePlugin.log.info("Player file for " + name + " created!");
 			} catch (IOException e) {
-				ForcePlugin.log.info("[ForceCraft] An error occured during the creation of the player file for: " + name);
+				ForcePlugin.log.info("An error occured during the creation of the player file for: " + name);
 				e.printStackTrace();
 			}
 		} else {
 			if (ForcePlugin.debug)
-				ForcePlugin.log.info("[ForceCraft] Loading player file for: " + name);
+				ForcePlugin.log.info("Loading player file for: " + name);
 			playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			rank = Ranks.getRank(playerConfig.getString("Alignment").toLowerCase(), playerConfig.getInt("Rank"));;
 			alignment = ForceAlignment.valueOf(((String) playerConfig.get("Alignment")).toUpperCase());
@@ -130,35 +130,37 @@ public class ForcePlayer {
 			loadAmounts();
 			loadSkillRanks();
 			if (ForcePlugin.debug) {
-				ForcePlugin.log.info("[ForceCraft] Loaded player file for: " + name);
-				ForcePlugin.log.info("[ForceCraft] Loaded attributes are:");
-				ForcePlugin.log.info("[ForceCraft] Alignment: " + alignment.toString());
-				ForcePlugin.log.info("[ForceCraft] Rank: " + rank.toString());
-				ForcePlugin.log.info("[ForceCraft] Mana: " + mana + "/" + maxMana);
-				ForcePlugin.log.info("[ForceCraft] Keys:");
+				ForcePlugin.log.info("Loaded player file for: " + name);
+				ForcePlugin.log.info("Loaded attributes are:");
+				ForcePlugin.log.info("Alignment: " + alignment.toString());
+				ForcePlugin.log.info("Rank: " + rank.toString());
+				ForcePlugin.log.info("Mana: " + mana + "/" + maxMana);
+				ForcePlugin.log.info("Keys:");
 				for (Map.Entry<Keyboard, String> entries : keys.entrySet()) {
-						ForcePlugin.log.info("[ForceCraft] Key: " + entries.getKey().toString());
-						ForcePlugin.log.info("[ForceCraft] Power: " + entries.getValue());
+						ForcePlugin.log.info("Key: " + entries.getKey().toString());
+						ForcePlugin.log.info("Power: " + entries.getValue());
 				}
-				ForcePlugin.log.info("[ForceCraft] Loaded player file for: " + name);
+				ForcePlugin.log.info("Loaded player file for: " + name);
 			}
 		}
-		manaBar = new ManaBarGUI((SpoutPlayer) handler, mana, maxMana);
-		sPlayer.getMainScreen().attachWidget(ForcePlugin.getInstance(), manaBar);
+		if (ForcePlugin.manaBarEnabled) {
+			manaBar = new ManaBarGUI((SpoutPlayer) handler, mana, maxMana);
+			sPlayer.getMainScreen().attachWidget(ForcePlugin.getInstance(), manaBar);
+		}
 	}
 
 	public void updateFile(boolean forceSave) {
 		if (count == 5 || forceSave) {
 			try {
 				if (ForcePlugin.debug)
-					ForcePlugin.log.info("[ForceCraft] Saving player file for: " + name);
+					ForcePlugin.log.info("Saving player file for: " + name);
 				updateKeysInFile();
 				saveAmounts();
 				saveSkillRanks();
 				saveLoneValues();
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
-				ForcePlugin.log.info("[ForceCraft] Failed to save player file for: " + name);
+				ForcePlugin.log.info("Failed to save player file for: " + name);
 				e.printStackTrace();
 			}
 			count = 0;
@@ -243,6 +245,10 @@ public class ForcePlayer {
 
 	public String getKey(Keyboard key) {
 		return keys.get(key);
+	}
+
+	public TreeMap<Keyboard, String> getKeys() {
+		return keys;
 	}
 
 	public boolean containsKey(Keyboard key) {
@@ -351,6 +357,10 @@ public class ForcePlayer {
 		maxMana = mana;
 		manaBar.updateMaxMana(this.maxMana);
 		updateFile();
+	}
+
+	public int getMaxMana() {
+		return maxMana;
 	}
 
 	public void incMaxMana(int mana) {

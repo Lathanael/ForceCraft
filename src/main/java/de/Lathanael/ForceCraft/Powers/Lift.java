@@ -68,6 +68,7 @@ public class Lift extends BasePower {
 			player.setLastTimeUsed(name, System.currentTimeMillis());
 			player.decMana(manaCost);
 		}
+
 	}
 
 	@Override

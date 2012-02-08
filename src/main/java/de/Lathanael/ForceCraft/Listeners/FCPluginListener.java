@@ -39,7 +39,7 @@ public class FCPluginListener implements Listener {
 		ForcePlugin instance = ForcePlugin.getInstance();
 		if (!instance.config.getBoolean("IgnorePermissionBridge")) {
 			if (instance.getServer().getPluginManager().getPlugin("Permissions").isEnabled()) {
-				ForcePlugin.log.info("[ForceCraft] Found Permission 2.x/3.x, hooking in!");
+				ForcePlugin.log.info("Found Permission 2.x/3.x, hooking in!");
 				PermissionsHandler.setYetiPerm(instance.getServer().getPluginManager().getPlugin("Permissions"));
 			}
 		}
@@ -47,15 +47,15 @@ public class FCPluginListener implements Listener {
 		Plugin plugin = instance.getServer().getPluginManager().getPlugin("PermissionsEx");
 		if (plugin != null)
 			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("PermissionsEx")))
-				ForcePlugin.log.info("[ForceCraft] Found PermissionsEx, hooking in!");
+				ForcePlugin.log.info("Found PermissionsEx, hooking in!");
 		plugin = instance.getServer().getPluginManager().getPlugin("bPermissions");
 		if (plugin != null)
 			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("bPermissions")))
-				ForcePlugin.log.info("[ForceCraft] Found bPermissions, hooking in!");
+				ForcePlugin.log.info("Found bPermissions, hooking in!");
 		plugin = instance.getServer().getPluginManager().getPlugin("PermissionsBukkit");
 		if (plugin != null)
 			if (PermissionsHandler.setPermEx(instance.getServer().getPluginManager().getPlugin("PermissionsBukkit")))
-				ForcePlugin.log.info("[ForceCraft] Found PermissionsBukkit, hooking in!");
+				ForcePlugin.log.info("Found PermissionsBukkit, hooking in!");
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)
@@ -63,22 +63,22 @@ public class FCPluginListener implements Listener {
 		ForcePlugin instance = ForcePlugin.getInstance();
 		if (!instance.config.getBoolean("IgnorePermissionBridge")) {
 			if (event.getPlugin().getDescription().getName().equalsIgnoreCase("Permissions")) {
-				ForcePlugin.log.info("[ForceCraft] Found Permission 2.x/3.x, hooking in!");
+				ForcePlugin.log.info("Found Permission 2.x/3.x, hooking in!");
 				PermissionsHandler.setYetiPerm(event.getPlugin());
 			}
 		}
 
 		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("PermissionsEx"))
 			if (PermissionsHandler.setPermEx(event.getPlugin()))
-				ForcePlugin.log.info("[ForceCraft] Found PermissionsEx, hooking in!");
+				ForcePlugin.log.info("Found PermissionsEx, hooking in!");
 
 		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("bPermissions"))
 			if (PermissionsHandler.setPermEx(event.getPlugin()))
-				ForcePlugin.log.info("[ForceCraft] Found bPermissions, hooking in!");
+				ForcePlugin.log.info("Found bPermissions, hooking in!");
 
 		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("PermissionsBukkit"))
 			if (PermissionsHandler.setPermEx(event.getPlugin()))
-				ForcePlugin.log.info("[ForceCraft] Found PermissionsBukkit, hooking in!");
+				ForcePlugin.log.info("Found PermissionsBukkit, hooking in!");
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)

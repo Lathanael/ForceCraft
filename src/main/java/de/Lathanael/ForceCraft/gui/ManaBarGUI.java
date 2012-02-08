@@ -16,7 +16,7 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.Utils;
+package de.Lathanael.ForceCraft.gui;
 
 import org.getspout.spoutapi.gui.Color;
 import org.getspout.spoutapi.gui.GenericContainer;
