@@ -47,6 +47,10 @@ commands:
         description: Use Force Pull to pull a certain amount of blocks towards you, amount depends on rank.
         aliases: [pull]
         usage: /<command>
+    fc_push:
+        description: Use Force Push to push a certain amount of blocks away from you, amount depends on rank.
+        aliases: [psuh]
+        usage: /<command>
     fc_mediation:
         description: Use Force Mediation to increase your mana over time.
         aliases: [mediation]
