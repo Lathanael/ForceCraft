@@ -16,7 +16,7 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.gui.User;
+package de.Lathanael.ForceCraft.gui.User.Buttons;
 
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.gui.Button;
