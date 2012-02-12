@@ -18,7 +18,12 @@
 
 package de.Lathanael.ForceCraft.Commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -26,13 +31,26 @@ import org.bukkit.command.CommandSender;
  */
 public class Reload extends BaseCommand {
 
+	public Reload() {
+		name = "fc_reload";
+		permNode = "force.reload";
+	}
+
 	/* (non-Javadoc)
 	 * @see de.Lathanael.ForceCraft.Commands.BaseCommand#execute(org.bukkit.command.CommandSender, java.lang.String[])
 	 */
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		// TODO Auto-generated method stub
-
+		if (sender instanceof ConsoleCommandSender)
+			ForcePlugin.log.info("Reloading configuration files...");
+		else
+			sender.sendMessage(ChatColor.AQUA + "Reloading configuration files...");
+		ForcePlugin.getInstance().reload();
+		if (sender instanceof ConsoleCommandSender)
+			ForcePlugin.log.info("Reloaded configuration files: config.yml, ranksInfo.yml.");
+		else
+			sender.sendMessage(ChatColor.GREEN + "Reloaded configuration files: "
+					+ ChatColor.GOLD + "config.yml, ranksInfo.yml.");
 	}
 
 	/* (non-Javadoc)
@@ -40,7 +58,11 @@ public class Reload extends BaseCommand {
 	 */
 	@Override
 	public boolean checkPerm(CommandSender sender) {
-		// TODO Auto-generated method stub
+		if (sender instanceof ConsoleCommandSender)
+			return true;
+		Player player = (Player) sender;
+		if (PermissionsHandler.getInstance().hasPerm(player, permNode))
+			return true;
 		return false;
 	}
 
@@ -49,8 +71,7 @@ public class Reload extends BaseCommand {
 	 */
 	@Override
 	public boolean checkArgs(String[] args) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

@@ -23,6 +23,10 @@ commands:
         description: Binds a Force Power the given key.
         aliases: [fbind]
         usage: /<command> [key] [power] - key maybe a number or the name defined by Spout!
+    fc_reload:
+        description: Reloads all configuration files.
+        aliases: [freload]
+        usage: /<command>
     fc_choke:
         description: Chokes the targeted player if he is within your range.
         aliases: [choke]
@@ -100,6 +104,7 @@ permissions:
         children:
             force.info: true
             force.set: true
+            force.reload: true
     force.info:
         description: Allows usage of the /finfo command.
         default: false
@@ -108,6 +113,9 @@ permissions:
         default: false
     force.bind:
         description: Allows usage of the /fbind command.
+        default: false
+    force.reload:
+        description: Allows usage of the /freload command.
         default: false
     force.pull:
         description: Allows usage of the Pull force.

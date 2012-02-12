@@ -253,6 +253,12 @@ public class ForcePlugin extends JavaPlugin {
 		return file;
 	}
 
+	public void reload() {
+		loadRanksInfo();
+		config = YamlConfiguration.loadConfiguration(loadConfiguration());
+		loadConfig(config);
+	}
+
 	// TODO: registering all commands and powers
 	private void registerCommands() {
 		if (config.getBoolean("Power.Pull.enabled"))
