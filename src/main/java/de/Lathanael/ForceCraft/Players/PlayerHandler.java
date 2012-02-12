@@ -69,6 +69,8 @@ public class PlayerHandler {
 	public ForcePlayer getPlayer(String name) {
 		if (players.containsKey(name))
 			return players.get(name);
+		else if (filePlayers.contains(name))
+			return new ForcePlayer(name);
 		else
 			return null;
 	}
@@ -87,7 +89,7 @@ public class PlayerHandler {
 			return new ForcePlayer(playerName);
 		if (ForcePlugin.sensitiveonJoin && join) {
 			if (ForcePlugin.debug)
-				ForcePlugin.log.info("Creating  of a ForcePlayer object if a new player joins is disabled!");
+				ForcePlugin.log.info("Creating of a ForcePlayer object if a new player joins is disabled!");
 			return null;
 		}
 		filePlayers.add(playerName);

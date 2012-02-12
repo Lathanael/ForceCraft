@@ -87,20 +87,20 @@ public class CommandsHandler implements CommandExecutor {
 					Player executor = (Player) sender;
 					Block block = null;
 					if (power.name.equalsIgnoreCase("pull")) {
-						block = executor.getTargetBlock(null, 20);
+						block = executor.getTargetBlock(null, ForcePlugin.checkDist);
 						if (block == null)
 							return;
 						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor)){
-							power.execute(fPlayer, null);
+							power.execute(fPlayer, target);
 							power.issueEvents();
 						}
 					}
 					else if (power.name.equalsIgnoreCase("push")) {
-						block = executor.getTargetBlock(null, 20);
+						block = executor.getTargetBlock(null, ForcePlugin.checkDist);
 						if (block == null)
 							return;
 						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor)) {
-							power.execute(fPlayer, null);
+							power.execute(fPlayer, target);
 							power.issueEvents();
 						}
 					}

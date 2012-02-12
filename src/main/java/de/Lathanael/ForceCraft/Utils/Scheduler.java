@@ -91,7 +91,7 @@ public class Scheduler {
 	 *
 	 * @param player - The ForcePlayer object to be filled
 	 */
-	public void scheduleMediationTask(final ForcePlayer player) {
+	public void scheduleMeditationTask(final ForcePlayer player) {
 		final int playerRank = player.getSkillRank("Mediation");
 		if (playerRank == 0)
 			return;

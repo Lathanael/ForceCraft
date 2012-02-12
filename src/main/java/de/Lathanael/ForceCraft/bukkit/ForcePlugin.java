@@ -51,8 +51,9 @@ import de.Lathanael.ForceCraft.Listeners.FCInputListener;
 import de.Lathanael.ForceCraft.Listeners.FCPlayerListener;
 import de.Lathanael.ForceCraft.Listeners.FCPluginListener;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
-import de.Lathanael.ForceCraft.Powers.Mediation;
+import de.Lathanael.ForceCraft.Powers.Meditation;
 import de.Lathanael.ForceCraft.Powers.Pull;
+import de.Lathanael.ForceCraft.Powers.Push;
 import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
@@ -77,7 +78,7 @@ public class ForcePlugin extends JavaPlugin {
 	public static int maxSP;
 	public static int startingSP;
 	public static boolean manaBarEnabled;
-	private boolean replace = true;
+	private boolean replace = false;
 
 	public void onDisable() {
 		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
@@ -147,11 +148,11 @@ public class ForcePlugin extends JavaPlugin {
 
 	private void loadConfig(FileConfiguration config) {
 		debug = config.getBoolean("DebugMessages");
-		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin");
-		checkDist = config.getInt("checkDistance");
+		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin", false);
+		checkDist = config.getInt("checkDistance", 20);
 		texURL = config.getString("manaBarTexURL", "");
-		maxSP = config.getInt("maxSkillPoints");
-		startingSP = config.getInt("startingSkillPoints");
+		maxSP = config.getInt("maxSkillPoints", 100);
+		startingSP = config.getInt("startingSkillPoints", 10);
 		manaBarEnabled = config.getBoolean("manaBarEnabled", true);
 	}
 
@@ -257,7 +258,9 @@ public class ForcePlugin extends JavaPlugin {
 		if (config.getBoolean("Power.Pull.enabled"))
 			commandsHandler.registerPower(Pull.class);
 		if (config.getBoolean("Power.Mediation.enabled"))
-			commandsHandler.registerPower(Mediation.class);
+			commandsHandler.registerPower(Meditation.class);
+		if (config.getBoolean("Power.Push.enabled"))
+			commandsHandler.registerPower(Push.class);
 		commandsHandler.registerCommand(Info.class);
 		commandsHandler.registerCommand(Set.class);
 		commandsHandler.registerCommand(BindKey.class);

@@ -108,6 +108,7 @@ public class Tools {
 		ArrayList<LivingEntity> livingE = new ArrayList<LivingEntity>();
 		for (Entity e : nearbyE) {
 			if (e instanceof LivingEntity) {
+				debugMsg("Adding entity to the list.", player);
 				livingE.add((LivingEntity) e);
 			}
 		}
@@ -129,8 +130,9 @@ public class Tools {
 				ex = loc.getX();
 				ey = loc.getY();
 				ez = loc.getZ();
-				if ((bx-.75 <= ex && ex <= bx+1.75) && (bz-.75 <= ez && ez <= bz+1.75) && (by-1 <= ey && ey <= by+2.5)) {
+				if ((bx-0.75 <= ex && ex <= bx+1.75) && (bz-0.75 <= ez && ez <= bz+1.75) && (by-1 <= ey && ey <= by+2.5)) {
 					// entity is close enough, return the target
+					debugMsg("Found entity!", player);
 					return e;
 				}
 			}

@@ -247,6 +247,20 @@ public class ForcePlayer {
 		return keys.get(key);
 	}
 
+	public void resetKeys() {
+		keys.clear();
+	}
+
+	public void removeKey(Keyboard key) {
+		Iterator<Map.Entry<Keyboard, String>> entries = keys.entrySet().iterator();
+		while (entries.hasNext()) {
+			if (entries.next().getKey() == key) {
+				entries.remove();
+				break;
+			}
+		}
+	}
+
 	public TreeMap<Keyboard, String> getKeys() {
 		return keys;
 	}
