@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (C) 2011-2012 Philippe Leipold
+ * Copyright (C) 2012 Philippe Leipold
  *
  * ForceCraft is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,19 +18,13 @@
 
 package de.Lathanael.ForceCraft.gui;
 
-import org.getspout.spoutapi.gui.GenericContainer;
-import org.getspout.spoutapi.player.SpoutPlayer;
+import org.getspout.spoutapi.gui.GenericItemWidget;
+import org.getspout.spoutapi.gui.ItemWidget;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
+ *
  */
-public class AdminGUI extends GenericContainer{
+public class ExtendedItemWidget extends GenericItemWidget implements ItemWidget{
 
-	private SpoutPlayer player;
-	private Geometry edges;
-
-	public AdminGUI(Geometry edges, SpoutPlayer player) {
-		this.player = player;
-		this.edges = edges;
-	}
 }

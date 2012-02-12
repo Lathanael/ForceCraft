@@ -33,9 +33,9 @@ import de.Lathanael.ForceCraft.Utils.Tools;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class Mediation extends BasePower {
+public class Meditation extends BasePower {
 
-	public Mediation() {
+	public Meditation() {
 		name = "Mediation";
 		cmdName = "fc_mediation";
 		perm = "force.mediation";
@@ -47,7 +47,7 @@ public class Mediation extends BasePower {
 
 	@Override
 	public void execute(ForcePlayer player, Entity target) {
-		Scheduler.getInstance().scheduleMediationTask(player);
+		Scheduler.getInstance().scheduleMeditationTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost);

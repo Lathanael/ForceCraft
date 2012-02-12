@@ -18,22 +18,29 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.gui;
+package de.Lathanael.ForceCraft.gui.SkillTree;
 
 import org.getspout.spoutapi.gui.GenericContainer;
 import org.getspout.spoutapi.gui.Label;
+import org.getspout.spoutapi.gui.Texture;
 import org.getspout.spoutapi.player.SpoutPlayer;
+
+import de.Lathanael.ForceCraft.gui.Geometry;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class SkillTreeGUI extends GenericContainer {
+public class SKGUI extends GenericContainer {
 	private Label label;
+	@SuppressWarnings("unused")
 	private SpoutPlayer player;
+	@SuppressWarnings("unused")
 	private Geometry edges;
+	private Texture background;
 
-	public SkillTreeGUI (Geometry edges, SpoutPlayer player) {
+	public SKGUI (Geometry edges, SpoutPlayer player, Texture tex) {
 		this.player = player;
 		this.edges = edges;
+		background = tex;
 	}
 }
