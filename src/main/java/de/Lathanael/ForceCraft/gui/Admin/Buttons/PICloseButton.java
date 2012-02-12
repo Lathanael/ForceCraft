@@ -16,34 +16,32 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.gui.Admin;
+package de.Lathanael.ForceCraft.gui.Admin.Buttons;
 
-import org.getspout.spoutapi.gui.ComboBox;
-import org.getspout.spoutapi.gui.GenericComboBox;
+import org.getspout.spoutapi.event.screen.ButtonClickEvent;
+import org.getspout.spoutapi.gui.Button;
+import org.getspout.spoutapi.gui.GenericButton;
+import org.getspout.spoutapi.gui.PopupScreen;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
-import de.Lathanael.ForceCraft.gui.FCUserInterface;
+import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class AdminComboBox extends GenericComboBox implements ComboBox {
+public class PICloseButton extends GenericButton implements Button {
 
-	private String selectedItem;
-
-	/* (non-Javadoc)
-	 * @see org.getspout.spoutapi.gui.GenericComboBox#onSelectionChanged(int, java.lang.String)
-	 */
-	@Override
-	public void onSelectionChanged(int i, String text) {
-		selectedItem = getSelectedItem();
-		this.setText(selectedItem);
-		this.setDirty(true);
-		FCUserInterface.adminField.input.setText(selectedItem);
-		FCUserInterface.adminField.input.setDirty(true);
+	public PICloseButton(String name) {
+		super(name);
 	}
 
-	public String getSelectionChangedItem() {
-		return selectedItem;
+	@Override
+	public void onButtonClick(ButtonClickEvent event) {
+		SpoutPlayer player = event.getPlayer();
+		player.getMainScreen().getActivePopup().close();
+		PopupScreen screen = Tools.reopenScreen(player);
+		if (screen != null)
+			player.getMainScreen().attachPopupScreen(Tools.reopenScreen(player));
 	}
 }

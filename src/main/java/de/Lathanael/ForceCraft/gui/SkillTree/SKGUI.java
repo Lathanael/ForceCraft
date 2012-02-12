@@ -21,6 +21,7 @@
 package de.Lathanael.ForceCraft.gui.SkillTree;
 
 import org.getspout.spoutapi.gui.GenericContainer;
+import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.Label;
 import org.getspout.spoutapi.gui.Texture;
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -42,5 +43,9 @@ public class SKGUI extends GenericContainer {
 		this.player = player;
 		this.edges = edges;
 		background = tex;
+		label = new GenericLabel();
+		label.setText("Admin GUI");
+		label.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());
+		label.setDirty(true);
 	}
 }

@@ -34,6 +34,7 @@ import org.getspout.spoutapi.gui.Widget;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.gui.Geometry;
+import de.Lathanael.ForceCraft.gui.Admin.Buttons.PlayerInfoButton;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -47,8 +48,9 @@ public class AdminGUI extends GenericContainer{
 	private Texture background;
 	private Label selPlayerLabel, adminLabel;
 	public ComboBox onlinePlayers;
-	private TextField input;
-	public Button promote, demote;
+	public TextField input, output;
+	public Button promote, demote, set, reload;
+	public PlayerInfoButton info;
 
 	public AdminGUI(Geometry edges, SpoutPlayer player, Texture tex) {
 		this.player = player;
@@ -58,15 +60,23 @@ public class AdminGUI extends GenericContainer{
 		adminLabel.setText("Admin GUI");
 		adminLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());
 		adminLabel.setDirty(true);
+		output = new GenericTextField();
+		output.setHeight(15).setWidth(300).setX(edges.getLeft()+10).setY(edges.getTop() + 20);
+		output.setMaximumCharacters(25555);
+		output.setMaximumLines(10);
+		output.setEnabled(false);
+		output.setDirty(true);
 		selPlayerLabel = new GenericLabel();
 		selPlayerLabel.setText("Select a player");
-		selPlayerLabel.setHeight(10).setWidth(70).setX(edges.getLeft()+10).setY(edges.getTop() + 30);
+		selPlayerLabel.setHeight(10).setWidth(70).setX(edges.getLeft()+10).setY(edges.getTop() + 45);
 		selPlayerLabel.setDirty(true);
 		input = new GenericTextField();
-		input.setHeight(15).setWidth(100).setX(edges.getLeft()+10).setY(edges.getTop() + 45);
+		input.setHeight(15).setWidth(100).setX(edges.getLeft()+10).setY(edges.getTop() + 60);
+		input.setMaximumCharacters(25555);
+		input.setMaximumLines(10);
 		input.setDirty(true);
 		onlinePlayers = new AdminComboBox();
-		onlinePlayers.setHeight(15).setWidth(100).setX(edges.getLeft() + 115).setY(edges.getTop() + 45);
+		onlinePlayers.setHeight(15).setWidth(100).setX(edges.getLeft() + 115).setY(edges.getTop() + 60);
 		List<String> list = new ArrayList<String>();
 		for (Player listPLayer : player.getServer().getOnlinePlayers()) {
 			list.add(listPLayer.getName());
@@ -74,7 +84,10 @@ public class AdminGUI extends GenericContainer{
 		onlinePlayers.setItems(list);
 		onlinePlayers.setText("Online Players");
 		onlinePlayers.setDirty(true);
-		addChildren(new Widget[] {onlinePlayers, selPlayerLabel, input, adminLabel});
+		info = new PlayerInfoButton("Force Player Info");
+		info.setHeight(15).setWidth(95).setX(edges.getLeft()+10).setY(edges.getTop() + 100);
+		info.setDirty(true);
+		addChildren(new Widget[] {onlinePlayers, selPlayerLabel, input, output, adminLabel, info});
 		setWidth(0).setHeight(0);
 	}
 

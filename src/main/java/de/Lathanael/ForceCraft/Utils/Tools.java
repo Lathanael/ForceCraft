@@ -36,7 +36,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
+import org.getspout.spoutapi.gui.PopupScreen;
 import org.getspout.spoutapi.keyboard.Keyboard;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
@@ -48,6 +50,7 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
  */
 public class Tools {
 
+	private static HashMap<SpoutPlayer, PopupScreen> screens = new HashMap<SpoutPlayer, PopupScreen>();
 	/**
 	 * Gets the Spout Keyboard.KEY Enum corresponding to the given key-Integer
 	 * @param keyNr
@@ -329,5 +332,13 @@ public class Tools {
 		for (Map.Entry<String, ForcePlayer> map: onlinePlayers.entrySet())
 			map.getValue().updateFile(true);
 		debugMsg("All files saved!", null);
+	}
+
+	public static void savePopupScreen(SpoutPlayer player, PopupScreen screen) {
+		screens.put(player, screen);
+	}
+
+	public static PopupScreen reopenScreen(SpoutPlayer player) {
+		return screens.get(player);
 	}
 }

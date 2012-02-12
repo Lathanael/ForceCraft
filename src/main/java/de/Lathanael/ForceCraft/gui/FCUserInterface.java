@@ -32,7 +32,6 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
-import de.Lathanael.ForceCraft.gui.Admin.AdminComboBox;
 import de.Lathanael.ForceCraft.gui.Admin.AdminGUI;
 import de.Lathanael.ForceCraft.gui.PlayerInfo.PIGUI;
 import de.Lathanael.ForceCraft.gui.SkillTree.SKGUI;
@@ -47,7 +46,7 @@ public class FCUserInterface extends GenericPopup {
 	private Button close;
 	private Texture background;
 	private SpoutPlayer player;
-	private Geometry edges = new Geometry();
+	public static Geometry edges = new Geometry();
 	public static UserGUI userField;
 	public static PIGUI infoField;
 	public static AdminGUI adminField;
@@ -168,9 +167,6 @@ public class FCUserInterface extends GenericPopup {
 			player.getMainScreen().closePopup();
 		} else if (button.equals(info)) {
 			openPlayerInfoField();
-		} else if (button.equals(adminField.onlinePlayers)) {
-			AdminComboBox box = (AdminComboBox) button;
-			adminField.setInputText(box.getSelectionChangedItem());
 		}
 	}
 }
