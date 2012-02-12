@@ -46,7 +46,6 @@ public class PIGUI extends GenericContainer{
 		this.edges = edges;
 		background = tex;
 		list = new GenericListView(new PIListModel(player));
-		this.edges = edges;
 		list.setHeight(155).setWidth(300).setX(edges.getLeft()+10).setY(edges.getTop()+20);
 		guiLabel = new GenericLabel("PlayerInfo");
 		guiLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());

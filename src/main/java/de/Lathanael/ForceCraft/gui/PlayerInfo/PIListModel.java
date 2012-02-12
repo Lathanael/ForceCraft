@@ -40,6 +40,13 @@ public class PIListModel extends AbstractListModel {
 	public PIListModel(SpoutPlayer player) {
 		this.player = player;
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(player.getName());
+		if (fPlayer == null) {
+			items = new ListWidgetItem[0];
+			items[0] = new ListWidgetItem("No ForcePlayer found",
+					"Sorry could not retrieve a ForcePlayer associated to your name: " + player.getName());
+			sizeChanged();
+			return;
+		}
 		items = new ListWidgetItem[3+fPlayer.getPowerAmounts().size()];
 		items[0] = new ListWidgetItem("Alignment", fPlayer.getAlignment().toString());
 		items[1] = new ListWidgetItem("Rank", fPlayer.getRankName());

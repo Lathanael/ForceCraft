@@ -37,6 +37,9 @@ import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Powers.PowerList;
 import de.Lathanael.ForceCraft.gui.Geometry;
+import de.Lathanael.ForceCraft.gui.User.Buttons.BindKeyButton;
+import de.Lathanael.ForceCraft.gui.User.Buttons.RemoveKeyButton;
+import de.Lathanael.ForceCraft.gui.User.Buttons.ResetKeysButton;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -67,9 +70,14 @@ public class UserGUI extends GenericContainer {
 		keys = new GenericTextField();
 		keys.setHeight(55).setWidth(300).setX(edges.getLeft()+10).setY(edges.getTop()+20);
 		keys.setEnabled(false);
-		String result = "Key    ---  Power\n";
-		for (Map.Entry<Keyboard, String> entries : fPlayer.getKeys().entrySet()) {
-			result += entries.getKey().toString() + "  ---  " + entries.getValue() + "\n";
+		String result = "";
+		if (fPlayer != null) {
+			result = "Key    ---  Power\n";
+			for (Map.Entry<Keyboard, String> entries : fPlayer.getKeys().entrySet()) {
+				result += entries.getKey().toString() + "  ---  " + entries.getValue() + "\n";
+			}
+		} else {
+			result = "Sorry no ForcePlayer associated to your name could be found.";
 		}
 		keys.setMaximumCharacters(25555);
 		keys.setMaximumLines(10);
