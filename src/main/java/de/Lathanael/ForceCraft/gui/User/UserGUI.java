@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.getspout.spoutapi.gui.Button;
 import org.getspout.spoutapi.gui.ComboBox;
-import org.getspout.spoutapi.gui.GenericButton;
 import org.getspout.spoutapi.gui.GenericContainer;
 import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.GenericTextField;
@@ -46,7 +44,9 @@ import de.Lathanael.ForceCraft.gui.Geometry;
 public class UserGUI extends GenericContainer {
 	private TextField keys;
 	private Label userLabel;
-	public Button changeKey, removeKey, resetKeys;
+	public BindKeyButton changeKey;
+	public RemoveKeyButton removeKey;
+	public ResetKeysButton resetKeys;
 	public ComboBox availableKeys, powers;
 	@SuppressWarnings("unused")
 	private SpoutPlayer player;
@@ -93,16 +93,25 @@ public class UserGUI extends GenericContainer {
 		}
 		powers.setItems(powerList);
 		powers.setDirty(true);
-		changeKey = new GenericButton("Bind Key");
+		changeKey = new BindKeyButton("Bind Key");
 		changeKey.setHeight(15).setWidth(60).setX(edges.getLeft()+10).setY(edges.getTop() + 100);
 		changeKey.setDirty(true);
-		resetKeys = new GenericButton("Reset keys");
+		resetKeys = new ResetKeysButton("Reset keys");
 		resetKeys.setHeight(15).setWidth(60).setX(edges.getLeft()+80).setY(edges.getTop() + 100);
 		resetKeys.setDirty(true);
-		removeKey = new GenericButton("Remove key");
+		removeKey = new RemoveKeyButton("Remove key");
 		removeKey.setHeight(15).setWidth(60).setX(edges.getLeft()+150).setY(edges.getTop() + 100);
 		removeKey.setDirty(true);
 		addChildren(new Widget[] {keys, userLabel, changeKey, availableKeys, powers, resetKeys, removeKey});
 		setWidth(0).setHeight(0);
+	}
+
+	public void updateTextField() {
+		String result = "Key    ---  Power\n";
+		for (Map.Entry<Keyboard, String> entries : fPlayer.getKeys().entrySet()) {
+			result += entries.getKey().toString() + "  ---  " + entries.getValue() + "\n";
+		}
+		keys.setText(result);
+		keys.setDirty(true);
 	}
 }

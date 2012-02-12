@@ -18,28 +18,27 @@
 
 package de.Lathanael.ForceCraft.gui.User;
 
-import org.getspout.spoutapi.gui.ComboBox;
-import org.getspout.spoutapi.gui.GenericComboBox;
+import org.getspout.spoutapi.event.screen.ButtonClickEvent;
+import org.getspout.spoutapi.gui.Button;
+import org.getspout.spoutapi.gui.GenericButton;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.gui.FCUserInterface;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class UserComboBox extends GenericComboBox implements ComboBox{
+public class ResetKeysButton extends GenericButton implements Button {
 
-	private String selectedItem;
-
-	/* (non-Javadoc)
-	 * @see org.getspout.spoutapi.gui.GenericComboBox#onSelectionChanged(int, java.lang.String)
-	 */
 	@Override
-	public void onSelectionChanged(int i, String text) {
-		selectedItem = getSelectedItem();
-		this.setText(selectedItem);
-		this.setDirty(true);
+	public void onButtonClick(ButtonClickEvent event) {
+		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
+		fPlayer.resetKeys();
+		FCUserInterface.userField.updateTextField();
 	}
 
-	public String getSelectionChangedItem() {
-		return selectedItem;
+	public ResetKeysButton(String name) {
+		super(name);
 	}
 }

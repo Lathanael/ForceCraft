@@ -35,6 +35,7 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 import de.Lathanael.ForceCraft.gui.Admin.AdminComboBox;
 import de.Lathanael.ForceCraft.gui.Admin.AdminGUI;
 import de.Lathanael.ForceCraft.gui.PlayerInfo.PIGUI;
+import de.Lathanael.ForceCraft.gui.SkillTree.SKGUI;
 import de.Lathanael.ForceCraft.gui.User.UserGUI;
 
 /**
@@ -47,9 +48,10 @@ public class FCUserInterface extends GenericPopup {
 	private Texture background;
 	private SpoutPlayer player;
 	private Geometry edges = new Geometry();
-	private UserGUI userField;
-	private PIGUI infoField;
-	private AdminGUI adminField;
+	public static UserGUI userField;
+	public static PIGUI infoField;
+	public static AdminGUI adminField;
+	public static SKGUI skillTreeField;
 
 	public FCUserInterface(SpoutPlayer player) {
 		this.player = player;
@@ -94,6 +96,8 @@ public class FCUserInterface extends GenericPopup {
 		attachWidget(ForcePlugin.getInstance(), infoField);
 		adminField = new AdminGUI(edges, player, background);
 		attachWidget(ForcePlugin.getInstance(), adminField);
+		skillTreeField = new SKGUI(edges, player, background);
+		attachWidget(ForcePlugin.getInstance(), skillTreeField);
 	}
 
 	public void openPlayerInfoField() {
@@ -129,6 +133,16 @@ public class FCUserInterface extends GenericPopup {
 		adminField.setDirty(true);
 	}
 
+	public void openSkillTreeGUI() {
+		skillTreeField.setVisible(true);
+		skillTreeField.setDirty(true);
+	}
+
+	public void closeSkillTreeGUI() {
+		skillTreeField.setVisible(false);
+		skillTreeField.setDirty(true);
+	}
+
 	public void open(){
 		player.getMainScreen().attachPopupScreen(this);
 		setDirty(true);
@@ -140,6 +154,7 @@ public class FCUserInterface extends GenericPopup {
 		closeUserGUI();
 		closePlayerInfoField();
 		closeAdminGUI();
+		closeSkillTreeGUI();
 	}
 
 	public void onButtonClick(Button button) {
