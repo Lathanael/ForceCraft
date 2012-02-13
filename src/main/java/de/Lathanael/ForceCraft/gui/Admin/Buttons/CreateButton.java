@@ -22,41 +22,25 @@ import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.gui.Button;
 import org.getspout.spoutapi.gui.Color;
 import org.getspout.spoutapi.gui.GenericButton;
-import org.getspout.spoutapi.gui.InGameHUD;
-import org.getspout.spoutapi.player.SpoutPlayer;
 
-import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
-import de.Lathanael.ForceCraft.Utils.Tools;
 import de.Lathanael.ForceCraft.gui.FCUserInterface;
-import de.Lathanael.ForceCraft.gui.Admin.PlayerInfoPopup;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class PlayerInfoButton extends GenericButton implements Button {
+public class CreateButton extends GenericButton implements Button {
 
-	public PlayerInfoButton(String name) {
+	public CreateButton(String name) {
 		super(name);
 	}
 
-	@Override
 	public void onButtonClick(ButtonClickEvent event) {
-		ForcePlayer fPlayer = PlayerHandler.getInstance()
-				.getPlayer(FCUserInterface.adminField.name.getText());
-		if (fPlayer == null) {
-			FCUserInterface.adminField.output.setText("Sorry no ForcePlayer with the name: "
-					+ FCUserInterface.adminField.name.getText() + " was found.");
-			FCUserInterface.adminField.output.setFieldColor(new Color(0.4F, 0, 0));
-			FCUserInterface.adminField.output.setDirty(true);
-			return;
-		}
-		SpoutPlayer player = (SpoutPlayer) fPlayer.getHandler();
-		InGameHUD mainscreen = event.getPlayer().getMainScreen();
-		SpoutPlayer clicker = event.getPlayer();
-		Tools.savePopupScreen(clicker, mainscreen.getActivePopup());
-		mainscreen.getActivePopup().close();
-		mainscreen.attachPopupScreen(new PlayerInfoPopup(player, FCUserInterface.edges));
+		PlayerHandler.getInstance().createNewForcePlayer(FCUserInterface.adminField.name.getText());
+		FCUserInterface.adminField.output.setText("Create ForcePlayer object for: "
+				+ FCUserInterface.adminField.name.getText());
+		FCUserInterface.adminField.output.setFieldColor(new Color(0, 1.0F, 0.4F));
+		FCUserInterface.adminField.output.setDirty(true);
 	}
 }

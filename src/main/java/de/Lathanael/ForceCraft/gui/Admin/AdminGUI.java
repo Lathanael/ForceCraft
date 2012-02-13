@@ -34,7 +34,12 @@ import org.getspout.spoutapi.gui.Widget;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.gui.Geometry;
+import de.Lathanael.ForceCraft.gui.Admin.Buttons.CreateButton;
+import de.Lathanael.ForceCraft.gui.Admin.Buttons.DemoteButton;
+import de.Lathanael.ForceCraft.gui.Admin.Buttons.NextButton;
 import de.Lathanael.ForceCraft.gui.Admin.Buttons.PlayerInfoButton;
+import de.Lathanael.ForceCraft.gui.Admin.Buttons.PromoteButton;
+import de.Lathanael.ForceCraft.gui.Admin.Buttons.SetButton;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -46,11 +51,16 @@ public class AdminGUI extends GenericContainer{
 	@SuppressWarnings("unused")
 	private Geometry edges;
 	private Texture background;
-	private Label selPlayerLabel, adminLabel;
-	public ComboBox onlinePlayers;
-	public TextField input, output;
+	private Label selPlayerLabel, adminLabel, chooseActionLabel;
+	public ComboBox onlinePlayers, setListBox, setAlignmentBox, setRankBox;
+	public TextField name, output, setField;
 	public Button promote, demote, set, reload;
 	public PlayerInfoButton info;
+	public SetButton setButton;
+	public CreateButton createButton;
+	public DemoteButton demoteButton;
+	public PromoteButton promoteButton;
+	public NextButton next;
 
 	public AdminGUI(Geometry edges, SpoutPlayer player, Texture tex) {
 		this.player = player;
@@ -67,27 +77,81 @@ public class AdminGUI extends GenericContainer{
 		output.setEnabled(false);
 		output.setDirty(true);
 		selPlayerLabel = new GenericLabel();
-		selPlayerLabel.setText("Select a player");
+		selPlayerLabel.setText("1. Select a player");
 		selPlayerLabel.setHeight(10).setWidth(70).setX(edges.getLeft()+10).setY(edges.getTop() + 45);
 		selPlayerLabel.setDirty(true);
-		input = new GenericTextField();
-		input.setHeight(15).setWidth(100).setX(edges.getLeft()+10).setY(edges.getTop() + 60);
-		input.setMaximumCharacters(25555);
-		input.setMaximumLines(10);
-		input.setDirty(true);
-		onlinePlayers = new AdminComboBox();
+		name = new GenericTextField();
+		name.setHeight(15).setWidth(100).setX(edges.getLeft()+10).setY(edges.getTop() + 60);
+		name.setMaximumCharacters(25555);
+		name.setMaximumLines(10);
+		name.setDirty(true);
+		onlinePlayers = new AdminPlayerComboBox();
 		onlinePlayers.setHeight(15).setWidth(100).setX(edges.getLeft() + 115).setY(edges.getTop() + 60);
-		List<String> list = new ArrayList<String>();
+		List<String> playerList = new ArrayList<String>();
 		for (Player listPLayer : player.getServer().getOnlinePlayers()) {
-			list.add(listPLayer.getName());
+			playerList.add(listPLayer.getName());
 		}
-		onlinePlayers.setItems(list);
+		onlinePlayers.setItems(playerList);
 		onlinePlayers.setText("Online Players");
 		onlinePlayers.setDirty(true);
+		chooseActionLabel = new GenericLabel();
+		chooseActionLabel.setText("2. Choose an action to perform:");
+		chooseActionLabel.setHeight(10).setWidth(150).setX(edges.getLeft()+10).setY(edges.getTop() + 80);
+		chooseActionLabel.setDirty(true);
 		info = new PlayerInfoButton("Force Player Info");
 		info.setHeight(15).setWidth(95).setX(edges.getLeft()+10).setY(edges.getTop() + 100);
 		info.setDirty(true);
-		addChildren(new Widget[] {onlinePlayers, selPlayerLabel, input, output, adminLabel, info});
+		createButton = new CreateButton("Create Player");
+		createButton.setTooltip("Creates a new ForcePlayer Object.");
+		createButton.setHeight(15).setWidth(75).setX(edges.getLeft() + 110).setY(edges.getTop() + 100);
+		createButton.setDirty(true);
+		List<String> setList = new ArrayList<String>();
+		setList.add("Mana");
+		setList.add("MaxMana");
+		setList.add("Alignment");
+		setList.add("Rank");
+		setListBox = new AdminComboBox();
+		setListBox.setHeight(15).setWidth(75).setX(edges.getLeft() + 125).setY(edges.getTop() + 120);
+		setListBox.setItems(setList);
+		setListBox.setText("Select Type");
+		setListBox.setDirty(true);
+		setField = new GenericTextField();
+		setField.setHeight(15).setWidth(100).setX(edges.getLeft() + 10).setY(edges.getTop() + 120);
+		setField.setMaximumCharacters(25555);
+		setField.setMaximumLines(10);
+		setField.setDirty(true);
+		List<String> setAlignmentList = new ArrayList<String>();
+		setAlignmentList.add("Neutral");
+		setAlignmentList.add("Light");
+		setAlignmentList.add("Dark");
+		setAlignmentBox = new AdminComboBox();
+		setAlignmentBox.setHeight(15).setWidth(75).setX(edges.getLeft() + 205).setY(edges.getTop() + 120);
+		setAlignmentBox.setItems(setAlignmentList);
+		setAlignmentBox.setText("Select Alignment");
+		setAlignmentBox.setDirty(true);
+		List<String> setRankList = new ArrayList<String>();
+		for (int i = 1; i < 6; i++)
+			setRankList.add(String.valueOf(i));
+		setRankBox = new AdminComboBox();
+		setRankBox.setHeight(15).setWidth(75).setX(edges.getLeft() + 10).setY(edges.getTop() + 140);
+		setRankBox.setItems(setRankList);
+		setRankBox.setText("Select Rank");
+		setRankBox.setDirty(true);
+		setButton = new SetButton("Set...");
+		setButton.setHeight(15).setWidth(50).setX(edges.getLeft() + 90).setY(edges.getTop() + 140);
+		setButton.setDirty(true);
+		promoteButton = new PromoteButton("Promote");
+		promoteButton.setHeight(15).setWidth(50).setX(edges.getLeft() + 10).setY(edges.getTop() + 160);
+		promoteButton.setDirty(true);
+		demoteButton = new DemoteButton("Demote");
+		demoteButton.setHeight(15).setWidth(50).setX(edges.getLeft() + 65).setY(edges.getTop() + 160);
+		demoteButton.setDirty(true);
+		next = new NextButton("Next Page");
+		next.setHeight(15).setWidth(60).setX(edges.getLeft() + 250).setY(edges.getTop() + 160);
+		next.setDirty(true);
+		addChildren(new Widget[] {onlinePlayers, selPlayerLabel, name, output, adminLabel,
+				info, chooseActionLabel, setListBox, setButton, setField, setAlignmentBox,
+				setRankBox, createButton, demoteButton, promoteButton, next});
 		setWidth(0).setHeight(0);
 	}
 
@@ -95,7 +159,7 @@ public class AdminGUI extends GenericContainer{
 	 * @param selectionChangedItem
 	 */
 	public void setInputText(String selectionChangedItem) {
-		input.setText(selectionChangedItem);
-		input.setDirty(true);
+		name.setText(selectionChangedItem);
+		name.setDirty(true);
 	}
 }

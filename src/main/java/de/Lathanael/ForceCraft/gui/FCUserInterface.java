@@ -33,6 +33,7 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 import de.Lathanael.ForceCraft.gui.Admin.AdminGUI;
+import de.Lathanael.ForceCraft.gui.Admin.AdminGUI2;
 import de.Lathanael.ForceCraft.gui.PlayerInfo.PIGUI;
 import de.Lathanael.ForceCraft.gui.SkillTree.SKGUI;
 import de.Lathanael.ForceCraft.gui.User.UserGUI;
@@ -50,6 +51,7 @@ public class FCUserInterface extends GenericPopup {
 	public static UserGUI userField;
 	public static PIGUI infoField;
 	public static AdminGUI adminField;
+	public static AdminGUI2 adminField2;
 	public static SKGUI skillTreeField;
 
 	public FCUserInterface(SpoutPlayer player) {
@@ -95,6 +97,8 @@ public class FCUserInterface extends GenericPopup {
 		attachWidget(ForcePlugin.getInstance(), infoField);
 		adminField = new AdminGUI(edges, player, background);
 		attachWidget(ForcePlugin.getInstance(), adminField);
+		adminField2 = new AdminGUI2(edges, background);
+		attachWidget(ForcePlugin.getInstance(), adminField2);
 		skillTreeField = new SKGUI(edges, player, background);
 		attachWidget(ForcePlugin.getInstance(), skillTreeField);
 	}
@@ -105,7 +109,7 @@ public class FCUserInterface extends GenericPopup {
 		infoField.setDirty(true);
 	}
 
-	public void closePlayerInfoField() {
+	public static void closePlayerInfoField() {
 		infoField.setVisible(false);
 		infoField.setDirty(true);
 	}
@@ -116,28 +120,38 @@ public class FCUserInterface extends GenericPopup {
 		userField.setDirty(true);
 	}
 
-	public void closeUserGUI() {
+	public static void closeUserGUI() {
 		userField.setVisible(false);
 		userField.setDirty(true);
 	}
 
-	public void openAdminGUI() {
+	public static void openAdminGUI() {
 		hideWidgets();
 		adminField.setVisible(true);
 		adminField.setDirty(true);
 	}
 
-	public void closeAdminGUI() {
+	public static void closeAdminGUI() {
 		adminField.setVisible(false);
 		adminField.setDirty(true);
 	}
 
+	public static void openAdminGUI2() {
+		hideWidgets();
+		adminField2.setVisible(true);
+		adminField2.setDirty(true);
+	}
+
+	public static void closeAdminGUI2() {
+		adminField2.setVisible(false);
+		adminField2.setDirty(true);
+	}
 	public void openSkillTreeGUI() {
 		skillTreeField.setVisible(true);
 		skillTreeField.setDirty(true);
 	}
 
-	public void closeSkillTreeGUI() {
+	public static void closeSkillTreeGUI() {
 		skillTreeField.setVisible(false);
 		skillTreeField.setDirty(true);
 	}
@@ -149,10 +163,11 @@ public class FCUserInterface extends GenericPopup {
 		openPlayerInfoField();
 	}
 
-	public void hideWidgets() {
+	public static void hideWidgets() {
 		closeUserGUI();
 		closePlayerInfoField();
 		closeAdminGUI();
+		closeAdminGUI2();
 		closeSkillTreeGUI();
 	}
 

@@ -21,11 +21,13 @@ package de.Lathanael.ForceCraft.gui.Admin;
 import org.getspout.spoutapi.gui.ComboBox;
 import org.getspout.spoutapi.gui.GenericComboBox;
 
+import de.Lathanael.ForceCraft.gui.FCUserInterface;
+
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class AdminComboBox extends GenericComboBox implements ComboBox {
+public class AdminPlayerComboBox extends GenericComboBox implements ComboBox {
 
 	private String selectedItem;
 
@@ -37,6 +39,8 @@ public class AdminComboBox extends GenericComboBox implements ComboBox {
 		selectedItem = getSelectedItem();
 		this.setText(selectedItem);
 		this.setDirty(true);
+		FCUserInterface.adminField.name.setText(selectedItem);
+		FCUserInterface.adminField.name.setDirty(true);
 	}
 
 	public String getSelectionChangedItem() {

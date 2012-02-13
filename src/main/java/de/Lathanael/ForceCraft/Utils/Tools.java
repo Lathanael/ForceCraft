@@ -170,9 +170,26 @@ public class Tools {
 				value = player.getAlignment().getNumber();
 			else if (type.equalsIgnoreCase("mana"))
 				value = player.getMana();
+			else if (type.equalsIgnoreCase("maxmana"))
+				value = player.getMaxMana();
 			else
 				value = 0;
 		}
+		return value;
+	}
+
+	/**
+	 * Parses and returns a given String s to an Integer, default value depends on type.
+	 *
+	 * @param player - The ForcePlayer object whose value should be set
+	 * @param s - The String to be parsed
+	 * @param type - String to define the default value
+	 * @return
+	 * @throws NumberFormatException
+	 */
+	public static int parseInteger(ForcePlayer player, String s, String type) throws NumberFormatException {
+		int value = 0;
+		value = Integer.parseInt(s);
 		return value;
 	}
 

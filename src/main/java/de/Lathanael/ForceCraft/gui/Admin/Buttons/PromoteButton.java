@@ -20,20 +20,38 @@ package de.Lathanael.ForceCraft.gui.Admin.Buttons;
 
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.gui.Button;
+import org.getspout.spoutapi.gui.Color;
 import org.getspout.spoutapi.gui.GenericButton;
+
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.gui.FCUserInterface;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class SetRankButton extends GenericButton implements Button {
+public class PromoteButton extends GenericButton implements Button {
 
-	public SetRankButton(String name) {
+	public PromoteButton(String name) {
 		super(name);
 	}
 
 	@Override
 	public void onButtonClick(ButtonClickEvent event) {
-
+		ForcePlayer fPlayer = PlayerHandler.getInstance()
+				.getPlayer(FCUserInterface.adminField.name.getText());
+		if (fPlayer == null) {
+			FCUserInterface.adminField.output.setText("Sorry no ForcePlayer with the name: "
+					+ FCUserInterface.adminField.name.getText() + " was found.");
+			FCUserInterface.adminField.output.setFieldColor(new Color(0.4F, 0, 0));
+			FCUserInterface.adminField.output.setDirty(true);
+			return;
+		}
+		fPlayer.incRank();
+		FCUserInterface.adminField.output.setText("Successfully promoted Player: "
+				+ FCUserInterface.adminField.name.getText());
+		FCUserInterface.adminField.output.setFieldColor(new Color(0, 1.0F, 0.4F));
+		FCUserInterface.adminField.output.setDirty(true);
 	}
 }
