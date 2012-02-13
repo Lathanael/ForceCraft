@@ -24,7 +24,6 @@ import org.bukkit.entity.Player;
 import org.getspout.commons.ChatColor;
 
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
-import de.Lathanael.ForceCraft.gui.FCUserInterface;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
