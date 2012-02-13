@@ -56,6 +56,7 @@ public class ForcePlayer {
 	protected int count = 0;
 	protected int mana = 0;
 	protected int maxMana = 100;
+	protected int maxRank = 5;
 	protected File playerFile;
 	protected long lastTimeCasted = 0;
 	protected boolean mediation = false;
@@ -217,12 +218,46 @@ public class ForcePlayer {
 		return 0;
 	}
 
+	public boolean incSkillRank(String power) {
+		if (skillRanks.containsKey(power)) {
+			int rank = skillRanks.get(power);
+			rank = rank + 1;
+			if (rank > maxRank) {
+				rank = maxRank;
+				skillRanks.put(power, rank);
+				return false;
+			}
+			skillRanks.put(power, rank);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean decSkillRank(String power) {
+		if (skillRanks.containsKey(power)) {
+			int rank = skillRanks.get(power);
+			rank = rank - 1;
+			if (rank < 0) {
+				rank = 0;
+				skillRanks.put(power, rank);
+				return false;
+			}
+			skillRanks.put(power, rank);
+			return true;
+		}
+		return false;
+	}
+
 	public void incAvailableSkillPoints(int amount) {
 		availableSP += amount;
+		if (availableSP > ForcePlugin.maxSP)
+			availableSP = ForcePlugin.maxSP;
 	}
 
 	public void setAvailableSkillPoints(int amount) {
 		availableSP = amount;
+		if (availableSP > ForcePlugin.maxSP)
+			availableSP = ForcePlugin.maxSP;
 	}
 
 	public int getAvailableSkillPoints() {
@@ -230,11 +265,15 @@ public class ForcePlayer {
 	}
 
 	public void incUsedSkillPoints(int amount) {
-		availableSP += amount;
+		usedSP += amount;
+	}
+
+	public void decUsedSkillPoints(int amount) {
+		usedSP -= amount;
 	}
 
 	public void setUsedSkillPoints(int amount) {
-		availableSP = amount;
+		usedSP = amount;
 	}
 
 	public int getUsedSkillPoints() {
@@ -242,6 +281,9 @@ public class ForcePlayer {
 	}
 
 	public boolean checkSkillPointUse() {
+		int incUsedSP = usedSP + 1;
+		if (incUsedSP > availableSP)
+			return false;
 		return true;
 	}
 
