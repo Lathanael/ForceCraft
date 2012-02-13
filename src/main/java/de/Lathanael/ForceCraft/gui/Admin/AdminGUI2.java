@@ -55,8 +55,8 @@ public class AdminGUI2 extends GenericContainer {
 		reloadButton = new ReloadButton("Reload");
 		reloadButton.setHeight(15).setWidth(50).setX(edges.getLeft() + 10).setY(edges.getTop() + 45);
 		reloadButton.setDirty(true);
-		prev = new PreviousButton("Previous Page");
-		prev.setHeight(15).setWidth(100).setX(edges.getLeft() + 10).setY(edges.getTop() + 160);
+		prev = new PreviousButton("Prev. Page");
+		prev.setHeight(15).setWidth(60).setX(edges.getLeft() + 10).setY(edges.getTop() + 160);
 		prev.setDirty(true);
 		addChildren(new Widget[] {adminLabel, prev, output, reloadButton});
 		setWidth(0).setHeight(0);

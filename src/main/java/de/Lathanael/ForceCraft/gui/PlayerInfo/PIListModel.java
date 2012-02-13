@@ -47,11 +47,13 @@ public class PIListModel extends AbstractListModel {
 			sizeChanged();
 			return;
 		}
-		items = new ListWidgetItem[3+fPlayer.getPowerAmounts().size()];
+		items = new ListWidgetItem[4+fPlayer.getPowerAmounts().size()];
 		items[0] = new ListWidgetItem("Alignment", fPlayer.getAlignment().toString());
 		items[1] = new ListWidgetItem("Rank", fPlayer.getRankName());
 		items[2] = new ListWidgetItem("Mana", fPlayer.getMana() + "/" + fPlayer.getMaxMana());
-		int i = 3;
+		items[3] = new ListWidgetItem("Used/Available Skillpoints: ", fPlayer.getUsedSkillPoints()
+				+ "/" + fPlayer.getAvailableSkillPoints());
+		int i = 4;
 		for (Map.Entry<String, Integer> keys : fPlayer.getPowerAmounts().entrySet()) {
 			items[i] = new ListWidgetItem("Power -- times used", keys.getKey() + " -- " + keys.getValue());
 			i++;

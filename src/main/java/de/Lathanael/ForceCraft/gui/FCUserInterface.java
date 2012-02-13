@@ -35,7 +35,9 @@ import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 import de.Lathanael.ForceCraft.gui.Admin.AdminGUI;
 import de.Lathanael.ForceCraft.gui.Admin.AdminGUI2;
 import de.Lathanael.ForceCraft.gui.PlayerInfo.PIGUI;
-import de.Lathanael.ForceCraft.gui.SkillTree.SKGUI;
+import de.Lathanael.ForceCraft.gui.SkillTree.SKGUIPage1;
+import de.Lathanael.ForceCraft.gui.SkillTree.SKGUIPage2;
+import de.Lathanael.ForceCraft.gui.SkillTree.SKGUIPage3;
 import de.Lathanael.ForceCraft.gui.User.UserGUI;
 
 /**
@@ -52,7 +54,9 @@ public class FCUserInterface extends GenericPopup {
 	public static PIGUI infoField;
 	public static AdminGUI adminField;
 	public static AdminGUI2 adminField2;
-	public static SKGUI skillTreeField;
+	public static SKGUIPage1 skillTreeField1;
+	public static SKGUIPage2 skillTreeField2;
+	public static SKGUIPage3 skillTreeField3;
 
 	public FCUserInterface(SpoutPlayer player) {
 		this.player = player;
@@ -99,8 +103,12 @@ public class FCUserInterface extends GenericPopup {
 		attachWidget(ForcePlugin.getInstance(), adminField);
 		adminField2 = new AdminGUI2(edges, background);
 		attachWidget(ForcePlugin.getInstance(), adminField2);
-		skillTreeField = new SKGUI(edges, player, background);
-		attachWidget(ForcePlugin.getInstance(), skillTreeField);
+		skillTreeField1 = new SKGUIPage1(edges, player, background);
+		attachWidget(ForcePlugin.getInstance(), skillTreeField1);
+		skillTreeField2 = new SKGUIPage2(edges, player, background);
+		attachWidget(ForcePlugin.getInstance(), skillTreeField2);
+		skillTreeField3 = new SKGUIPage3(edges, player, background);
+		attachWidget(ForcePlugin.getInstance(), skillTreeField3);
 	}
 
 	public void openPlayerInfoField() {
@@ -146,14 +154,38 @@ public class FCUserInterface extends GenericPopup {
 		adminField2.setVisible(false);
 		adminField2.setDirty(true);
 	}
-	public void openSkillTreeGUI() {
-		skillTreeField.setVisible(true);
-		skillTreeField.setDirty(true);
+
+	public static void openSkillTreePage1() {
+		hideWidgets();
+		skillTreeField1.setVisible(true);
+		skillTreeField1.setDirty(true);
 	}
 
-	public static void closeSkillTreeGUI() {
-		skillTreeField.setVisible(false);
-		skillTreeField.setDirty(true);
+	public static void openSkillTreePage2() {
+		hideWidgets();
+		skillTreeField2.setVisible(true);
+		skillTreeField2.setDirty(true);
+	}
+
+	public static void openSkillTreePage3() {
+		hideWidgets();
+		skillTreeField3.setVisible(true);
+		skillTreeField3.setDirty(true);
+	}
+
+	public static void closeSkillTreePage1() {
+		skillTreeField1.setVisible(false);
+		skillTreeField1.setDirty(true);
+	}
+
+	public static void closeSkillTreePage2() {
+		skillTreeField2.setVisible(false);
+		skillTreeField2.setDirty(true);
+	}
+
+	public static void closeSkillTreePage3() {
+		skillTreeField3.setVisible(false);
+		skillTreeField3.setDirty(true);
 	}
 
 	public void open(){
@@ -168,7 +200,9 @@ public class FCUserInterface extends GenericPopup {
 		closePlayerInfoField();
 		closeAdminGUI();
 		closeAdminGUI2();
-		closeSkillTreeGUI();
+		closeSkillTreePage1();
+		closeSkillTreePage2();
+		closeSkillTreePage3();
 	}
 
 	public void onButtonClick(Button button) {
@@ -177,7 +211,7 @@ public class FCUserInterface extends GenericPopup {
 		} else if (button.equals(user)) {
 			openUserGUI();
 		} else if (button.equals(skillTree)) {
-
+			openSkillTreePage1();
 		} else if (button.equals(close)) {
 			player.getMainScreen().closePopup();
 		} else if (button.equals(info)) {

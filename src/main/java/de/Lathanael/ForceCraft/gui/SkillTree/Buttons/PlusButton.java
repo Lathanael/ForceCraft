@@ -16,42 +16,15 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.gui.SkillTree;
+package de.Lathanael.ForceCraft.gui.SkillTree.Buttons;
 
-import org.getspout.spoutapi.gui.AbstractListModel;
-import org.getspout.spoutapi.gui.ListWidgetItem;
+import org.getspout.spoutapi.gui.Button;
+import org.getspout.spoutapi.gui.GenericButton;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class SKListModel extends AbstractListModel {
-
-	/* (non-Javadoc)
-	 * @see org.getspout.spoutapi.gui.AbstractListModel#getItem(int)
-	 */
-	@Override
-	public ListWidgetItem getItem(int row) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.getspout.spoutapi.gui.AbstractListModel#getSize()
-	 */
-	@Override
-	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.getspout.spoutapi.gui.AbstractListModel#onSelected(int, boolean)
-	 */
-	@Override
-	public void onSelected(int item, boolean doubleClick) {
-		// TODO Auto-generated method stub
-
-	}
+public class PlusButton extends GenericButton implements Button {
 
 }
