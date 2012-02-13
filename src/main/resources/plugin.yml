@@ -27,6 +27,10 @@ commands:
         description: Reloads all configuration files.
         aliases: [freload]
         usage: /<command>
+    fc_create:
+        description: Creates a new ForcePlayer object for the given player.
+        aliases: [fcreate]
+        usage: /<command> [player]
     fc_choke:
         description: Chokes the targeted player if he is within your range.
         aliases: [choke]
@@ -105,6 +109,7 @@ permissions:
             force.info: true
             force.set: true
             force.reload: true
+            force.create: true
     force.info:
         description: Allows usage of the /finfo command.
         default: false
@@ -116,6 +121,9 @@ permissions:
         default: false
     force.reload:
         description: Allows usage of the /freload command.
+        default: false
+    force.create:
+        description: Allows usage of the /fcreate command.
         default: false
     force.pull:
         description: Allows usage of the Pull force.

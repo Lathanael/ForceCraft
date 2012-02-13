@@ -41,8 +41,10 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 
 import de.Lathanael.ForceCraft.Commands.BindKey;
 import de.Lathanael.ForceCraft.Commands.CommandsHandler;
+import de.Lathanael.ForceCraft.Commands.Create;
 import de.Lathanael.ForceCraft.Commands.Info;
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
+import de.Lathanael.ForceCraft.Commands.Reload;
 import de.Lathanael.ForceCraft.Commands.Set;
 import de.Lathanael.ForceCraft.Events.FCKeyBinding;
 import de.Lathanael.ForceCraft.Listeners.FCButtonListener;
@@ -270,5 +272,7 @@ public class ForcePlugin extends JavaPlugin {
 		commandsHandler.registerCommand(Info.class);
 		commandsHandler.registerCommand(Set.class);
 		commandsHandler.registerCommand(BindKey.class);
+		commandsHandler.registerCommand(Reload.class);
+		commandsHandler.registerCommand(Create.class);
 	}
 }

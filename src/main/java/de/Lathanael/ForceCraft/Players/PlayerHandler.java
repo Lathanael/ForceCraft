@@ -126,6 +126,21 @@ public class PlayerHandler {
 			ForcePlugin.log.info("FocrePlayer object is null, creation failed.");
 	}
 
+	/**
+	 * Creates a new ForcePlayer object.
+	 *
+	 * @param playerName - The String representing a Players name
+	 *                     (use getName() NOT getDisplayName()!!)
+	 */
+	public void createNewForcePlayer(String playerName) {
+		if (filePlayers.contains(playerName)) {
+			players.put(playerName, new ForcePlayer(playerName));
+		} else {
+			filePlayers.add(playerName);
+			players.put(playerName, new ForcePlayer(playerName, playerFolder.getPath()));
+		}
+	}
+
 	public static void setInstance() {
 		if (handler != null)
 			return;
