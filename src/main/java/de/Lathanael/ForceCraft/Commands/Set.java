@@ -65,6 +65,9 @@ public class Set extends BaseCommand {
 			} else if (args[1].equalsIgnoreCase("mana")) {
 				int mana = Tools.parseInteger(sender, fPlayer, args[2], "mana");
 				fPlayer.setMana(mana);
+			} else if (args[1].equalsIgnoreCase("maxmana")) {
+				int mana = Tools.parseInteger(sender, fPlayer, args[2], "maxmana");
+				fPlayer.setMaxMana(mana);
 			}
 		} else if (args[1].equalsIgnoreCase("reset")) {
 			fPlayer.resetLastTimeUsed();
