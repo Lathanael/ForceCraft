@@ -3,8 +3,6 @@ ForceSensitiveOnJoin: false
 DebugMessages: false
 IgnorePermissionBridge: true
 checkDistance: 20
-manaBarTexURL: http://...
-BackgroundTexURL: http://...
 maxSkillPoints: 20
 startingSkillPoints: 5
 manaBarEnabled: true
@@ -15,72 +13,84 @@ Power:
     alignment: neutral
     delay: 0
     mana: 10
+    costInc: 2
   Pull:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
     mana: 10
+    costInc: 2
   Choke:
     enabled: true
     rank: 1
     alignment: dark
     delay: 0
     mana: 10
+    costInc: 2
   Lift:
     enabled: true
     rank: 1
     alignment: light
     delay: 0
     mana: 10
+    costInc: 2
   Run:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
     mana: 10
+    costInc: 2
   Jump:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
     mana: 10
+    costInc: 2
   Lightning:
     enabled: true
     rank: 1
     alignment: dark
     delay: 0
     mana: 10
+    costInc: 2
   Shield:
     enabled: true
     rank: 1
     alignment: light
     delay: 0
     mana: 10
+    costInc: 2
   Flash:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
     mana: 10
+    costInc: 2
   Heal:
     enabled: true
     rank: 1
     alignment: neutral
     delay: 0
     mana: 10
+    costInc: 2
   Rage:
     enabled: true
     rank: 1
     alignment: dark
     delay: 0
     mana: 10
+    costInc: 2
   Mediation:
     enabled: true
     rank: 1
     alignment: light
     delay: 0
     mana: 10
+    costInc: 2
 ManaInc:
     '1': 0
     '2': 50

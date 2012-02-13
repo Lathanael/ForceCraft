@@ -34,6 +34,9 @@
         		<include>BarTex.jpg</include>
         		<include>Background.png</include>
         		<include>ranksInfo.yml</include>
+        		<include>STPicBack.png</include>
+        		<include>powerInfo.yml</include>
+        		<include>autoPromoteValues.yml</include>
         	</includes>
         	<excludes>
                 <exclude>Background_alt.png</exclude>

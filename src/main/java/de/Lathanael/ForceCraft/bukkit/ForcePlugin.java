@@ -78,7 +78,9 @@ public class ForcePlugin extends JavaPlugin {
 	private FCPluginListener fcPluL = new FCPluginListener();
 	private static ForcePlugin instance;
 	public FileConfiguration config;
-	public FileConfiguration ranksInfo;
+	public FileConfiguration powerInfo;
+	public FileConfiguration texturePaths;
+	public FileConfiguration autoPromoteValues;
 	public String directory;
 	public CommandsHandler commandsHandler;
 	public static Logger log;
@@ -97,7 +99,7 @@ public class ForcePlugin extends JavaPlugin {
 		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
 		saveConfig();
 		try {
-			ranksInfo.save(new File(getDataFolder().getPath() + File.separator + "ranksInfo.yml"));
+			powerInfo.save(new File(getDataFolder().getPath() + File.separator + "ranksInfo.yml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -170,7 +172,7 @@ public class ForcePlugin extends JavaPlugin {
 	}
 
 	private void loadRanksInfo() {
-		File ranksInfoFile = new File(getDataFolder().getPath() + File.separator + "ranksInfo.yml");
+		File ranksInfoFile = new File(getDataFolder().getPath() + File.separator + "powerInfo.yml");
 		if (!ranksInfoFile.exists()) {
 			try {
 				ranksInfoFile.createNewFile();
@@ -182,14 +184,14 @@ public class ForcePlugin extends JavaPlugin {
 				writer.flush();
 				writer.close();
 				in.close();
-				ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
-				ranksInfo.save(ranksInfoFile);
+				powerInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+				powerInfo.save(ranksInfoFile);
 			} catch (IOException e) {
 				log.info("Failed to create ranksInfo.yml!");
 				e.printStackTrace();
 			}
 		} else {
-			ranksInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+			powerInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
 		}
 	}
 
@@ -198,8 +200,6 @@ public class ForcePlugin extends JavaPlugin {
 	 * @author Lathanael (aka Philippe Leipold)
 	 */
 	private File loadConfiguration() {
-		//public File getInnerFile(String filename, String directory, boolean replace) {
-
 		String fileVersion = null;
 		try {
 			Properties gitVersion = new Properties();

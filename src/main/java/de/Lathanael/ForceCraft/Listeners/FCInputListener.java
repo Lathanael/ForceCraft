@@ -65,7 +65,7 @@ public class FCInputListener implements Listener {
 			BasePower power = instance.commandsHandler.getPower(cmd);
 			if (power == null)
 				return;
-			double mult = instance.ranksInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
+			double mult = instance.powerInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
 			sPlayer.setJumpingMultiplier(mult);
 		}
 
@@ -78,7 +78,7 @@ public class FCInputListener implements Listener {
 			BasePower power = instance.commandsHandler.getPower(cmd);
 			if (power == null)
 				return;
-			double mult = instance.ranksInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
+			double mult = instance.powerInfo.getDouble("Run." + String.valueOf(fPlayer.getRank()), 1);
 			sPlayer.setWalkingMultiplier(mult);
 		}
 

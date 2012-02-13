@@ -57,7 +57,7 @@ public class Push extends BasePower {
 		} else
 			Tools.debugMsg("Target is null!", player.getHandler());
 		int skillRank = player.getSkillRank(name);
-		double force = instance.ranksInfo.getDouble(name + "." + String.valueOf(skillRank), 1D);
+		double force = instance.powerInfo.getDouble(name + "." + String.valueOf(skillRank), 1D);
 		if (target == null) {
 			Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
 			if (block.getType().equals(Material.AIR) || block == null) {

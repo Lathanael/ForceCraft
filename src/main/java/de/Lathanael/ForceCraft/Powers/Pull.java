@@ -56,7 +56,7 @@ public class Pull extends BasePower {
 		}else
 			Tools.debugMsg("Target is null!", player.getHandler());
 		int skillRank = player.getSkillRank(name);
-		double force = instance.ranksInfo.getDouble(name + "." + String.valueOf(skillRank), 1D)*(-1);
+		double force = instance.powerInfo.getDouble(name + "." + String.valueOf(skillRank), 1D)*(-1);
 		if (target == null) {
 			Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
 			if (block.getType().equals(Material.AIR) || block == null) {

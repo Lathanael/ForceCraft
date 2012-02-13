@@ -81,7 +81,7 @@ public class FCEntityListener implements Listener{
 		if (fPlayer == null)
 			return;
 		if (fPlayer.hasPowerState(PlayerPowerStates.SHIELD)) {
-			double shieldDmgRed = ForcePlugin.getInstance().ranksInfo.
+			double shieldDmgRed = ForcePlugin.getInstance().powerInfo.
 								getDouble("Shield." + String.valueOf(fPlayer.getRank()), 1);
 			damaged.setLastDamage((int) (damaged.getLastDamage()*shieldDmgRed));
 		}
