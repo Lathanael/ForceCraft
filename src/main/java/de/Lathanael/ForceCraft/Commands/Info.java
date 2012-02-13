@@ -26,7 +26,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Utils.Tools;
@@ -58,6 +57,8 @@ public class Info extends BaseCommand {
 			sender.sendMessage(ChatColor.GREEN + "Alignment: " + ChatColor.GOLD + player.getAlignment().toString());
 			sender.sendMessage(ChatColor.GREEN + "Rank: " + ChatColor.GOLD + player.getRankName());
 			sender.sendMessage(ChatColor.GREEN + "Mana: " + ChatColor.GOLD + String.valueOf(player.getMana()));
+			sender.sendMessage(ChatColor.GREEN + "Used/Available Skillpoints: " + ChatColor.GOLD + player.getUsedSkillPoints()
+					+ "/" + player.getAvailableSkillPoints());
 			sender.sendMessage(ChatColor.GREEN + "Power -- times used");
 			for (Map.Entry<String, Integer> keys : player.getPowerAmounts().entrySet())
 				sender.sendMessage(ChatColor.AQUA + keys.getKey() + ChatColor.GREEN + " -- "
@@ -67,6 +68,8 @@ public class Info extends BaseCommand {
 			sender.sendMessage("Alignment: " + player.getAlignment().toString());
 			sender.sendMessage("Rank: " + player.getRankName());
 			sender.sendMessage("Mana: " + String.valueOf(player.getMana()));
+			sender.sendMessage("Used/Available Skillpoints: " + player.getUsedSkillPoints()
+					+ "/" + player.getAvailableSkillPoints());
 			sender.sendMessage("Power -- times used");
 			for (Map.Entry<String, Integer> keys : player.getPowerAmounts().entrySet())
 				sender.sendMessage(keys.getKey() + " -- " + keys.getValue());

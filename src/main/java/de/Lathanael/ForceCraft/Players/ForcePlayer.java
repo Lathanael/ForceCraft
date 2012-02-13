@@ -135,6 +135,7 @@ public class ForcePlayer {
 				ForcePlugin.log.info("Alignment: " + alignment.toString());
 				ForcePlugin.log.info("Rank: " + rank.toString());
 				ForcePlugin.log.info("Mana: " + mana + "/" + maxMana);
+				ForcePlugin.log.info("Used/Available Skillpoints: " + usedSP + "/" + availableSP);
 				ForcePlugin.log.info("Keys:");
 				for (Map.Entry<Keyboard, String> entries : keys.entrySet()) {
 						ForcePlugin.log.info("Key: " + entries.getKey().toString());
@@ -201,14 +202,47 @@ public class ForcePlayer {
 		updateFile();
 	}
 
-	public void setSkillRank(String power, int rank) {
-		updateFile();
+	public boolean setSkillRank(String power, int rank) {
+		if (skillRanks.containsKey(power)) {
+			skillRanks.put(power, rank);
+			updateFile();
+			return true;
+		}
+		return false;
 	}
 
 	public int getSkillRank(String power) {
 		if (skillRanks.containsKey(power))
 			return skillRanks.get(power);
 		return 0;
+	}
+
+	public void incAvailableSkillPoints(int amount) {
+		availableSP += amount;
+	}
+
+	public void setAvailableSkillPoints(int amount) {
+		availableSP = amount;
+	}
+
+	public int getAvailableSkillPoints() {
+		return availableSP;
+	}
+
+	public void incUsedSkillPoints(int amount) {
+		availableSP += amount;
+	}
+
+	public void setUsedSkillPoints(int amount) {
+		availableSP = amount;
+	}
+
+	public int getUsedSkillPoints() {
+		return usedSP;
+	}
+
+	public boolean checkSkillPointUse() {
+		return true;
 	}
 
 	public String getRankName() {
