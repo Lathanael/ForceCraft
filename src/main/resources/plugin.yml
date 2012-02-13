@@ -31,6 +31,14 @@ commands:
         description: Creates a new ForcePlayer object for the given player.
         aliases: [fcreate]
         usage: /<command> [player]
+    fc_promote:
+        description: Promotes the player.
+        aliases: [fpromote]
+        usage: /<command> [player]
+    fc_demote:
+        description: Demotes the player.
+        aliases: [fdemote]
+        usage: /<command> [player]
     fc_choke:
         description: Chokes the targeted player if he is within your range.
         aliases: [choke]
@@ -63,6 +71,22 @@ commands:
         description: Use Force Mediation to increase your mana over time.
         aliases: [mediation]
         usage: /<command>
+    fc_lift:
+        description: Use Force Lift to Lift a block or entity.
+        aliases: [lift]
+        usage: /<command> <target>
+    fc_heal:
+        description: Use Force Heal to heal yourself.
+        aliases: [heal, fheal]
+        usage: /<command>
+    fc_flash:
+        description: Use Force Flash to blind the target.
+        aliases: [flash]
+        usage: /<command> <target>
+    fc_lightning:
+        description: Use Force Lightning to strike the target with lightnings.
+        aliases: [lightning]
+        usage: /<command> <target>
 permissions:
     force.*:
         description: Grants access to all ForceCraft commands and powers.
@@ -83,6 +107,10 @@ permissions:
             force.rage: true
             force.shield: true
             force.mediation: true
+            force.lift: true
+            force.heal: true
+            force.flash: true
+            force.lightning: true
     force.user.light:
         description: Grants access to all Lightside Forces.
         default: false
@@ -96,6 +124,10 @@ permissions:
             force.rage: true
             force.shield: true
             force.mediation: true
+            force.lift: true
+            force.heal: true
+            force.flash: true
+            force.lightning: true
     force.user.*:
         description: Grants access to all Forces.
         default: false
@@ -110,6 +142,8 @@ permissions:
             force.set: true
             force.reload: true
             force.create: true
+            force.promote: true
+            force.demote: true
     force.info:
         description: Allows usage of the /finfo command.
         default: false
@@ -124,6 +158,12 @@ permissions:
         default: false
     force.create:
         description: Allows usage of the /fcreate command.
+        default: false
+    force.demote:
+        description: Allows usage of the /fdemote command.
+        default: false
+    force.promote:
+        description: Allows usage of the /fpromote command.
         default: false
     force.pull:
         description: Allows usage of the Pull force.
@@ -148,4 +188,16 @@ permissions:
         default: false
     force.mediation:
         description: Allows usage of the Mediation force.
+        default: false
+    force.lift:
+        description: Allows usage of the Lift force.
+        default: false
+    force.heal:
+        description: Allows usage of the Heal force.
+        default: false
+    force.flash:
+        description: Allows usage of the Flash force.
+        default: false
+    force.lightning:
+        description: Allows usage of the Lightning force.
         default: false

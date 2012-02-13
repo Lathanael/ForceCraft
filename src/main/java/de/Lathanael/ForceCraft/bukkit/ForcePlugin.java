@@ -42,8 +42,10 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 import de.Lathanael.ForceCraft.Commands.BindKey;
 import de.Lathanael.ForceCraft.Commands.CommandsHandler;
 import de.Lathanael.ForceCraft.Commands.Create;
+import de.Lathanael.ForceCraft.Commands.Demote;
 import de.Lathanael.ForceCraft.Commands.Info;
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
+import de.Lathanael.ForceCraft.Commands.Promote;
 import de.Lathanael.ForceCraft.Commands.Reload;
 import de.Lathanael.ForceCraft.Commands.Set;
 import de.Lathanael.ForceCraft.Events.FCKeyBinding;
@@ -53,9 +55,18 @@ import de.Lathanael.ForceCraft.Listeners.FCInputListener;
 import de.Lathanael.ForceCraft.Listeners.FCPlayerListener;
 import de.Lathanael.ForceCraft.Listeners.FCPluginListener;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.Powers.Choke;
+import de.Lathanael.ForceCraft.Powers.Flash;
+import de.Lathanael.ForceCraft.Powers.Heal;
+import de.Lathanael.ForceCraft.Powers.Jump;
+import de.Lathanael.ForceCraft.Powers.Lift;
+import de.Lathanael.ForceCraft.Powers.Lightning;
 import de.Lathanael.ForceCraft.Powers.Meditation;
 import de.Lathanael.ForceCraft.Powers.Pull;
 import de.Lathanael.ForceCraft.Powers.Push;
+import de.Lathanael.ForceCraft.Powers.Rage;
+import de.Lathanael.ForceCraft.Powers.Run;
+import de.Lathanael.ForceCraft.Powers.Shield;
 import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
@@ -153,7 +164,7 @@ public class ForcePlugin extends JavaPlugin {
 		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin", false);
 		checkDist = config.getInt("checkDistance", 20);
 		texURL = config.getString("manaBarTexURL", "");
-		maxSP = config.getInt("maxSkillPoints", 100);
+		maxSP = config.getInt("maxSkillPoints", 20);
 		startingSP = config.getInt("startingSkillPoints", 10);
 		manaBarEnabled = config.getBoolean("manaBarEnabled", true);
 	}
@@ -269,10 +280,31 @@ public class ForcePlugin extends JavaPlugin {
 			commandsHandler.registerPower(Meditation.class);
 		if (config.getBoolean("Power.Push.enabled"))
 			commandsHandler.registerPower(Push.class);
+		if (config.getBoolean("Power.Lift.enabled"))
+			commandsHandler.registerPower(Lift.class);
+		if (config.getBoolean("Power.Jump.enabled"))
+			commandsHandler.registerPower(Jump.class);
+		if (config.getBoolean("Power.Rage.enabled"))
+			commandsHandler.registerPower(Rage.class);
+		if (config.getBoolean("Power.Schield.enabled"))
+			commandsHandler.registerPower(Shield.class);
+		if (config.getBoolean("Power.Run.enabled"))
+			commandsHandler.registerPower(Run.class);
+		if (config.getBoolean("Power.Heal.enabled"))
+			commandsHandler.registerPower(Heal.class);
+		if (config.getBoolean("Power.Flash.enabled"))
+			commandsHandler.registerPower(Flash.class);
+		if (config.getBoolean("Power.Choke.enabled"))
+			commandsHandler.registerPower(Choke.class);
+		if (config.getBoolean("Power.Lightning.enabled"))
+			commandsHandler.registerPower(Lightning.class);
+
 		commandsHandler.registerCommand(Info.class);
 		commandsHandler.registerCommand(Set.class);
 		commandsHandler.registerCommand(BindKey.class);
 		commandsHandler.registerCommand(Reload.class);
 		commandsHandler.registerCommand(Create.class);
+		commandsHandler.registerCommand(Promote.class);
+		commandsHandler.registerCommand(Demote.class);
 	}
 }
