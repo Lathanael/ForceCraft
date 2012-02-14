@@ -37,7 +37,6 @@
         		<include>texturePaths.yml</include>
         	</includes>
         	<excludes>
-                <exclude>Background_alt.png</exclude>
             </excludes>
         </resource>
         <resource>
@@ -48,9 +47,12 @@
         		<include>SkillPointHighlighted.png</include>
         		<include>BarTex.jpg</include>
         		<include>Background.png</include>
-        		<include>STPicBack.png</include>
         		<include>SkillPoint.png</include>
         	</includes>
+        	<excludes>
+        		<exclude>Background_alt.png</exclude>
+        		<exclude>STPicBack.png</exclude>
+        	</excludes>
         </resource>
     </resources>
     <plugins>
