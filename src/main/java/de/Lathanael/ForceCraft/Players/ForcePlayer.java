@@ -59,7 +59,6 @@ public class ForcePlayer {
 	protected int maxRank = 5;
 	protected File playerFile;
 	protected long lastTimeCasted = 0;
-	protected boolean mediation = false;
 	protected HashSet<PlayerPowerStates> powers = new HashSet<PlayerPowerStates>();
 	protected TreeMap<Keyboard, String> keys = new TreeMap<Keyboard, String>();
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
@@ -283,9 +282,12 @@ public class ForcePlayer {
 		return usedSP;
 	}
 
-	public boolean checkSkillPointUse() {
+	public boolean checkSkillPointUse(boolean decrease) {
 		int incUsedSP = usedSP + 1;
-		if (incUsedSP > availableSP)
+		int decUsedSP = usedSP - 1;
+		if (incUsedSP > availableSP && !decrease)
+			return false;
+		else if (decrease && decUsedSP < 0)
 			return false;
 		return true;
 	}
@@ -477,7 +479,7 @@ public class ForcePlayer {
 		playerConfig.addDefault("Amount.Choke", 0);
 		playerConfig.addDefault("Amount.Rage", 0);
 		playerConfig.addDefault("Amount.Flash", 0);
-		playerConfig.addDefault("Amount.Mediation", 0);
+		playerConfig.addDefault("Amount.Meditation", 0);
 		playerConfig.addDefault("Amount.Lightning", 0);
 		playerConfig.addDefault("Amount.Shield", 0);
 		playerConfig.addDefault("Skillrank.Pull", 0);
@@ -489,7 +491,7 @@ public class ForcePlayer {
 		playerConfig.addDefault("Skillrank.Choke", 0);
 		playerConfig.addDefault("Skillrank.Rage", 0);
 		playerConfig.addDefault("Skillrank.Flash", 0);
-		playerConfig.addDefault("Skillrank.Mediation", 0);
+		playerConfig.addDefault("Skillrank.Meditation", 0);
 		playerConfig.addDefault("Skillrank.Lightning", 0);
 		playerConfig.addDefault("Skillrank.Shield", 0);
 		playerConfig.addDefault("Mana", 100);
