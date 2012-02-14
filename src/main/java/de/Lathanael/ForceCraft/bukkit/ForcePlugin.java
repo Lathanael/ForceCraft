@@ -335,7 +335,6 @@ public class ForcePlugin extends JavaPlugin {
 		loadConfig(config);
 	}
 
-	// TODO: registering all commands and powers
 	private void registerCommands() {
 		if (config.getBoolean("Power.Pull.enabled"))
 			commandsHandler.registerPower(Pull.class);
