@@ -31,16 +31,26 @@
         	<targetPath>.</targetPath>
         	<directory>${basedir}/src/main/resources/</directory>
         	<includes>
-        		<include>BarTex.jpg</include>
-        		<include>Background.png</include>
         		<include>ranksInfo.yml</include>
-        		<include>STPicBack.png</include>
         		<include>powerInfo.yml</include>
         		<include>autoPromoteValues.yml</include>
+        		<include>texturePaths.yml</include>
         	</includes>
         	<excludes>
                 <exclude>Background_alt.png</exclude>
             </excludes>
+        </resource>
+        <resource>
+        	<targetPath>./images</targetPath>
+        	<directory>${basedir}/src/main/resources/</directory>
+        	<includes>
+        		<include>Power_Back.png</include>
+        		<include>SkillPointHighlighted.png</include>
+        		<include>BarTex.jpg</include>
+        		<include>Background.png</include>
+        		<include>STPicBack.png</include>
+        		<include>SkillPoint.png</include>
+        	</includes>
         </resource>
     </resources>
     <plugins>
