@@ -89,7 +89,10 @@ public class ForcePlugin extends JavaPlugin {
 	public static boolean sensitiveonJoin = false;
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 	public static int checkDist = 0;
-	public static String texURL = "";
+	public static String manaBarTexURL = "";
+	public static String backgroundTexURL = "";
+	public static String skillPointTexURL = "";
+	public static String spHighlightedTexURL = "";
 	public static int maxSP;
 	public static int startingSP;
 	public static boolean manaBarEnabled;
@@ -111,12 +114,13 @@ public class ForcePlugin extends JavaPlugin {
 		instance = this;
 		directory = getDataFolder().getPath() + File.separator + "config.yml";
 		log = getLogger();
-		config = YamlConfiguration.loadConfiguration(loadConfiguration());
+		config = YamlConfiguration.loadConfiguration(loadConfigurationFile());
 		saveConfig();
 		loadConfig(config);
-		loadPowerInfo();
-		loadTexturePaths();
-		loadAutoPromoteValues();
+		loadPowerInfoFile();
+		loadTexturePathsFile();
+		loadTextures();
+		loadAutoPromoteFile();
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		commandsHandler = CommandsHandler.initInstance(this);
@@ -167,13 +171,19 @@ public class ForcePlugin extends JavaPlugin {
 		debug = config.getBoolean("DebugMessages");
 		sensitiveonJoin = config.getBoolean("ForceSensitiveOnJoin", false);
 		checkDist = config.getInt("checkDistance", 20);
-		texURL = config.getString("manaBarTexURL", "");
 		maxSP = config.getInt("maxSkillPoints", 20);
 		startingSP = config.getInt("startingSkillPoints", 10);
 		manaBarEnabled = config.getBoolean("manaBarEnabled", true);
 	}
 
-	private void loadPowerInfo() {
+	public void loadTextures() {
+		manaBarTexURL = texturePaths.getString("manaBarTexURL", "http://dl.dropbox.com/u/42731731/BarTex.jpg");
+		skillPointTexURL = texturePaths.getString("SkillPoint", "http://dl.dropbox.com/u/42731731/SkillPoint.png");
+		spHighlightedTexURL = texturePaths.getString("SPHighlighted", "http://dl.dropbox.com/u/42731731/SkillPointHighlighted.png");
+		backgroundTexURL = texturePaths.getString("BackgroundTexURL", "http://dl.dropbox.com/u/42731731/Background.png");
+	}
+
+	private void loadPowerInfoFile() {
 		File file = new File(getDataFolder().getPath() + File.separator + "powerInfo.yml");
 		if (!file.exists()) {
 			try {
@@ -197,7 +207,7 @@ public class ForcePlugin extends JavaPlugin {
 		}
 	}
 
-	private void loadAutoPromoteValues() {
+	private void loadAutoPromoteFile() {
 		File file = new File(getDataFolder().getPath() + File.separator + "autoPromoteValues.yml");
 		if (!file.exists()) {
 			try {
@@ -221,7 +231,7 @@ public class ForcePlugin extends JavaPlugin {
 		}
 	}
 
-	private void loadTexturePaths() {
+	private void loadTexturePathsFile() {
 		File file = new File(getDataFolder().getPath() + File.separator + "texturePaths.yml");
 		if (!file.exists()) {
 			try {
@@ -249,7 +259,7 @@ public class ForcePlugin extends JavaPlugin {
 	 * @author Balor (aka Antoine Aflalo)
 	 * @author Lathanael (aka Philippe Leipold)
 	 */
-	private File loadConfiguration() {
+	private File loadConfigurationFile() {
 		String fileVersion = null;
 		try {
 			Properties gitVersion = new Properties();
@@ -317,8 +327,11 @@ public class ForcePlugin extends JavaPlugin {
 	}
 
 	public void reload() {
-		loadPowerInfo();
-		config = YamlConfiguration.loadConfiguration(loadConfiguration());
+		loadPowerInfoFile();
+		loadTexturePathsFile();
+		loadTextures();
+		loadAutoPromoteFile();
+		config = YamlConfiguration.loadConfiguration(loadConfigurationFile());
 		loadConfig(config);
 	}
 
