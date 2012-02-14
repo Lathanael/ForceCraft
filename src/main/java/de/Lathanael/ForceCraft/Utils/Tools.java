@@ -187,7 +187,7 @@ public class Tools {
 	 * @return
 	 * @throws NumberFormatException
 	 */
-	public static int parseInteger(ForcePlayer player, String s, String type) throws NumberFormatException {
+	public static int parseInteger(ForcePlayer player, String s) throws NumberFormatException {
 		int value = 0;
 		value = Integer.parseInt(s);
 		return value;
