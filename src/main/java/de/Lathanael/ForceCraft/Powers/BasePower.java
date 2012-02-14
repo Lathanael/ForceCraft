@@ -44,6 +44,7 @@ public abstract class BasePower {
 	public final ForcePlugin instance;
 	public long delay = 0L;
 	public int manaCost = 0;
+	public int costInc = 0;
 
 	public BasePower() {
 		instance = ForcePlugin.getInstance();

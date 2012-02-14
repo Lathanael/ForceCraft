@@ -46,6 +46,7 @@ public class Lift extends BasePower {
 		rank = instance.config.getInt("Power." + name + ".rank");
 		delay = instance.config.getLong("Power." + name + ".delay");
 		manaCost = instance.config.getInt("Power." + name + ".mana");
+		costInc = instance.config.getInt("Power." + name + ".costInc");
 	}
 
 	@Override
@@ -59,14 +60,14 @@ public class Lift extends BasePower {
 					PlayerHandler.getInstance().getPlayer(pTarget.getName()));
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
-			player.decMana(manaCost);
+			player.decMana(manaCost+costInc*player.getSkillRank(name));
 		} else if (target instanceof LivingEntity) {
 			LivingEntity eTarget = (LivingEntity) target;
 			eTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
 			Scheduler.getInstance().scheduleEntityLiftTask(player, eTarget);
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
-			player.decMana(manaCost);
+			player.decMana(manaCost+costInc*player.getSkillRank(name));
 		}
 
 	}
