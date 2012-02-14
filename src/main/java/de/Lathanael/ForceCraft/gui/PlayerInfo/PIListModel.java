@@ -82,8 +82,6 @@ public class PIListModel extends AbstractListModel {
 	 */
 	@Override
 	public void onSelected(int item, boolean doubleClick) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
