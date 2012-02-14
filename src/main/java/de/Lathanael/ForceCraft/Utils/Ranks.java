@@ -60,8 +60,8 @@ public enum Ranks {
 	}
 
 	public static Ranks getRank(String side, int rank) {
-		if (lookupTableString.containsKey(String.valueOf(rank)+side))
-			return lookupTableString.get(String.valueOf(rank)+side);
+		if (lookupTableString.containsKey(String.valueOf(rank)+side.toLowerCase()))
+			return lookupTableString.get(String.valueOf(rank)+side.toLowerCase());
 		else
 			return Ranks.NONE;
 	}
