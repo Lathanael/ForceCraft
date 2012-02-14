@@ -39,8 +39,11 @@ public class PrevButton extends GenericButton implements Button {
 		if (FCUserInterface.skillTreeField2.isVisible()) {
 			FCUserInterface.closeSkillTreePage2();
 			FCUserInterface.openSkillTreePage1();
-		} else if (FCUserInterface.skillTreeField3.isVisible()) {
-			FCUserInterface.closeSkillTreePage3();
+		} else if (FCUserInterface.skillTreeFieldLight.isVisible()) {
+			FCUserInterface.closeSkillTreePageLight();
+			FCUserInterface.openSkillTreePage2();
+		}  else if (FCUserInterface.skillTreeFieldDark.isVisible()) {
+			FCUserInterface.closeSkillTreePageDark();
 			FCUserInterface.openSkillTreePage2();
 		}
 	}

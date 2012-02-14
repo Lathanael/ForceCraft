@@ -21,6 +21,7 @@ package de.Lathanael.ForceCraft.gui.Admin.Buttons;
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.gui.Button;
 import org.getspout.spoutapi.gui.Color;
+import org.getspout.spoutapi.gui.ComboBox;
 import org.getspout.spoutapi.gui.GenericButton;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
@@ -44,49 +45,49 @@ public class SetButton extends GenericButton implements Button {
 		ForcePlayer fPlayer = PlayerHandler.getInstance()
 				.getPlayer(FCUserInterface.adminField.name.getText());
 		if (fPlayer == null) {
-			FCUserInterface.adminField.output.setText("Sorry no ForcePlayer with the name: "
-					+ FCUserInterface.adminField.name.getText() + " was found.");
-			FCUserInterface.adminField.output.setFieldColor(new Color(0.4F, 0, 0));
-			FCUserInterface.adminField.output.setDirty(true);
+			errorMsg("Please select an action to perform!");
 			return;
 		}
 		String setType = FCUserInterface.adminField.setListBox.getSelectedItem();
 		String setValue = FCUserInterface.adminField.setField.getText();
+		if (setType == null) {
+			return;
+		}
 		int number = 0;
 		if (setType.equalsIgnoreCase("mana")) {
 			try {
-				number = Tools.parseInteger(fPlayer, setValue, "mana");
+				number = Tools.parseInteger(fPlayer, setValue);
 			} catch (NumberFormatException e) {
-				errorMsg();
+				errorMsg("Sorry, could not parse the given String as a number.");
 				return;
 			}
 			fPlayer.setMana(number);
 			successMsg();
 		} else if (setType.equalsIgnoreCase("alignment")) {
-			try {
-				number = Tools.parseInteger(fPlayer, FCUserInterface.adminField.setAlignmentBox.getSelectedItem()
-						, "alignment");
-			} catch (NumberFormatException e) {
-				errorMsg();
-				return;
-			}
+			number = fPlayer.getAlignment().getNumber();
+			ComboBox box = FCUserInterface.adminField.setAlignmentBox;
+			if (box.getSelectedItem().equalsIgnoreCase("light"))
+				number = 1;
+			else if (box.getSelectedItem().equalsIgnoreCase("dark"))
+				number = 2;
+			else if (box.getSelectedItem().equalsIgnoreCase("neutral"))
+				number = 0;
 			fPlayer.setAlignment(ForceAlignment.getAlignmentByNr(number));
 			successMsg();
 		} else if (setType.equalsIgnoreCase("rank")) {
 			try {
-				number = Tools.parseInteger(fPlayer, FCUserInterface.adminField.setRankBox.getSelectedItem()
-						, "rank");
+				number = Tools.parseInteger(fPlayer, FCUserInterface.adminField.setRankBox.getSelectedItem());
 			} catch (NumberFormatException e) {
-				errorMsg();
+				errorMsg("Sorry, could not parse the given String as a number.");
 				return;
 			}
-			fPlayer.setRank(Ranks.getRank(FCUserInterface.adminField.setAlignmentBox.getSelectedItem(), number));
+			fPlayer.setRank(Ranks.getRank(fPlayer.getAlignment().toString(), number));
 			successMsg();
 		} else if (setType.equalsIgnoreCase("maxmana")) {
 			try {
-				number = Tools.parseInteger(fPlayer, setValue, "maxmana");
+				number = Tools.parseInteger(fPlayer, setValue);
 			} catch (NumberFormatException e) {
-				errorMsg();
+				errorMsg("Sorry, could not parse the given String as a number.");
 				return;
 			}
 			fPlayer.setMaxMana(number);
@@ -94,8 +95,8 @@ public class SetButton extends GenericButton implements Button {
 		}
 	}
 
-	private void errorMsg() {
-		FCUserInterface.adminField.output.setText("Sorry, could not parse the given String as a number.");
+	private void errorMsg(String msg) {
+		FCUserInterface.adminField.output.setText(msg);
 		FCUserInterface.adminField.output.setFieldColor(new Color(0.4F, 0, 0));
 		FCUserInterface.adminField.output.setDirty(true);
 	}

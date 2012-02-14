@@ -20,9 +20,12 @@
 
 package de.Lathanael.ForceCraft.gui.SkillTree;
 
+import java.util.HashMap;
+
 import org.getspout.spoutapi.gui.Color;
 import org.getspout.spoutapi.gui.GenericContainer;
 import org.getspout.spoutapi.gui.GenericLabel;
+import org.getspout.spoutapi.gui.GenericTexture;
 import org.getspout.spoutapi.gui.Label;
 import org.getspout.spoutapi.gui.Texture;
 import org.getspout.spoutapi.gui.Widget;
@@ -38,39 +41,24 @@ import de.Lathanael.ForceCraft.gui.SkillTree.Buttons.PrevButton;
  * @author Lathanael (aka Philippe Leipold)
  */
 public class SKGUIPage2 extends GenericContainer {
-	private Label label, warning, skillPoints;
-	@SuppressWarnings("unused")
-	private SpoutPlayer player;
+	private Label label, warning, skillPoints, alignment;
+	private ForcePlayer player;
 	@SuppressWarnings("unused")
 	private Geometry edges;
 	private Texture background;
 	private NextButton next;
 	private PrevButton prev;
+	private SkillTreeItem ski1, ski2, ski3;
+	public HashMap<String, SkillTreeItem> treeItem = new HashMap<String, SkillTreeItem>();
 
 	public SKGUIPage2 (Geometry edges, SpoutPlayer player, Texture tex) {
-		this.player = player;
 		this.edges = edges;
 		background = tex;
 		label = new GenericLabel();
-		label.setText("Skill Tree Page 2");
+		label.setText("Skill Tree");
 		label.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());
 		label.setDirty(true);
-		next = new NextButton("Next Page");
-		next.setHeight(15).setWidth(60).setX(edges.getLeft() + 250).setY(edges.getTop() + 160);
-		next.setDirty(true);
-		prev = new PrevButton("Prev. Page");
-		prev.setHeight(15).setWidth(60).setX(edges.getLeft() + 10).setY(edges.getTop() + 160);
-		prev.setDirty(true);
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(player.getName());
-		warning = new GenericLabel();
-		warning.setHeight(15).setWidth(100).setX(edges.getLeft() + 10).setY(edges.getTop() + 100);
-		warning.setText("");
-		warning.setVisible(false);
-		warning.setDirty(true);
-		skillPoints = new GenericLabel();
-		skillPoints.setHeight(15).setWidth(150).setX(edges.getLeft() + 80).setY(edges.getTop() + 160);
-		skillPoints.setVisible(false);
-		skillPoints.setDirty(true);
 		if (fPlayer == null) {
 			next.setEnabled(false);
 			next.setDirty(true);
@@ -82,10 +70,45 @@ public class SKGUIPage2 extends GenericContainer {
 			warning.setDirty(true);
 			return;
 		}
+		this.player = fPlayer;
+		alignment = new GenericLabel("Neutral Powers");
+		alignment.setHeight(10).setWidth(100).setX(edges.getLeft() + 10).setY(edges.getTop() + 20);
+		next = new NextButton("Next Page", fPlayer);
+		next.setHeight(15).setWidth(60).setX(edges.getLeft() + 250).setY(edges.getTop() + 169);
+		next.setDirty(true);
+		prev = new PrevButton("Prev. Page");
+		prev.setHeight(15).setWidth(60).setX(edges.getLeft() + 10).setY(edges.getTop() + 169);
+		prev.setDirty(true);
+		warning = new GenericLabel();
+		warning.setHeight(15).setWidth(100).setX(edges.getLeft() + 10).setY(edges.getTop() + 100);
+		warning.setText("");
+		warning.setVisible(false);
+		warning.setDirty(true);
+		skillPoints = new GenericLabel();
+		skillPoints.setHeight(15).setWidth(150).setX(edges.getLeft() + 120).setY(edges.getTop() + 172);
+		skillPoints.setVisible(false);
+		skillPoints.setDirty(true);
 		skillPoints.setText("Skillpoints: " + fPlayer.getUsedSkillPoints() + "/" + fPlayer.getAvailableSkillPoints());
 		skillPoints.setVisible(true);
 		skillPoints.setDirty(true);
-		addChildren(new Widget[] {label, prev, next, warning, skillPoints});
+		ski1 = new SkillTreeItem(edges,
+				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Run", fPlayer);
+		ski1.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 45);
+		treeItem.put("Run", ski1);
+		ski2 = new SkillTreeItem(edges,
+				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Jump", fPlayer);
+		ski2.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 85);
+		treeItem.put("Jump", ski2);
+		ski3 = new SkillTreeItem(edges,
+				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Heal", fPlayer);
+		ski3.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 125);
+		treeItem.put("Heal", ski3);
+		addChildren(new Widget[] {alignment, label, prev, next, warning, skillPoints, ski1, ski2, ski3});
 		setWidth(0).setHeight(0);
+	}
+
+	public void updateskillPoints() {
+		skillPoints.setText("Skillpoints: " + player.getUsedSkillPoints() + "/" + player.getAvailableSkillPoints());
+		skillPoints.setDirty(true);
 	}
 }

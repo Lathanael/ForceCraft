@@ -65,7 +65,7 @@ public class UserGUI extends GenericContainer {
 		background = tex;
 		userLabel = new GenericLabel();
 		userLabel.setText("User GUI");
-		userLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());
+		userLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop() - 5);
 		userLabel.setDirty(true);
 		keys = new GenericTextField();
 		keys.setHeight(55).setWidth(300).setX(edges.getLeft()+10).setY(edges.getTop()+20);

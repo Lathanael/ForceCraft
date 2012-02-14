@@ -44,7 +44,7 @@ public class AdminGUI2 extends GenericContainer {
 	public AdminGUI2 (Geometry edges, Texture background) {
 		adminLabel = new GenericLabel();
 		adminLabel.setText("Admin GUI");
-		adminLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());
+		adminLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop() - 5);
 		adminLabel.setDirty(true);
 		output = new GenericTextField();
 		output.setHeight(15).setWidth(300).setX(edges.getLeft()+10).setY(edges.getTop() + 20);

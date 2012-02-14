@@ -42,6 +42,6 @@ public class PICloseButton extends GenericButton implements Button {
 		player.getMainScreen().getActivePopup().close();
 		PopupScreen screen = Tools.reopenScreen(player);
 		if (screen != null)
-			player.getMainScreen().attachPopupScreen(Tools.reopenScreen(player));
+			player.getMainScreen().attachPopupScreen(screen);
 	}
 }

@@ -16,47 +16,45 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.gui.Admin;
+package de.Lathanael.ForceCraft.gui.ErrorScreen;
 
-import org.bukkit.ChatColor;
-import org.getspout.spoutapi.gui.GenericListView;
+import org.getspout.spoutapi.gui.Color;
+import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.GenericPopup;
 import org.getspout.spoutapi.gui.GenericTexture;
-import org.getspout.spoutapi.gui.RenderPriority;
+import org.getspout.spoutapi.gui.Label;
 import org.getspout.spoutapi.gui.Texture;
-import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 import de.Lathanael.ForceCraft.gui.Geometry;
-import de.Lathanael.ForceCraft.gui.Admin.Buttons.PICloseButton;
-import de.Lathanael.ForceCraft.gui.PlayerInfo.PIListModel;
+import de.Lathanael.ForceCraft.gui.ErrorScreen.Buttons.ESCloseButton;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class PlayerInfoPopup extends GenericPopup {
-	private GenericListView list;
+public class ErrorScreen extends GenericPopup {
 	private Texture background;
-	private PICloseButton close;
+	private Label label;
+	private Geometry edges;
+	private ESCloseButton close;
 
-	public PlayerInfoPopup(SpoutPlayer player, Geometry edges) {
+	public ErrorScreen (SpoutPlayer player, String errorMsg) {
 		int screenWidth = player.getMainScreen().getWidth();
 		int screenHeight = player.getMainScreen().getHeight();
 		background = new GenericTexture(ForcePlugin.backgroundTexURL);
-		background.setHeight(200).setWidth(400).setX((screenWidth - 400)/2).setY((screenHeight-200)/2);
-		background.setPriority(RenderPriority.Highest);
-		attachWidget(ForcePlugin.getInstance(), background);
-		list = new GenericListView(new PIListModel(player));
-		list.setHeight(160).setWidth(360).setX(edges.getLeft()+10).setY(edges.getTop()+20);
-		attachWidget(ForcePlugin.getInstance(), list);
-		close = new PICloseButton(ChatColor.WHITE + "X");
-		close.setAlign(WidgetAnchor.CENTER_CENTER);
-		close.setHeight(10).setWidth(10).setX(edges.getRight()-10).setY(edges.getTop());
-		close.setTooltip("Close the Window");
-		attachWidget(ForcePlugin.getInstance(), close);
-
-		player.getMainScreen().attachPopupScreen(this);
+		background.setHeight(50).setWidth(200).setX((screenWidth - 200)/2).setY((screenHeight-50)/2);
+		edges.setLeft((screenWidth-190)/2);
+		edges.setRight(background.getX()+background.getWidth()-10);
+		edges.setTop(background.getY()+10);
+		edges.setBottom(background.getHeight()+background.getY()-10);
+		label = new GenericLabel(errorMsg);
+		label.setTextColor(new Color(1.0F, 0, 0));
+		label.setWidth(180).setHeight(30).setX(edges.getLeft()).setY(edges.getTop());
+		close = new ESCloseButton("X");
+		close.setHeight(10).setWidth(10).setX(edges.getRight()).setY(edges.getTop());
+		close.setTooltip("Close the window");
+		attachWidgets(ForcePlugin.getInstance(), background, label, close);
 	}
 }

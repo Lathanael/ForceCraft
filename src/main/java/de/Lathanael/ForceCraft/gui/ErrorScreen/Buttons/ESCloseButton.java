@@ -16,15 +16,32 @@
  *
  **************************************************************************/
 
-package de.Lathanael.ForceCraft.gui;
+package de.Lathanael.ForceCraft.gui.ErrorScreen.Buttons;
 
-import org.getspout.spoutapi.gui.GenericItemWidget;
-import org.getspout.spoutapi.gui.ItemWidget;
+import org.getspout.spoutapi.event.screen.ButtonClickEvent;
+import org.getspout.spoutapi.gui.Button;
+import org.getspout.spoutapi.gui.GenericButton;
+import org.getspout.spoutapi.gui.PopupScreen;
+import org.getspout.spoutapi.player.SpoutPlayer;
+
+import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class ExtendedItemWidget extends GenericItemWidget implements ItemWidget{
+public class ESCloseButton extends GenericButton implements Button {
 
+	public ESCloseButton(String name) {
+		super(name);
+	}
+
+	@Override
+	public void onButtonClick(ButtonClickEvent event) {
+		SpoutPlayer player = event.getPlayer();
+		player.getMainScreen().getActivePopup().close();
+		PopupScreen screen = Tools.reopenScreen(player);
+		if (screen != null)
+			player.getMainScreen().attachPopupScreen(screen);
+	}
 }

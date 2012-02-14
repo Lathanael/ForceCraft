@@ -34,12 +34,11 @@ import de.Lathanael.ForceCraft.gui.Geometry;
  */
 public class PIGUI extends GenericContainer{
 	private Label guiLabel;
-	@SuppressWarnings("unused")
 	private SpoutPlayer player;
 	@SuppressWarnings("unused")
 	private Geometry edges;
 	private Texture background;
-	private GenericListView list;
+	public GenericListView list;
 
 	public PIGUI (Geometry edges, SpoutPlayer player, Texture tex) {
 		this.player = player;
@@ -48,8 +47,13 @@ public class PIGUI extends GenericContainer{
 		list = new GenericListView(new PIListModel(player));
 		list.setHeight(155).setWidth(300).setX(edges.getLeft()+10).setY(edges.getTop()+20);
 		guiLabel = new GenericLabel("PlayerInfo");
-		guiLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());
+		guiLabel.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop() - 5);
 		addChildren(new Widget[] {guiLabel, list});
 		setWidth(0).setHeight(0);
+	}
+
+	public void updateList() {
+		list = new GenericListView(new PIListModel(player));
+		list.setDirty(true);
 	}
 }

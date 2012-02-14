@@ -40,27 +40,28 @@ import de.Lathanael.ForceCraft.gui.SkillTree.Buttons.PrevButton;
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class SKGUIPage1 extends GenericContainer {
-	private Label label, skillPoints, warning, alignment;
+public class SKGUIPageLight extends GenericContainer {
+	private Label label, warning, skillPoints, alignment;
 	private ForcePlayer player;
 	@SuppressWarnings("unused")
 	private Geometry edges;
 	private Texture background;
-	private NextButton next;
 	private PrevButton prev;
+	private NextButton next;
 	private SkillTreeItem ski1, ski2, ski3;
 	public HashMap<String, SkillTreeItem> treeItem = new HashMap<String, SkillTreeItem>();
 
-	public SKGUIPage1 (Geometry edges, SpoutPlayer player, Texture tex) {
+	public SKGUIPageLight (Geometry edges, SpoutPlayer player, Texture tex) {
 		this.edges = edges;
 		background = tex;
-		label = new GenericLabel("Skill Tree");
+		label = new GenericLabel();
+		label.setText("Skill Tree");
 		label.setHeight(10).setWidth(50).setX(edges.getLeft()+background.getWidth()/2-100).setY(edges.getTop());
 		label.setDirty(true);
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(player.getName());
 		if (fPlayer == null) {
-			next.setEnabled(false);
-			next.setDirty(true);
+			prev.setEnabled(false);
+			prev.setDirty(true);
 			warning.setText("Sorry, a ForcePlayer with your name was not found!");
 			warning.setTextColor(new Color(1.0F, 0, 0));
 			warning.setVisible(true);
@@ -68,40 +69,40 @@ public class SKGUIPage1 extends GenericContainer {
 			return;
 		}
 		this.player = fPlayer;
-		alignment = new GenericLabel("Neutral Powers");
+		alignment = new GenericLabel("Light Powers");
 		alignment.setHeight(10).setWidth(100).setX(edges.getLeft() + 10).setY(edges.getTop() + 20);
 		next = new NextButton("Next Page", fPlayer);
 		next.setHeight(15).setWidth(60).setX(edges.getLeft() + 250).setY(edges.getTop() + 169);
+		next.setEnabled(false);
 		next.setDirty(true);
 		prev = new PrevButton("Prev. Page");
 		prev.setHeight(15).setWidth(60).setX(edges.getLeft() + 10).setY(edges.getTop() + 169);
-		prev.setEnabled(false);
 		prev.setDirty(true);
-		warning = new GenericLabel("");
+		warning = new GenericLabel();
 		warning.setHeight(15).setWidth(100).setX(edges.getLeft() + 10).setY(edges.getTop() + 100);
+		warning.setText("");
 		warning.setVisible(false);
 		warning.setDirty(true);
 		skillPoints = new GenericLabel();
 		skillPoints.setHeight(15).setWidth(150).setX(edges.getLeft() + 120).setY(edges.getTop() + 172);
 		skillPoints.setVisible(false);
 		skillPoints.setDirty(true);
-
 		skillPoints.setText("Skillpoints: " + fPlayer.getUsedSkillPoints() + "/" + fPlayer.getAvailableSkillPoints());
 		skillPoints.setVisible(true);
 		skillPoints.setDirty(true);
 		ski1 = new SkillTreeItem(edges,
-				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Push", fPlayer);
+				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Lift", fPlayer);
 		ski1.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 45);
-		treeItem.put("Push", ski1);
+		treeItem.put("Lift", ski1);
 		ski2 = new SkillTreeItem(edges,
-				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Pull", fPlayer);
+				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Shield", fPlayer);
 		ski2.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 85);
-		treeItem.put("Pull", ski2);
+		treeItem.put("Shield", ski2);
 		ski3 = new SkillTreeItem(edges,
-				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Flash", fPlayer);
+				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Meditation", fPlayer);
 		ski3.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 125);
-		treeItem.put("Flash", ski3);
-		addChildren(new Widget[] {alignment ,label, prev, next, warning, skillPoints, ski1, ski2, ski3});
+		treeItem.put("Meditation", ski3);
+		addChildren(new Widget[] {alignment, label, prev, next, warning, skillPoints, ski1, ski2, ski3});
 		setWidth(0).setHeight(0);
 	}
 

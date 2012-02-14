@@ -18,8 +18,12 @@
 
 package de.Lathanael.ForceCraft.gui.SkillTree.Buttons;
 
+import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.gui.Button;
 import org.getspout.spoutapi.gui.GenericButton;
+
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.gui.FCUserInterface;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -27,4 +31,34 @@ import org.getspout.spoutapi.gui.GenericButton;
  */
 public class MinusButton extends GenericButton implements Button {
 
+	private String power;
+	private ForcePlayer player;
+
+	public MinusButton(String label, String power, ForcePlayer player) {
+		super(label);
+		this.power = power;
+		this.player = player;
+	}
+
+	@Override
+	public void onButtonClick(ButtonClickEvent event) {
+		if (player.checkSkillPointUse(true)) {
+			if (player.decSkillRank(power)) {
+				player.decUsedSkillPoints(1);
+				if (FCUserInterface.skillTreeField1.treeItem.containsKey(power)) {
+					FCUserInterface.skillTreeField1.treeItem.get(power).updateSkillPoints();
+					FCUserInterface.skillTreeField1.updateskillPoints();
+				} else if (FCUserInterface.skillTreeField2.treeItem.containsKey(power)) {
+					FCUserInterface.skillTreeField2.treeItem.get(power).updateSkillPoints();
+					FCUserInterface.skillTreeField2.updateskillPoints();
+				} else if (FCUserInterface.skillTreeFieldLight.treeItem.containsKey(power)) {
+					FCUserInterface.skillTreeFieldLight.treeItem.get(power).updateSkillPoints();
+					FCUserInterface.skillTreeFieldLight.updateskillPoints();
+				} else if (FCUserInterface.skillTreeFieldDark.treeItem.containsKey(power)) {
+					FCUserInterface.skillTreeFieldDark.treeItem.get(power).updateSkillPoints();
+					FCUserInterface.skillTreeFieldDark.updateskillPoints();
+				}
+			}
+		}
+	}
 }

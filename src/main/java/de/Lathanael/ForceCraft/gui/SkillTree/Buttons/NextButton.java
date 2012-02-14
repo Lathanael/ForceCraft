@@ -22,6 +22,8 @@ import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.gui.Button;
 import org.getspout.spoutapi.gui.GenericButton;
 
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.Utils.ForceAlignment;
 import de.Lathanael.ForceCraft.gui.FCUserInterface;
 
 /**
@@ -30,8 +32,11 @@ import de.Lathanael.ForceCraft.gui.FCUserInterface;
  */
 public class NextButton extends GenericButton implements Button {
 
-	public NextButton(String text) {
+	private ForcePlayer player;
+
+	public NextButton(String text, ForcePlayer player) {
 		super(text);
+		this.player = player;
 	}
 
 	@Override
@@ -39,9 +44,12 @@ public class NextButton extends GenericButton implements Button {
 		if (FCUserInterface.skillTreeField1.isVisible()) {
 			FCUserInterface.closeSkillTreePage1();
 			FCUserInterface.openSkillTreePage2();
-		} else if (FCUserInterface.skillTreeField2.isVisible()) {
+		} else if (FCUserInterface.skillTreeField2.isVisible() && player.getAlignment().equals(ForceAlignment.LIGHT)) {
 			FCUserInterface.closeSkillTreePage2();
-			FCUserInterface.openSkillTreePage3();
+			FCUserInterface.openSkillTreePageLight();
+		} else if (FCUserInterface.skillTreeField2.isVisible() && player.getAlignment().equals(ForceAlignment.DARK)) {
+			FCUserInterface.closeSkillTreePage2();
+			FCUserInterface.openSkillTreePageDark();
 		}
 	}
 }
