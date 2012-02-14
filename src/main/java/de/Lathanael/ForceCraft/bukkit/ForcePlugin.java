@@ -114,7 +114,9 @@ public class ForcePlugin extends JavaPlugin {
 		config = YamlConfiguration.loadConfiguration(loadConfiguration());
 		saveConfig();
 		loadConfig(config);
-		loadRanksInfo();
+		loadPowerInfo();
+		loadTexturePaths();
+		loadAutoPromoteValues();
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		commandsHandler = CommandsHandler.initInstance(this);
@@ -171,27 +173,75 @@ public class ForcePlugin extends JavaPlugin {
 		manaBarEnabled = config.getBoolean("manaBarEnabled", true);
 	}
 
-	private void loadRanksInfo() {
-		File ranksInfoFile = new File(getDataFolder().getPath() + File.separator + "powerInfo.yml");
-		if (!ranksInfoFile.exists()) {
+	private void loadPowerInfo() {
+		File file = new File(getDataFolder().getPath() + File.separator + "powerInfo.yml");
+		if (!file.exists()) {
 			try {
-				ranksInfoFile.createNewFile();
-				InputStream in = getResource("ranksInfo.yml");
-				FileWriter writer = new FileWriter(ranksInfoFile);
+				file.createNewFile();
+				InputStream in = getResource("powerInfo.yml");
+				FileWriter writer = new FileWriter(file);
 				for (int i = 0; (i = in.read()) > 0;) {
 					writer.write(i);
 				}
 				writer.flush();
 				writer.close();
 				in.close();
-				powerInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
-				powerInfo.save(ranksInfoFile);
+				powerInfo = YamlConfiguration.loadConfiguration(file);
+				powerInfo.save(file);
 			} catch (IOException e) {
-				log.info("Failed to create ranksInfo.yml!");
+				log.info("Failed to create powerInfo.yml!");
 				e.printStackTrace();
 			}
 		} else {
-			powerInfo = YamlConfiguration.loadConfiguration(ranksInfoFile);
+			powerInfo = YamlConfiguration.loadConfiguration(file);
+		}
+	}
+
+	private void loadAutoPromoteValues() {
+		File file = new File(getDataFolder().getPath() + File.separator + "autoPromoteValues.yml");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				InputStream in = getResource("autoPromoteValues.yml");
+				FileWriter writer = new FileWriter(file);
+				for (int i = 0; (i = in.read()) > 0;) {
+					writer.write(i);
+				}
+				writer.flush();
+				writer.close();
+				in.close();
+				autoPromoteValues = YamlConfiguration.loadConfiguration(file);
+				autoPromoteValues.save(file);
+			} catch (IOException e) {
+				log.info("Failed to create autoPromoteValues.yml!");
+				e.printStackTrace();
+			}
+		} else {
+			autoPromoteValues = YamlConfiguration.loadConfiguration(file);
+		}
+	}
+
+	private void loadTexturePaths() {
+		File file = new File(getDataFolder().getPath() + File.separator + "texturePaths.yml");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				InputStream in = getResource("texturePaths.yml");
+				FileWriter writer = new FileWriter(file);
+				for (int i = 0; (i = in.read()) > 0;) {
+					writer.write(i);
+				}
+				writer.flush();
+				writer.close();
+				in.close();
+				texturePaths = YamlConfiguration.loadConfiguration(file);
+				texturePaths.save(file);
+			} catch (IOException e) {
+				log.info("Failed to create autoPromoteValues.yml!");
+				e.printStackTrace();
+			}
+		} else {
+			texturePaths = YamlConfiguration.loadConfiguration(file);
 		}
 	}
 
@@ -267,7 +317,7 @@ public class ForcePlugin extends JavaPlugin {
 	}
 
 	public void reload() {
-		loadRanksInfo();
+		loadPowerInfo();
 		config = YamlConfiguration.loadConfiguration(loadConfiguration());
 		loadConfig(config);
 	}
