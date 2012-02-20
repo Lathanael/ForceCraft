@@ -21,19 +21,38 @@ package de.Lathanael.ForceCraft.Events;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+
 /**
  * @author Lathanael (aka Philippe Leipold)
  */
-public class ManaChangeEvent extends Event{
+public class ManaChangeEvent extends Event {
+
+	private static final HandlerList handlers = new HandlerList();
+	private ForcePlayer player;
+	private int mana;
+
+	public ManaChangeEvent (ForcePlayer player, int mana) {
+		this.player = player;
+		this.mana = mana;
+	}
 
 	/**
+	 * Gets the ForcePlayer associated with the event.
 	 *
+	 * @return
 	 */
-	private static final long serialVersionUID = 8605559929677712643L;
-	private static final HandlerList handlers = new HandlerList();
+	public ForcePlayer getPlayer() {
+		return player;
+	}
 
-	public ManaChangeEvent () {
-
+	/**
+	 * Gets the Amount of mana wich was consumed in the event.
+	 *
+	 * @return
+	 */
+	public int getMana() {
+		return mana;
 	}
 
 	public HandlerList getHandlers() {
