@@ -342,6 +342,7 @@ public class Scheduler {
 				}, delay);
 	}
 
+	// TODO: Lift tasks
 	public void scheduleLiftTask(final ForcePlayer player, final ForcePlayer target) {
 
 	}

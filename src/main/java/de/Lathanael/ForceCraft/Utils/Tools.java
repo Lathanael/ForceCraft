@@ -268,6 +268,7 @@ public class Tools {
 	 * @param blocks
 	 * @param pushing
 	 */
+	// TODO: move block(s) code
 	public static void moveBlocks(List<Block> blocks, World world, boolean pushing, Vector direction) {
 		int x = (int) Math.abs(direction.getX());
 		double z = (int) Math.abs(direction.getZ());

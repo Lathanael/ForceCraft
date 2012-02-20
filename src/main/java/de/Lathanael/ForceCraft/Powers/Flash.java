@@ -47,6 +47,7 @@ public class Flash extends BasePower {
 
 	@Override
 	public int execute(ForcePlayer player, Entity target) {
+		// TODO: Flash code
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));
