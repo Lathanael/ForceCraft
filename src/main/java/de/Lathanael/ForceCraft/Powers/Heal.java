@@ -48,7 +48,7 @@ public class Heal extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer player, Entity target) {
+	public int execute(ForcePlayer player, Entity target) {
 		Player pTarget = null;
 		if (target != null && target instanceof Player)
 			pTarget = (Player) target;
@@ -59,6 +59,7 @@ public class Heal extends BasePower {
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));
+		return manaCost+costInc*player.getSkillRank(name);
 	}
 
 	@Override

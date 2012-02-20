@@ -50,7 +50,14 @@ public abstract class BasePower {
 		instance = ForcePlugin.getInstance();
 	}
 
-	public abstract void execute(ForcePlayer player, Entity target);
+	/**
+	 * Executes the power and returns how much it did cost, or 0 if not executed
+	 *
+	 * @param player
+	 * @param target
+	 * @return
+	 */
+	public abstract int execute(ForcePlayer player, Entity target);
 
 	public abstract boolean checkPerm(CommandSender sender);
 
@@ -89,8 +96,8 @@ public abstract class BasePower {
 		return false;
 	}
 
-	public void issueEvents() {
-		Bukkit.getServer().getPluginManager().callEvent(new PowerUsedEvent());
-		Bukkit.getServer().getPluginManager().callEvent(new ManaChangeEvent());
+	public void issueEvents(ForcePlayer player, int mana, String powerName) {
+		Bukkit.getServer().getPluginManager().callEvent(new PowerUsedEvent(player, powerName));
+		Bukkit.getServer().getPluginManager().callEvent(new ManaChangeEvent(player, mana));
 	}
 }

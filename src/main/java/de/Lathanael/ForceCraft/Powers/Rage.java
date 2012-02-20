@@ -49,7 +49,7 @@ public class Rage extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer player, Entity target) {
+	public int execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.RAGE);
 		Scheduler.getInstance().scheduleCancelRageTask(player);
 		// TODO: Colouring of the raged player
@@ -57,6 +57,7 @@ public class Rage extends BasePower {
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));
+		return manaCost+costInc*player.getSkillRank(name);
 	}
 
 	@Override

@@ -51,7 +51,7 @@ public class Pull extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer player, Entity target) {
+	public int execute(ForcePlayer player, Entity target) {
 		if (target != null) {
 			Tools.debugMsg("Entity targeted!", player.getHandler());
 		}else
@@ -62,7 +62,7 @@ public class Pull extends BasePower {
 			Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
 			if (block.getType().equals(Material.AIR) || block == null) {
 				Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());
-				return;
+				return 0;
 			}
 			List<Block> blocks = new ArrayList<Block>();
 			for (int i = 1; i < force; i++) {
@@ -81,6 +81,7 @@ public class Pull extends BasePower {
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));
+		return manaCost+costInc*player.getSkillRank(name);
 	}
 
 	@Override

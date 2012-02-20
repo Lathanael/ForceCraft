@@ -50,9 +50,9 @@ public class Lift extends BasePower {
 	}
 
 	@Override
-	public void execute(ForcePlayer player, Entity target) {
+	public int execute(ForcePlayer player, Entity target) {
 		if (target == null)
-			return;
+			return 0;
 		if (target instanceof Player) {
 			Player pTarget = (Player) target;
 			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
@@ -61,6 +61,7 @@ public class Lift extends BasePower {
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
 			player.decMana(manaCost+costInc*player.getSkillRank(name));
+			return manaCost+costInc*player.getSkillRank(name);
 		} else if (target instanceof LivingEntity) {
 			LivingEntity eTarget = (LivingEntity) target;
 			eTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
@@ -68,8 +69,9 @@ public class Lift extends BasePower {
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
 			player.decMana(manaCost+costInc*player.getSkillRank(name));
+			return manaCost+costInc*player.getSkillRank(name);
 		}
-
+		return 0;
 	}
 
 	@Override

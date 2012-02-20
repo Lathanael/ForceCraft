@@ -86,13 +86,14 @@ public class CommandsHandler implements CommandExecutor {
 				if (power.checkRank(fPlayer) && power.checkTime(fPlayer) && power.checkMana(fPlayer)) {
 					Player executor = (Player) sender;
 					Block block = null;
+					int cost = 0;
 					if (power.name.equalsIgnoreCase("pull")) {
 						block = executor.getTargetBlock(null, ForcePlugin.checkDist);
 						if (block == null)
 							return;
 						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor)){
-							power.execute(fPlayer, target);
-							power.issueEvents();
+							cost = power.execute(fPlayer, target);
+							power.issueEvents(fPlayer, cost, power.name);
 						}
 					}
 					else if (power.name.equalsIgnoreCase("push")) {
@@ -100,13 +101,13 @@ public class CommandsHandler implements CommandExecutor {
 						if (block == null)
 							return;
 						else if (Tools.checkDistance(executor.getLocation(), block.getLocation(), ForcePlugin.checkDist, executor)) {
-							power.execute(fPlayer, target);
-							power.issueEvents();
+							cost = power.execute(fPlayer, target);
+							power.issueEvents(fPlayer, cost, power.name);
 						}
 					}
 					else if (Tools.checkDistance(executor, target, ForcePlugin.checkDist, executor)) {
-						power.execute(fPlayer, target);
-						power.issueEvents();
+						cost = power.execute(fPlayer, target);
+						power.issueEvents(fPlayer, cost, power.name);
 					}
 				}
 
