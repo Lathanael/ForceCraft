@@ -247,7 +247,7 @@ public class ForcePlugin extends JavaPlugin {
 				texturePaths = YamlConfiguration.loadConfiguration(file);
 				texturePaths.save(file);
 			} catch (IOException e) {
-				log.info("Failed to create autoPromoteValues.yml!");
+				log.info("Failed to create texturePaths.yml!");
 				e.printStackTrace();
 			}
 		} else {
@@ -270,7 +270,11 @@ public class ForcePlugin extends JavaPlugin {
 			e.printStackTrace();
 		}
 
+		File folder = new File(getDataFolder().getPath());
 		File file = new File(getDataFolder().getPath() + File.separator + "config.yml");
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
 		if (file.exists()) {
 			BufferedReader reader = null;
 			try {

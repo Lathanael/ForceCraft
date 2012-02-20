@@ -37,7 +37,7 @@ public class PlayerHandler {
 	private HashMap<String, ForcePlayer> players = new HashMap<String, ForcePlayer>();
 	private File playerFolder;
 	private FilenameFilter ymlFilter = new YamlFileFilter();
-	private static PlayerHandler handler= null;
+	private static PlayerHandler handler = null;
 
 	public PlayerHandler() {
 	}
