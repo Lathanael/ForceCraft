@@ -44,7 +44,6 @@ public class MinusButton extends GenericButton implements Button {
 	public void onButtonClick(ButtonClickEvent event) {
 		if (player.checkSkillPointUse(true)) {
 			if (player.decSkillRank(power)) {
-				player.decUsedSkillPoints(1);
 				if (FCUserInterface.skillTreeField1.treeItem.containsKey(power)) {
 					FCUserInterface.skillTreeField1.treeItem.get(power).updateSkillPoints();
 					FCUserInterface.skillTreeField1.updateskillPoints();

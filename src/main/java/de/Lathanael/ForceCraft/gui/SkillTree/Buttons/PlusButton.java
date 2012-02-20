@@ -44,7 +44,6 @@ public class PlusButton extends GenericButton implements Button {
 	public void onButtonClick(ButtonClickEvent event) {
 		if (player.checkSkillPointUse(false)) {
 			if (player.incSkillRank(power)) {
-				player.incUsedSkillPoints(1);
 				if (FCUserInterface.skillTreeField1.treeItem.containsKey(power)) {
 					FCUserInterface.skillTreeField1.treeItem.get(power).updateSkillPoints();
 					FCUserInterface.skillTreeField1.updateskillPoints();

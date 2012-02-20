@@ -202,10 +202,25 @@ public class ForcePlayer {
 		updateFile();
 	}
 
-	// TODO: Make sure skillPoints are available and set them to the new amount
-	public boolean setSkillRank(String power, int rank) {
+	public boolean setSkillRank(String power, int skillLevel) {
 		if (skillRanks.containsKey(power)) {
-			skillRanks.put(power, rank);
+			int oldRank = skillRanks.get(power);
+			int newRank = oldRank + skillLevel;
+			if (newRank > 5)
+				newRank = 5;
+			else if (newRank < 0)
+				newRank = 0;
+			int diff = Math.abs((newRank - oldRank));
+			if (newRank > oldRank) {
+				if (!checkSkillPointUse(false))
+					return false;
+				incUsedSkillPoints(diff);
+			} else if (oldRank > newRank) {
+				if (!checkSkillPointUse(true))
+					return false;
+				decUsedSkillPoints(diff);
+			}
+			skillRanks.put(power, newRank);
 			updateFile();
 			return true;
 		}
@@ -218,8 +233,9 @@ public class ForcePlayer {
 		return 0;
 	}
 
-	// TODO: Make sure skillPoints are available
 	public boolean incSkillRank(String power) {
+		if (!checkSkillPointUse(false))
+			return false;
 		if (skillRanks.containsKey(power)) {
 			int rank = skillRanks.get(power);
 			rank = rank + 1;
@@ -229,13 +245,15 @@ public class ForcePlayer {
 				return false;
 			}
 			skillRanks.put(power, rank);
+			incUsedSkillPoints(1);
 			return true;
 		}
 		return false;
 	}
 
-	// TODO: Make sure skillpoints are set free again
 	public boolean decSkillRank(String power) {
+		if (!checkSkillPointUse(true))
+			return false;
 		if (skillRanks.containsKey(power)) {
 			int rank = skillRanks.get(power);
 			rank = rank - 1;
@@ -245,6 +263,7 @@ public class ForcePlayer {
 				return false;
 			}
 			skillRanks.put(power, rank);
+			decUsedSkillPoints(1);
 			return true;
 		}
 		return false;
