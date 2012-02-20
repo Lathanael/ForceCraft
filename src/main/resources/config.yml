@@ -6,6 +6,7 @@ checkDistance: 20
 maxSkillPoints: 20
 startingSkillPoints: 5
 manaBarEnabled: true
+EnableAutoPromote: true
 Power:
   Push:
     enabled: true

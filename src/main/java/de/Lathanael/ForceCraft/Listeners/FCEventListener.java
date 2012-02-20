@@ -18,10 +18,16 @@
 
 package de.Lathanael.ForceCraft.Listeners;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import de.Lathanael.ForceCraft.Events.PowerUsedEvent;
+import de.Lathanael.ForceCraft.Players.ForcePlayer;
+import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.bukkit.PromoteValues;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -30,6 +36,25 @@ public class FCEventListener implements Listener{
 
 	@EventHandler
 	public void onPowerUsed(PowerUsedEvent event) {
-
+		if (!ForcePlugin.autoPromote) {
+			event.setCancelled(true);
+			return;
+		}
+		ForcePlayer p = event.getPlayer();
+		int rank = p.getRank();
+		boolean promote = false;
+		HashMap<String, Integer> amounts = p.getPowerAmounts();
+		for (Map.Entry<String, Integer> entries : amounts.entrySet()) {
+			int value = PromoteValues.getValue(entries.getKey() + "." + String.valueOf(rank));
+			if (value <= 0)
+				continue;
+			else if (value <= entries.getValue())
+				promote = true;
+			else if (value > entries.getValue())
+				promote = false;
+		}
+		if (promote) {
+			p.incRank();
+		}
 	}
 }

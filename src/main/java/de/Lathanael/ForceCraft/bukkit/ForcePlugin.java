@@ -87,6 +87,7 @@ public class ForcePlugin extends JavaPlugin {
 	public PluginManager pm;
 	public static boolean debug = false;
 	public static boolean sensitiveonJoin = false;
+	public static boolean autoPromote = true;
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 	public static int checkDist = 0;
 	public static String manaBarTexURL = "";
@@ -121,6 +122,8 @@ public class ForcePlugin extends JavaPlugin {
 		loadTexturePathsFile();
 		loadTextures();
 		loadAutoPromoteFile();
+		PromoteValues.setInstance();
+		PromoteValues.loadValues(autoPromoteValues);
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
 		commandsHandler = CommandsHandler.initInstance(this);
@@ -174,6 +177,7 @@ public class ForcePlugin extends JavaPlugin {
 		maxSP = config.getInt("maxSkillPoints", 20);
 		startingSP = config.getInt("startingSkillPoints", 10);
 		manaBarEnabled = config.getBoolean("manaBarEnabled", true);
+		autoPromote = config.getBoolean("EnableAutoPromote", true);
 	}
 
 	public void loadTextures() {
