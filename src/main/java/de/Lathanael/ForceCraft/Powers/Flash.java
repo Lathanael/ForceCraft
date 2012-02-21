@@ -27,6 +27,8 @@ import org.bukkit.entity.Player;
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
+import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
@@ -47,7 +49,8 @@ public class Flash extends BasePower {
 
 	@Override
 	public int execute(ForcePlayer player, Entity target) {
-		// TODO: Flash code
+		player.setPowerState(PlayerPowerStates.FLASH);
+		Scheduler.getInstance().scheduleCancelFlashTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));

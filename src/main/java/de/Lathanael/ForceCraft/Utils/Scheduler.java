@@ -350,4 +350,17 @@ public class Scheduler {
 	public void scheduleEntityLiftTask(final ForcePlayer player, final LivingEntity target) {
 
 	}
+
+	public void scheduleCancelFlashTask(final ForcePlayer player) {
+		int playerRank = player.getSkillRank("Flash");
+		if (playerRank == 0)
+			return;
+		long delay = plugin.powerInfo.getLong("Flash.Duration." + String.valueOf(playerRank), 200);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						player.removePowerState(PlayerPowerStates.FLASH);
+					}
+				}, delay);
+	}
 }

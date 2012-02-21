@@ -31,6 +31,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
+import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -63,5 +64,7 @@ public class FCPlayerListener implements Listener {
 				|| fPlayer.hasPowerState(PlayerPowerStates.SHOCKED)
 				|| fPlayer.hasPowerState(PlayerPowerStates.LIFTED)))
 			event.setCancelled(true);
+		if (fPlayer.hasPowerState(PlayerPowerStates.FLASH))
+			Tools.flash(fPlayer);
 	}
 }

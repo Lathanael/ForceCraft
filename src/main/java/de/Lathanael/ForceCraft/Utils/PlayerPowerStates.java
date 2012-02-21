@@ -30,5 +30,6 @@ public enum PlayerPowerStates {
 	RUN,
 	CHOKED,
 	LIFTED,
-	SHOCKED;
+	SHOCKED,
+	FLASH;
 }

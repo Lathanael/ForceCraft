@@ -25,12 +25,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.server.EnumSkyBlock;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -198,9 +201,10 @@ public class Tools {
 	 *
 	 * @param message - The message to be printed
 	 * @param sender - The Object which did call the command/power, null if none!
+	 * @param forceSend - Send the message even if debug is set to false in the config
 	 */
-	public static void debugMsg(String message, CommandSender sender) {
-		if (!ForcePlugin.debug)
+	public static void debugMsg(String message, CommandSender sender, boolean forceSend) {
+		if (!ForcePlugin.debug || forceSend)
 			return;
 		if (sender == null)
 			ForcePlugin.log.info(message);
@@ -211,6 +215,10 @@ public class Tools {
 			ForcePlugin.log.info(message);
 			sender.sendMessage(ChatColor.RED + message);
 		}
+	}
+
+	public static void debugMsg(String message, CommandSender sender) {
+		debugMsg(message, sender, false);
 	}
 
 	/**
@@ -352,11 +360,46 @@ public class Tools {
 		debugMsg("All files saved!", null);
 	}
 
+	/**
+	 * Saves a GUI popup for later reuse.
+	 *
+	 * @param player - The player whose popup should be saved
+	 * @param screen - The popup which should be saved
+	 */
 	public static void savePopupScreen(SpoutPlayer player, PopupScreen screen) {
 		screens.put(player, screen);
 	}
 
+	/**
+	 * Returns the screen of a player or null if none found.
+	 *
+	 * @param player - The player whose screen should be returned
+	 * @return
+	 */
 	public static PopupScreen reopenScreen(SpoutPlayer player) {
 		return screens.get(player);
+	}
+
+	/**
+	 * Lights up an area around the player
+	 *
+	 * @param player - The ForcePlayer around which the area should be lit up
+	 */
+	public static void flash(ForcePlayer player) {
+		CraftWorld world = (CraftWorld) player.getHandler().getWorld();
+		Block block = player.getHandler().getLocation().getBlock();
+		int x = block.getX();
+		int y = block.getY();
+		int z = block.getZ();
+		int skillRank = player.getSkillRank("Flash");
+		int radius = ForcePlugin.getInstance().powerInfo.getInt("Flash.Radius" + String.valueOf(skillRank), 10);
+		for (int i = -radius; i <= radius; i++)
+			for (int j = -radius; j <= radius; j++)
+				for (int k = -radius; k <= radius; k++) {
+					int oldLevel = world.getHandle().getLightLevel(x + i, y + j, z + k);
+					int newLevel = 15 - (Math.abs(i) + Math.abs(j) + Math.abs(k));
+					if (newLevel > oldLevel)
+						world.getHandle().a(EnumSkyBlock.BLOCK, x+i, y+j, z+k, newLevel);
+				}
 	}
 }
