@@ -35,6 +35,7 @@ public class AdminComboBox extends GenericComboBox implements ComboBox {
 	@Override
 	public void onSelectionChanged(int i, String text) {
 		selectedItem = getSelectedItem();
+		this.setFormat("%selected%");
 		this.setText(selectedItem);
 		this.setDirty(true);
 	}
