@@ -25,7 +25,7 @@ import org.getspout.spoutapi.gui.GenericComboBox;
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class UserComboBox extends GenericComboBox implements ComboBox{
+public class UserComboBox extends GenericComboBox implements ComboBox {
 
 	private String selectedItem;
 
