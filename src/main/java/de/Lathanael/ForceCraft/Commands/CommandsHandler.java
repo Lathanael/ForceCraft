@@ -83,7 +83,7 @@ public class CommandsHandler implements CommandExecutor {
 					sender.sendMessage(ChatColor.RED + "Could not find your ForcePlayer object, please contact your ServerAdmin with this error!");
 					return;
 				}
-				if (power.checkRank(fPlayer) && power.checkTime(fPlayer) && power.checkMana(fPlayer)) {
+				if (power.checkRank(fPlayer) && power.checkTime(fPlayer) && power.checkMana(fPlayer) && power.checkAlignment(fPlayer)) {
 					Player executor = (Player) sender;
 					Block block = null;
 					int cost = 0;

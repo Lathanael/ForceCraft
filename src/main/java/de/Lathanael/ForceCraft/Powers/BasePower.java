@@ -61,6 +61,16 @@ public abstract class BasePower {
 
 	public abstract boolean checkPerm(CommandSender sender);
 
+	public boolean checkAlignment(ForcePlayer player) {
+		ForceAlignment pa = player.getAlignment();
+		if (alignment.equals(ForceAlignment.NEUTRAL))
+			return true;
+		else if (pa.equals(alignment))
+			return true;
+		else
+			return false;
+	}
+
 	public boolean checkRank(ForcePlayer player) {
 		if (player.getRank() < rank) {
 			player.getHandler().sendMessage(ChatColor.RED +
