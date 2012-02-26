@@ -44,8 +44,6 @@ import org.getspout.spoutapi.gui.PopupScreen;
 import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-import com.sun.org.apache.xalan.internal.xsltc.cmdline.getopt.GetOpt;
-
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
 
@@ -279,7 +277,6 @@ public class Tools {
 	 * @param blocks
 	 * @param pushing
 	 */
-	// TODO: push block(s) code
 	public static boolean moveBlocks(Block block, Player player, int rank, boolean pushing) {
 		Block up = block.getRelative(BlockFace.UP);
 		Block down = block.getRelative(BlockFace.DOWN);
@@ -306,24 +303,78 @@ public class Tools {
 				return false;
 			if (rank == 1)
 				return true;
-			else if (rank == 2)
-				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+			else if (rank == 2) {
+				if (BlockStrenghts.Low.containsBlock(block.getType().toString()))
 					block.breakNaturally();
-			else if (rank == 3) {
-				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+				return true;
+			} else if (rank == 3) {
+				List<Block> blocks = new ArrayList<Block>();
+				blocks.add(up);
+				blocks.add(down);
+				if (dir == 's' || dir == 'n') {
+					blocks.add(east);
+					blocks.add(west);
+				} else {
+					blocks.add(north);
+					blocks.add(south);
+				}
+				if (BlockStrenghts.Low.containsBlock(block.getType().toString()) || BlockStrenghts.Middle.containsBlock(block.getType().toString()))
 					block.breakNaturally();
+				for (Block b : blocks) {
+					if (BlockStrenghts.Low.containsBlock(b.getType().toString()))
+						block.breakNaturally();
+				}
 			} else if (rank == 4) {
+				List<Block> blocks = new ArrayList<Block>();
+				blocks.add(up);
+				blocks.add(down);
+				if (dir == 's' || dir == 'n') {
+					blocks.add(east);
+					blocks.add(west);
+				} else {
+					blocks.add(north);
+					blocks.add(south);
+				}
 				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
 					block.breakNaturally();
+				for (Block b : blocks) {
+					if (BlockStrenghts.Low.containsBlock(b.getType().toString()) || BlockStrenghts.Middle.containsBlock(b.getType().toString()))
+						block.breakNaturally();
+				}
+				return true;
 			} else if (rank == 5) {
+				List<Block> blocks = new ArrayList<Block>();
+				blocks.add(up);
+				blocks.add(down);
+				if (dir == 's' || dir == 'n') {
+					blocks.add(east);
+					blocks.add(eastUp);
+					blocks.add(eastDown);
+					blocks.add(west);
+					blocks.add(westUp);
+					blocks.add(westDown);
+				} else {
+					blocks.add(north);
+					blocks.add(northUp);
+					blocks.add(northDown);
+					blocks.add(south);
+					blocks.add(southUp);
+					blocks.add(southDown);
+				}
 				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
 					block.breakNaturally();
+				for (Block b : blocks) {
+					if (BlockStrenghts.Low.containsBlock(b.getType().toString()) || BlockStrenghts.Middle.containsBlock(b.getType().toString()))
+						block.breakNaturally();
+				}
+				return true;
 			}
 			return false;
 		} else {
 			char dir = getOrientation(player.getLocation().getYaw());
 			Location loc;
 			int strength;
+			int id;
 			if (dir == 'i')
 				return false;
 			if (rank == 1) {
@@ -347,7 +398,8 @@ public class Tools {
 					newBlock = player.getWorld().getBlockAt(loc);
 					break;
 				}
-				if (newBlock.getType() == Material.AIR || newBlock.getType() == Material.WATER) {
+				id = newBlock.getTypeId();
+				if (id == Material.AIR.getId() || id == 8 || id == 9 || id == 10 || id == 9) {
 					newBlock.setType(block.getType());
 					block.setType(Material.AIR);
 					return true;
@@ -360,7 +412,8 @@ public class Tools {
 				for (int i = 0; i < blocks.size(); i++) {
 					Block newBlock = blocks.get(i);
 					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
-					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+					id = toReplace.getTypeId();
+					if (id == Material.AIR.getId() || id == 8 || id == 9 || id == 10 || id == 9) {
 						toReplace.setType(newBlock.getType());
 						newBlock.setType(Material.AIR);
 					}
@@ -373,7 +426,8 @@ public class Tools {
 				for (int i = 0; i < blocks.size(); i++) {
 					Block newBlock = blocks.get(i);
 					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
-					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+					id = toReplace.getTypeId();
+					if (id == Material.AIR.getId() || id == 8 || id == 9 || id == 10 || id == 9) {
 						toReplace.setType(newBlock.getType());
 						newBlock.setType(Material.AIR);
 					}
@@ -395,7 +449,8 @@ public class Tools {
 				for (int i = 0; i < blocks.size(); i++) {
 					Block newBlock = blocks.get(i);
 					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
-					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+					id = toReplace.getTypeId();
+					if (id == Material.AIR.getId() || id == 8 || id == 9 || id == 10 || id == 9) {
 						toReplace.setType(newBlock.getType());
 						newBlock.setType(Material.AIR);
 					}
@@ -425,7 +480,8 @@ public class Tools {
 				for (int i = 0; i < blocks.size(); i++) {
 					Block newBlock = blocks.get(i);
 					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
-					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+					id = toReplace.getTypeId();
+					if (id == Material.AIR.getId() || id == 8 || id == 9 || id == 10 || id == 9) {
 						toReplace.setType(newBlock.getType());
 						newBlock.setType(Material.AIR);
 					}
