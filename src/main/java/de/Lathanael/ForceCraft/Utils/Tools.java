@@ -29,8 +29,9 @@ import net.minecraft.server.EnumSkyBlock;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -42,6 +43,8 @@ import org.bukkit.util.Vector;
 import org.getspout.spoutapi.gui.PopupScreen;
 import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
+
+import com.sun.org.apache.xalan.internal.xsltc.cmdline.getopt.GetOpt;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
@@ -222,7 +225,7 @@ public class Tools {
 	}
 
 	/**
-	 * Checks if one entity is within the range of another one (in the xz-plane)
+	 * Checks if one entity is within the range of another one (in xyz)
 	 *
 	 * @param ent1 - First Entity
 	 * @param ent2 - Second Entity
@@ -277,18 +280,72 @@ public class Tools {
 	 * @param pushing
 	 */
 	// TODO: move block(s) code
-	public static void moveBlocks(List<Block> blocks, World world, boolean pushing, Vector direction) {
-		int x = (int) Math.abs(direction.getX());
-		double z = (int) Math.abs(direction.getZ());
-		int length = blocks.size();
+	public static boolean moveBlocks(Block block, Player player, int strenght, boolean pushing) {
 		int counter = 0;
 		if (pushing) {
-
-		} else {
-			for (Block block : blocks) {
-				Location loc = block.getRelative(length-counter, 0, 0).getLocation();
-				counter++;
+			Block up = block.getRelative(BlockFace.UP);
+			Block down = block.getRelative(BlockFace.DOWN);
+			Block west = block.getRelative(BlockFace.WEST);
+			Block east = block.getRelative(BlockFace.EAST);
+			Block south = block.getRelative(BlockFace.SOUTH);
+			Block north = block.getRelative(BlockFace.NORTH);
+			player.sendMessage(String.valueOf(player.getLocation().getYaw()));
+			char dir = getOrientation(player.getLocation().getYaw());
+			if (dir == 'i')
+				return false;
+			if (strenght == 1)
+				return true;
+			else if (strenght == 2)
+				block.breakNaturally();
+			else if (strenght == 3) {
+				block.breakNaturally();
+			} else if (strenght == 4) {
+				block.breakNaturally();
+			} else if (strenght == 5) {
+				block.breakNaturally();
 			}
+			return false;
+		} else {
+			char dir = getOrientation(player.getLocation().getYaw());
+			Location loc;
+			Block newBlock = block;
+			if (dir == 'i')
+				return false;
+			if (strenght == 1) {
+				switch (dir) {
+				case 's':
+					loc = block.getRelative(0, 0, -1).getLocation();
+					newBlock = player.getWorld().getBlockAt(loc);
+					break;
+				case 'n':
+					loc = block.getRelative(0, 0, 1).getLocation();
+					newBlock = player.getWorld().getBlockAt(loc);
+					break;
+				case 'w':
+					loc = block.getRelative(-1, 0, 0).getLocation();
+					newBlock = player.getWorld().getBlockAt(loc);
+					break;
+				case 'e':
+					loc = block.getRelative(1, 0, 0).getLocation();
+					newBlock = player.getWorld().getBlockAt(loc);
+					break;
+				}
+				if (newBlock.getType() == Material.AIR || newBlock.getType() == Material.WATER) {
+					newBlock.setType(block.getType());
+					block.setType(Material.AIR);
+					return true;
+				} else
+					return false;
+			} else if (strenght == 2) {
+
+			} else if (strenght == 3) {
+
+			} else if (strenght == 4) {
+
+			} else if (strenght == 5) {
+
+			}
+			return false;
 		}
 	}
 
@@ -401,5 +458,30 @@ public class Tools {
 					if (newLevel > oldLevel)
 						world.getHandle().a(EnumSkyBlock.BLOCK, x+i, y+j, z+k, newLevel);
 				}
+	}
+
+	private static char getOrientation(float yaw) {
+		if (yaw < 0)
+			yaw += 360;
+		int newYaw = Math.round(yaw/90);
+		char value;
+		switch (newYaw) {
+		case 0:
+			value = 's';
+			break;
+		case 1:
+			value = 'e';
+			break;
+		case 2:
+			value = 'n';
+			break;
+		case 3:
+			value = 'w';
+			break;
+		default:
+			value = 'i';
+			break;
+		}
+		return value;
 	}
 }

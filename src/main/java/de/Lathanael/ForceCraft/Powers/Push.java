@@ -20,15 +20,11 @@
 
 package de.Lathanael.ForceCraft.Powers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
@@ -53,30 +49,26 @@ public class Push extends BasePower {
 
 	@Override
 	public int execute(ForcePlayer player, Entity target) {
+		Player p = player.getHandler();
 		if (target != null) {
-			Tools.debugMsg("Entity targeted!", player.getHandler());
+			Tools.debugMsg("Entity targeted!", p);
 		} else
-			Tools.debugMsg("Target is null!", player.getHandler());
+			Tools.debugMsg("Target is null!", p);
 		int skillRank = player.getSkillRank(name);
-		double force = instance.powerInfo.getDouble(name + "." + String.valueOf(skillRank), 1D);
+		double force;
+		int strength;
 		if (target == null) {
-			Block block = (player.getHandler()).getTargetBlock(null, ForcePlugin.checkDist);
+			strength = instance.powerInfo.getInt(name + ".Strength." + String.valueOf(skillRank), 1);
+			Block block = p.getTargetBlock(null, ForcePlugin.checkDist);
 			if (block.getType().equals(Material.AIR) || block == null) {
-				Tools.debugMsg("No Block was found or Block is an Air-Block!", player.getHandler());
+				Tools.debugMsg("No Block was found or Block is an Air-Block!", p);
 				return 0;
 			}
-			List<Block> blocks = new ArrayList<Block>();
-			for (int i = 1; i < force; i++) {
-				Block nthBlock = null;
-				if (block.getX() >= block.getZ())
-					nthBlock = block.getRelative(i,0,0);
-				else
-					nthBlock = block.getRelative(0, 0, i);
-				blocks.add(nthBlock);
-			}
-			Tools.moveBlocks(blocks, player.getHandler().getWorld(), false, player.getHandler().getLocation().getDirection());
+			if (!Tools.moveBlocks(block, p, strength, true))
+				return 0;
 		} else {
-			Tools.moveEntity(player.getHandler(), target, force);
+			force = instance.powerInfo.getDouble(name + ".Entity." + String.valueOf(skillRank), 1D);
+			Tools.moveEntity(p, target, force);
 		}
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
