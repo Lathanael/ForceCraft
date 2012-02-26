@@ -56,15 +56,13 @@ public class Push extends BasePower {
 			Tools.debugMsg("Target is null!", p);
 		int skillRank = player.getSkillRank(name);
 		double force;
-		int strength;
 		if (target == null) {
-			strength = instance.powerInfo.getInt(name + ".Strength." + String.valueOf(skillRank), 1);
 			Block block = p.getTargetBlock(null, ForcePlugin.checkDist);
 			if (block.getType().equals(Material.AIR) || block == null) {
 				Tools.debugMsg("No Block was found or Block is an Air-Block!", p);
 				return 0;
 			}
-			if (!Tools.moveBlocks(block, p, strength, true))
+			if (!Tools.moveBlocks(block, p, skillRank, true))
 				return 0;
 		} else {
 			force = instance.powerInfo.getDouble(name + ".Entity." + String.valueOf(skillRank), 1D);

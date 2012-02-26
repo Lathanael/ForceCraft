@@ -279,54 +279,71 @@ public class Tools {
 	 * @param blocks
 	 * @param pushing
 	 */
-	// TODO: move block(s) code
-	public static boolean moveBlocks(Block block, Player player, int strenght, boolean pushing) {
-		int counter = 0;
+	// TODO: push block(s) code
+	public static boolean moveBlocks(Block block, Player player, int rank, boolean pushing) {
+		Block up = block.getRelative(BlockFace.UP);
+		Block down = block.getRelative(BlockFace.DOWN);
+		// western blocks
+		Block west = block.getRelative(BlockFace.WEST);
+		Block westUp = west.getRelative(BlockFace.UP);
+		Block westDown = west.getRelative(BlockFace.DOWN);
+		//eastern blocks
+		Block east = block.getRelative(BlockFace.EAST);
+		Block eastUp = east.getRelative(BlockFace.UP);
+		Block eastDown = east.getRelative(BlockFace.DOWN);
+		// southern blocks
+		Block south = block.getRelative(BlockFace.SOUTH);
+		Block southUp = south.getRelative(BlockFace.UP);
+		Block southDown = south.getRelative(BlockFace.DOWN);
+		// northern blocks
+		Block north = block.getRelative(BlockFace.NORTH);
+		Block northUp = north.getRelative(BlockFace.UP);
+		Block northDown = north.getRelative(BlockFace.DOWN);
+
 		if (pushing) {
-			Block up = block.getRelative(BlockFace.UP);
-			Block down = block.getRelative(BlockFace.DOWN);
-			Block west = block.getRelative(BlockFace.WEST);
-			Block east = block.getRelative(BlockFace.EAST);
-			Block south = block.getRelative(BlockFace.SOUTH);
-			Block north = block.getRelative(BlockFace.NORTH);
-			player.sendMessage(String.valueOf(player.getLocation().getYaw()));
 			char dir = getOrientation(player.getLocation().getYaw());
 			if (dir == 'i')
 				return false;
-			if (strenght == 1)
+			if (rank == 1)
 				return true;
-			else if (strenght == 2)
-				block.breakNaturally();
-			else if (strenght == 3) {
-				block.breakNaturally();
-			} else if (strenght == 4) {
-				block.breakNaturally();
-			} else if (strenght == 5) {
-				block.breakNaturally();
+			else if (rank == 2)
+				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+					block.breakNaturally();
+			else if (rank == 3) {
+				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+					block.breakNaturally();
+			} else if (rank == 4) {
+				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+					block.breakNaturally();
+			} else if (rank == 5) {
+				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+					block.breakNaturally();
 			}
 			return false;
 		} else {
 			char dir = getOrientation(player.getLocation().getYaw());
 			Location loc;
-			Block newBlock = block;
+			int strength;
 			if (dir == 'i')
 				return false;
-			if (strenght == 1) {
+			if (rank == 1) {
+				strength = ForcePlugin.getInstance().powerInfo.getInt("Pull.Strength.1");
+				Block newBlock = block;
 				switch (dir) {
 				case 's':
-					loc = block.getRelative(0, 0, -1).getLocation();
+					loc = block.getRelative(0, 0, -strength).getLocation();
 					newBlock = player.getWorld().getBlockAt(loc);
 					break;
 				case 'n':
-					loc = block.getRelative(0, 0, 1).getLocation();
+					loc = block.getRelative(0, 0, strength).getLocation();
 					newBlock = player.getWorld().getBlockAt(loc);
 					break;
 				case 'w':
-					loc = block.getRelative(-1, 0, 0).getLocation();
+					loc = block.getRelative(-strength, 0, 0).getLocation();
 					newBlock = player.getWorld().getBlockAt(loc);
 					break;
 				case 'e':
-					loc = block.getRelative(1, 0, 0).getLocation();
+					loc = block.getRelative(strength, 0, 0).getLocation();
 					newBlock = player.getWorld().getBlockAt(loc);
 					break;
 				}
@@ -336,19 +353,160 @@ public class Tools {
 					return true;
 				} else
 					return false;
-			} else if (strenght == 2) {
-
-			} else if (strenght == 3) {
-
-			} else if (strenght == 4) {
-
-			} else if (strenght == 5) {
-
+			} else if (rank == 2) {
+				List<Block> blocks = new ArrayList<Block>();
+				strength = ForcePlugin.getInstance().powerInfo.getInt("Pull.Strength.2");
+				moveBlocksHelper(block, player, 2, dir, blocks);
+				for (int i = 0; i < blocks.size(); i++) {
+					Block newBlock = blocks.get(i);
+					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
+					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+						toReplace.setType(newBlock.getType());
+						newBlock.setType(Material.AIR);
+					}
+				}
+				return true;
+			} else if (rank == 3) {
+				List<Block> blocks = new ArrayList<Block>();
+				strength = ForcePlugin.getInstance().powerInfo.getInt("Pull.Strength.3");
+				moveBlocksHelper(block, player, 3, dir, blocks);
+				for (int i = 0; i < blocks.size(); i++) {
+					Block newBlock = blocks.get(i);
+					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
+					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+						toReplace.setType(newBlock.getType());
+						newBlock.setType(Material.AIR);
+					}
+				}
+				return true;
+			} else if (rank == 4) {
+				List<Block> blocks = new ArrayList<Block>();
+				strength = ForcePlugin.getInstance().powerInfo.getInt("Pull.Strength.4");
+				moveBlocksHelper(block, player, 3, dir, blocks);
+				blocks.add(up);
+				blocks.add(down);
+				if (dir == 's' || dir == 'n') {
+					blocks.add(east);
+					blocks.add(west);
+				} else {
+					blocks.add(north);
+					blocks.add(south);
+				}
+				for (int i = 0; i < blocks.size(); i++) {
+					Block newBlock = blocks.get(i);
+					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
+					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+						toReplace.setType(newBlock.getType());
+						newBlock.setType(Material.AIR);
+					}
+				}
+				return true;
+			} else if (rank == 5) {
+				List<Block> blocks = new ArrayList<Block>();
+				strength = ForcePlugin.getInstance().powerInfo.getInt("Pull.Strength.4");
+				moveBlocksHelper(block, player, 3, dir, blocks);
+				blocks.add(up);
+				blocks.add(down);
+				if (dir == 's' || dir == 'n') {
+					blocks.add(east);
+					blocks.add(eastUp);
+					blocks.add(eastDown);
+					blocks.add(west);
+					blocks.add(westUp);
+					blocks.add(westDown);
+				} else {
+					blocks.add(north);
+					blocks.add(northUp);
+					blocks.add(northDown);
+					blocks.add(south);
+					blocks.add(southUp);
+					blocks.add(southDown);
+				}
+				for (int i = 0; i < blocks.size(); i++) {
+					Block newBlock = blocks.get(i);
+					Block toReplace = getRelativeToDirection(dir, newBlock, strength);
+					if (toReplace.getType() == Material.AIR || toReplace.getType() == Material.WATER) {
+						toReplace.setType(newBlock.getType());
+						newBlock.setType(Material.AIR);
+					}
+				}
+				return true;
 			}
 			return false;
 		}
 	}
 
+	/**
+	 * Helper function to get the Listy<Block> blocks populated!
+	 *
+	 * @param block
+	 * @param p
+	 * @param amount
+	 * @param dir
+	 * @param blocks
+	 */
+	private static void moveBlocksHelper(Block block, Player p, int amount, char dir, List<Block> blocks) {
+		blocks.add(block);
+		Location loc;
+		switch (dir) {
+		case 's':
+			for (int i = 1; i < amount; i++) {
+				loc = block.getRelative(0, 0, i).getLocation();
+				blocks.add(p.getWorld().getBlockAt(loc));
+			}
+			break;
+		case 'n':
+			for (int i = 1; i < amount; i++) {
+				loc = block.getRelative(0, 0, -i).getLocation();
+				blocks.add(p.getWorld().getBlockAt(loc));
+			}
+			break;
+		case 'w':
+			for (int i = 1; i < amount; i++) {
+				loc = block.getRelative(i, 0, 0).getLocation();
+				blocks.add(p.getWorld().getBlockAt(loc));
+			}
+			break;
+		case 'e':
+			for (int i = 1; i < amount; i++) {
+				loc = block.getRelative(-i, 0, 0).getLocation();
+				blocks.add(p.getWorld().getBlockAt(loc));
+			}
+			break;
+		}
+	}
+
+	/**
+	 * Gets a block relative to a given block depending on the direction the player is facing
+	 *
+	 * @param dir
+	 * @param block
+	 * @param distance
+	 * @return
+	 */
+	private static Block getRelativeToDirection(char dir, Block block, int distance) {
+		Location loc;
+		Block returnBlock = block;
+		switch (dir) {
+		case 's':
+			loc = block.getRelative(0, 0, -distance).getLocation();
+			returnBlock = block.getWorld().getBlockAt(loc);
+			break;
+		case 'n':
+			loc = block.getRelative(0, 0, distance).getLocation();
+			returnBlock = block.getWorld().getBlockAt(loc);
+			break;
+		case 'w':
+			loc = block.getRelative(-distance, 0, 0).getLocation();
+			returnBlock = block.getWorld().getBlockAt(loc);
+			break;
+		case 'e':
+			loc = block.getRelative(distance, 0, 0).getLocation();
+			returnBlock = block.getWorld().getBlockAt(loc);
+			break;
+		}
+		return returnBlock;
+	}
 
 	/**
 	 * Moves an Entity forward or backward. If the Entity hits something it stops!
