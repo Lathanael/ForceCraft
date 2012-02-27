@@ -342,13 +342,46 @@ public class Scheduler {
 				}, delay);
 	}
 
-	// TODO: Lift tasks
 	public void scheduleLiftTask(final ForcePlayer player, final ForcePlayer target) {
+		final int playerRank = player.getSkillRank("Lift");
+		if (playerRank == 0)
+			return;
+		long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 10);
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
+				new Runnable() {
+					public void run() {
+						target.getHandler().setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
+					}
+				}, 0, 20);
 
+		// Stops the lift after xx seceonds
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
+					}
+				}, delay);
 	}
 
 	public void scheduleEntityLiftTask(final ForcePlayer player, final LivingEntity target) {
+		final int playerRank = player.getSkillRank("Lift");
+		if (playerRank == 0)
+			return;
+		long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 10);
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
+				new Runnable() {
+					public void run() {
+						target.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
+					}
+				}, 0, 20);
 
+		// Stops the lift after xx seceonds
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+				new Runnable() {
+					public void run() {
+						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
+					}
+				}, delay);
 	}
 
 	public void scheduleCancelFlashTask(final ForcePlayer player) {
