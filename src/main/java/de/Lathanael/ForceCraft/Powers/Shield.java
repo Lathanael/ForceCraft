@@ -20,6 +20,7 @@
 
 package de.Lathanael.ForceCraft.Powers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -52,8 +53,8 @@ public class Shield extends BasePower {
 	public int execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.SHIELD);
 		Scheduler.getInstance().scheduleCancelShieldTask(player);
-		// TODO: Colouring of the shielded player
 		SpoutPlayer sPlayer = (SpoutPlayer) player.getHandler();
+		sPlayer.setDisplayName(ChatColor.AQUA + sPlayer.getDisplayName());
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));

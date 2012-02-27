@@ -20,6 +20,7 @@
 
 package de.Lathanael.ForceCraft.Powers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -52,8 +53,8 @@ public class Rage extends BasePower {
 	public int execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.RAGE);
 		Scheduler.getInstance().scheduleCancelRageTask(player);
-		// TODO: Colouring of the raged player
 		SpoutPlayer sPlayer = (SpoutPlayer) player.getHandler();
+		sPlayer.setDisplayName(ChatColor.RED + sPlayer.getDisplayName());
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));
