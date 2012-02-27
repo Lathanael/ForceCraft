@@ -350,9 +350,9 @@ public class Scheduler {
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						target.getHandler().setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
+						target.getHandler().setVelocity(new Vector(0, 1, 0).normalize().multiply(0.38));
 					}
-				}, 0, 18);
+				}, 0, 10);
 
 		// Stops the lift after xx seceonds
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
@@ -371,9 +371,9 @@ public class Scheduler {
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						target.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
+						target.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.37));
 					}
-				}, 0, 18);
+				}, 0, 10);
 
 		// Stops the lift after xx seceonds
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
