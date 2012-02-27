@@ -46,28 +46,52 @@ public class FCEntityListener implements Listener{
 		if (event instanceof EntityDamageByEntityEvent) {
 			EntityDamageByEntityEvent newEvent = (EntityDamageByEntityEvent)event;
 			Entity attacker = newEvent.getDamager();
-			if (!(attacker instanceof Player))
-				return;
-			ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) attacker).getName());
-			if (fPlayer == null)
-				return;
-			if (fPlayer.hasPowerState(PlayerPowerStates.RAGE)) {
-				newEvent.setDamage(newEvent.getDamage()*2);
-				return;
+			Entity attacked = newEvent.getEntity();
+			if (attacker instanceof Player) {
+				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) attacker).getName());
+				if (fPlayer == null)
+					return;
+				if (fPlayer.hasPowerState(PlayerPowerStates.RAGE)) {
+					newEvent.setDamage(newEvent.getDamage()*2);
+					return;
+				}
+			}
+			if (attacked instanceof Player) {
+				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(((Player) attacked).getName());
+				if (fPlayer == null)
+					return;
+				if (fPlayer.hasPowerState(PlayerPowerStates.SHIELD)) {
+					double shieldDmgRed = ForcePlugin.getInstance().powerInfo.
+							getDouble("Shield." + String.valueOf(fPlayer.getRank()), 1);
+					newEvent.setDamage((int) (newEvent.getDamage() * shieldDmgRed));
+				}
 			}
 		}
 		if (event.getCause().equals(DamageCause.LIGHTNING)) {
 			ForcePlayer fPlayer = null;
-			if (event.getEntity() instanceof Player)
+			if (event.getEntity() instanceof Player) {
 				fPlayer = PlayerHandler.getInstance().getPlayer(((Player) event.getEntity()).getName());
-			if (fPlayer != null && fPlayer.hasPowerState(PlayerPowerStates.SHOCKED)) {
-				event.setDamage(0);
-				return;
+				if (fPlayer != null && fPlayer.hasPowerState(PlayerPowerStates.SHOCKED)) {
+					event.setDamage(0);
+					return;
+				}
 			}
 			if ((event.getEntity() instanceof LivingEntity)
 					&& ForcePlugin.containsStrokedEntity(event.getEntity().getUniqueId()))
 				event.setDamage(0);
-
+		}
+		if (event.getCause().equals(DamageCause.FALL)) {
+			Entity dropped = event.getEntity();
+			if (dropped instanceof Player) {
+				Player drop = (Player) dropped;
+				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(drop.getName());
+				if (fPlayer == null)
+					return;
+				if (fPlayer.hasPowerState(PlayerPowerStates.LIFTED)) {
+					event.setDamage(2);
+					fPlayer.removePowerState(PlayerPowerStates.LIFTED);
+				}
+			}
 		}
 	}
 

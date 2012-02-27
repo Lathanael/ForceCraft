@@ -27,6 +27,7 @@ import org.getspout.spoutapi.gui.GenericContainer;
 import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.GenericTextField;
 import org.getspout.spoutapi.gui.Label;
+import org.getspout.spoutapi.gui.RenderPriority;
 import org.getspout.spoutapi.gui.TextField;
 import org.getspout.spoutapi.gui.Texture;
 import org.getspout.spoutapi.gui.Widget;
@@ -92,6 +93,7 @@ public class UserGUI extends GenericContainer {
 		}
 		availableKeys.setItems(keyList);
 		availableKeys.setDirty(true);
+		availableKeys.setPriority(RenderPriority.Lowest);
 		List<String> powerList = new ArrayList<String>();
 		powers = new UserComboBox();
 		powers.setHeight(15).setWidth(100).setX(edges.getLeft()+115).setY(edges.getTop() + 80);
@@ -101,6 +103,7 @@ public class UserGUI extends GenericContainer {
 		}
 		powers.setItems(powerList);
 		powers.setDirty(true);
+		powers.setPriority(RenderPriority.Lowest);
 		changeKey = new BindKeyButton("Bind Key");
 		changeKey.setHeight(15).setWidth(60).setX(edges.getLeft()+10).setY(edges.getTop() + 100);
 		changeKey.setDirty(true);
