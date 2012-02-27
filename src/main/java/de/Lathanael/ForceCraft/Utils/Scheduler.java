@@ -64,7 +64,7 @@ public class Scheduler {
 				new Runnable() {
 					public void run() {
 						int health = target.getHandler().getHealth();
-						int amount = plugin.powerInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
+						int amount = plugin.powerInfo.getInt("Heal." + String.valueOf(playerRank), 1);
 						if (health >= 20)
 							return;
 						else
@@ -100,7 +100,7 @@ public class Scheduler {
 				new Runnable() {
 					public void run() {
 						int foodLevel = player.getHandler().getFoodLevel();
-						int amount = plugin.powerInfo.getInt("Mediation. " + String.valueOf(playerRank), 1);
+						int amount = plugin.powerInfo.getInt("Mediation." + String.valueOf(playerRank), 1);
 						if (foodLevel >= 20)
 							return;
 						else
@@ -130,7 +130,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Rage");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Rage." + String.valueOf(playerRank), 200);
+		long delay = plugin.powerInfo.getLong("Rage." + String.valueOf(playerRank), 10)*20;
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -149,7 +149,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Jump");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Jump." + String.valueOf(playerRank), 200);
+		long delay = plugin.powerInfo.getLong("Jump." + String.valueOf(playerRank), 10)*20;
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -169,7 +169,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Run");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Run." + String.valueOf(playerRank), 200);
+		long delay = plugin.powerInfo.getLong("Run." + String.valueOf(playerRank), 10)*20;
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -189,7 +189,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Shield");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Shield." + String.valueOf(playerRank), 200);
+		long delay = plugin.powerInfo.getLong("Shield." + String.valueOf(playerRank), 10)*20;
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -208,7 +208,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Choke");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Choke." + String.valueOf(playerRank), 200);
+		long delay = plugin.powerInfo.getLong("Choke." + String.valueOf(playerRank), 1)*20;
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -244,7 +244,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Choke");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Choke." + String.valueOf(playerRank), 200);
+		long delay = plugin.powerInfo.getLong("Choke." + String.valueOf(playerRank), 1)*20;
 		target.setVelocity(new Vector(0, 0, 0));
 		final Location flying = target.getLocation();
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
@@ -280,7 +280,7 @@ public class Scheduler {
 		final int playerRank = player.getSkillRank("Lightning");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Lightning." + String.valueOf(playerRank), 20);
+		long delay = plugin.powerInfo.getLong("Lightning.Duration." + String.valueOf(playerRank), 1)*20;
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -288,7 +288,7 @@ public class Scheduler {
 						World targetWorld = pTarget.getWorld();
 						targetWorld.strikeLightning(pTarget.getLocation());
 						int health = pTarget.getHealth();
-						int amount = plugin.powerInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
+						int amount = plugin.powerInfo.getInt("Lightning.Amount." + String.valueOf(playerRank), 1);
 						if ((health - amount) < 0)
 							pTarget.setHealth(0);
 						else
@@ -317,14 +317,14 @@ public class Scheduler {
 		final int playerRank = player.getSkillRank("Lightning");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Lightning." + String.valueOf(playerRank), 20);
+		long delay = plugin.powerInfo.getLong("Lightning.Duration." + String.valueOf(playerRank), 1)*20;
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
 						World targetWorld = target.getWorld();
 						targetWorld.strikeLightning(target.getLocation());
 						int health = target.getHealth();
-						int amount = plugin.powerInfo.getInt("Heal. " + String.valueOf(playerRank), 1);
+						int amount = plugin.powerInfo.getInt("Lightning.Amount." + String.valueOf(playerRank), 1);
 						if ((health - amount) < 0)
 							target.setHealth(0);
 						else
@@ -346,7 +346,7 @@ public class Scheduler {
 		final int playerRank = player.getSkillRank("Lift");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 10);
+		long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 1)*20;
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -367,7 +367,7 @@ public class Scheduler {
 		final int playerRank = player.getSkillRank("Lift");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 10);
+		long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 10)*20;
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -388,7 +388,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Flash");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Flash.Duration." + String.valueOf(playerRank), 200);
+		long delay = plugin.powerInfo.getLong("Flash.Duration." + String.valueOf(playerRank), 10)*20;
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
 				new Runnable() {
 					public void run() {
