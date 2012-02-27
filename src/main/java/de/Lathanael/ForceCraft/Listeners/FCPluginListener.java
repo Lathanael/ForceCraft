@@ -73,11 +73,11 @@ public class FCPluginListener implements Listener {
 				ForcePlugin.log.info("Found PermissionsEx, hooking in!");
 
 		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("bPermissions"))
-			if (PermissionsHandler.setPermEx(event.getPlugin()))
+			if (PermissionsHandler.setbPerm())
 				ForcePlugin.log.info("Found bPermissions, hooking in!");
 
 		if (event.getPlugin().getDescription().getName().equalsIgnoreCase("PermissionsBukkit"))
-			if (PermissionsHandler.setPermEx(event.getPlugin()))
+			if (PermissionsHandler.setPermBukkit())
 				ForcePlugin.log.info("Found PermissionsBukkit, hooking in!");
 	}
 
