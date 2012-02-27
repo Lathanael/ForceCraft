@@ -44,6 +44,7 @@ import de.Lathanael.ForceCraft.Commands.CommandsHandler;
 import de.Lathanael.ForceCraft.Commands.Create;
 import de.Lathanael.ForceCraft.Commands.Demote;
 import de.Lathanael.ForceCraft.Commands.Info;
+import de.Lathanael.ForceCraft.Commands.Join;
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Commands.Promote;
 import de.Lathanael.ForceCraft.Commands.Reload;
@@ -344,31 +345,69 @@ public class ForcePlugin extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		if (config.getBoolean("Power.Pull.enabled"))
+		// Register powers if they are enabled
+		if (config.getBoolean("Power.Pull.enabled")) {
 			commandsHandler.registerPower(Pull.class);
-		if (config.getBoolean("Power.Mediation.enabled"))
+			Tools.debugMsg("Power Pull enabled", null);
+		} else
+			Tools.debugMsg("Power Pull disabled", null);
+		if (config.getBoolean("Power.Meditation.enabled")) {
 			commandsHandler.registerPower(Meditation.class);
-		if (config.getBoolean("Power.Push.enabled"))
+			Tools.debugMsg("Power Meditation enabled", null);
+		} else
+			Tools.debugMsg("Power Meditation disabled", null);
+		if (config.getBoolean("Power.Push.enabled")) {
 			commandsHandler.registerPower(Push.class);
-		if (config.getBoolean("Power.Lift.enabled"))
+			Tools.debugMsg("Power Push enabled", null);
+		} else
+			Tools.debugMsg("Power Push disabled", null);
+		if (config.getBoolean("Power.Lift.enabled")) {
 			commandsHandler.registerPower(Lift.class);
-		if (config.getBoolean("Power.Jump.enabled"))
+			Tools.debugMsg("Power Lift enabled", null);
+		} else
+			Tools.debugMsg("Power Lift disabled", null);
+		if (config.getBoolean("Power.Jump.enabled")) {
 			commandsHandler.registerPower(Jump.class);
-		if (config.getBoolean("Power.Rage.enabled"))
+			Tools.debugMsg("Power Jump enabled", null);
+		} else
+			Tools.debugMsg("Power Jump disabled", null);
+		if (config.getBoolean("Power.Rage.enabled")) {
 			commandsHandler.registerPower(Rage.class);
-		if (config.getBoolean("Power.Schield.enabled"))
+			Tools.debugMsg("Power Rage enabled", null);
+		} else
+			Tools.debugMsg("Power rage disabled", null);
+		if (config.getBoolean("Power.Shield.enabled")) {
 			commandsHandler.registerPower(Shield.class);
-		if (config.getBoolean("Power.Run.enabled"))
+			Tools.debugMsg("Power Shield enabled", null);
+		} else
+			Tools.debugMsg("Power Shield disabled", null);
+		if (config.getBoolean("Power.Run.enabled")) {
 			commandsHandler.registerPower(Run.class);
-		if (config.getBoolean("Power.Heal.enabled"))
+			Tools.debugMsg("Power Run enabled", null);
+		} else
+			Tools.debugMsg("Power Run disabled", null);
+		if (config.getBoolean("Power.Heal.enabled")) {
 			commandsHandler.registerPower(Heal.class);
-		if (config.getBoolean("Power.Flash.enabled"))
+			Tools.debugMsg("Power Heal enabled", null);
+		} else
+			Tools.debugMsg("Power Heal disabled", null);
+		if (config.getBoolean("Power.Flash.enabled")) {
 			commandsHandler.registerPower(Flash.class);
-		if (config.getBoolean("Power.Choke.enabled"))
+			Tools.debugMsg("Power Flash enabled", null);
+		} else
+			Tools.debugMsg("Power Flash disabled", null);
+		if (config.getBoolean("Power.Choke.enabled")) {
 			commandsHandler.registerPower(Choke.class);
-		if (config.getBoolean("Power.Lightning.enabled"))
+			Tools.debugMsg("Power Choke enabled", null);
+		} else
+			Tools.debugMsg("Power Choke disabled", null);
+		if (config.getBoolean("Power.Lightning.enabled")) {
 			commandsHandler.registerPower(Lightning.class);
+			Tools.debugMsg("Power Lightning enabled", null);
+		} else
+			Tools.debugMsg("Power Flash disabled", null);
 
+		// Register commands
 		commandsHandler.registerCommand(Info.class);
 		commandsHandler.registerCommand(Set.class);
 		commandsHandler.registerCommand(BindKey.class);
@@ -376,5 +415,6 @@ public class ForcePlugin extends JavaPlugin {
 		commandsHandler.registerCommand(Create.class);
 		commandsHandler.registerCommand(Promote.class);
 		commandsHandler.registerCommand(Demote.class);
+		commandsHandler.registerCommand(Join.class);
 	}
 }

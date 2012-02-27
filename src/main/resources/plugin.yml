@@ -39,6 +39,10 @@ commands:
         description: Demotes the player.
         aliases: [fdemote]
         usage: /<command> [player]
+    fc_join:
+        description: Lets a player join the Dark/Light side.
+        aliases: [fjoin]
+        usage: /<command> [side]
     fc_choke:
         description: Chokes the targeted player if he is within your range.
         aliases: [choke]
@@ -98,6 +102,7 @@ permissions:
         description: Grants access to all Darkside Forces.
         default: false
         children:
+            force.join: true
             force.pull: true
             force.push: true
             force.choke: true
@@ -115,6 +120,7 @@ permissions:
         description: Grants access to all Lightside Forces.
         default: false
         children:
+            force.join: true
             force.pull: true
             force.push: true
             force.flash: true
@@ -164,6 +170,9 @@ permissions:
         default: false
     force.promote:
         description: Allows usage of the /fpromote command.
+        default: false
+    force.promote:
+        description: Allows usage of the /fjoin command.
         default: false
     force.pull:
         description: Allows usage of the Pull force.
