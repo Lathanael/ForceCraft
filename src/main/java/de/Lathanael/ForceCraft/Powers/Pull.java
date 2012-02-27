@@ -50,10 +50,6 @@ public class Pull extends BasePower {
 	@Override
 	public int execute(ForcePlayer player, Entity target) {
 		Player p = player.getHandler();
-		if (target != null) {
-			Tools.debugMsg("Entity targeted!", p);
-		}else
-			Tools.debugMsg("Target is null!", p);
 		int skillRank = player.getSkillRank(name);
 		double force;
 		if (target == null) {
@@ -66,7 +62,6 @@ public class Pull extends BasePower {
 				return 0;
 		} else {
 			force = instance.powerInfo.getDouble(name + ".Entity." + String.valueOf(skillRank), 1D)*(-1);
-			Tools.debugMsg("Moving entity!", p);
 			Tools.moveEntity(p, target, force);
 		}
 		player.increasePwrAmount(name);

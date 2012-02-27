@@ -50,10 +50,6 @@ public class Push extends BasePower {
 	@Override
 	public int execute(ForcePlayer player, Entity target) {
 		Player p = player.getHandler();
-		if (target != null) {
-			Tools.debugMsg("Entity targeted!", p);
-		} else
-			Tools.debugMsg("Target is null!", p);
 		int skillRank = player.getSkillRank(name);
 		double force;
 		if (target == null) {
