@@ -352,7 +352,7 @@ public class Scheduler {
 					public void run() {
 						target.getHandler().setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
 					}
-				}, 0, 20);
+				}, 0, 18);
 
 		// Stops the lift after xx seceonds
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
@@ -373,7 +373,7 @@ public class Scheduler {
 					public void run() {
 						target.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
 					}
-				}, 0, 20);
+				}, 0, 18);
 
 		// Stops the lift after xx seceonds
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
