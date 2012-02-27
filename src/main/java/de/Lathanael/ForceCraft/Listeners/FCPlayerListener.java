@@ -53,9 +53,14 @@ public class FCPlayerListener implements Listener {
 
 	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPlayerKick(PlayerKickEvent event) {
+		if (event.isCancelled())
+			return;
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
 		if (fPlayer != null)
 			fPlayer.updateFile(true);
+		if ((event.getReason().toLowerCase().contains("flying") || event.getReason().toLowerCase()
+				.contains("floating")) && fPlayer.hasPowerState(PlayerPowerStates.LIFTED))
+			event.setCancelled(true);
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)
