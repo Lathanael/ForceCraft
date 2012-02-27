@@ -20,6 +20,7 @@
 
 package de.Lathanael.ForceCraft.Listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,7 +41,9 @@ public class FCPlayerListener implements Listener {
 
 	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		PlayerHandler.getInstance().createForcePlayer(event.getPlayer().getName(), true);
+		Player p = event.getPlayer();
+		ForcePlayer fp = PlayerHandler.getInstance().createForcePlayer(p.getName(), true);
+		p.setDisplayName("[" + fp.getRankName() + "] " + p.getDisplayName());
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)
