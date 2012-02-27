@@ -102,12 +102,17 @@ public class PlayerHandler {
 	 * @param playerName - The String representing a Players name
 	 *                     (use getName() NOT getDisplayName()!!)
 	 */
-	public void createForcePlayer(String playerName) {
+	public ForcePlayer createForcePlayer(String playerName) {
 		ForcePlayer fPlayer = callForcePlayer(playerName, false);
-		if (fPlayer != null)
+		if (fPlayer != null) {
 			players.put(playerName, fPlayer);
-		if (ForcePlugin.debug && fPlayer == null)
+			return fPlayer;
+		}
+		if (ForcePlugin.debug && fPlayer == null) {
 			ForcePlugin.log.info("FocrePlayer object is null, creation failed.");
+			return null;
+		}
+		return null;
 	}
 
 	/**
@@ -117,13 +122,19 @@ public class PlayerHandler {
 	 *                     (use getName() NOT getDisplayName()!!)
 	 * @param join - Did the player join the server or not, ie was the code called
 	 *               from the Player listener or not.
+	 * @return
 	 */
-	public void createForcePlayer(String playerName, boolean join) {
+	public ForcePlayer createForcePlayer(String playerName, boolean join) {
 		ForcePlayer fPlayer = callForcePlayer(playerName, join);
-		if (fPlayer != null)
+		if (fPlayer != null) {
 			players.put(playerName, fPlayer);
-		if (ForcePlugin.debug && fPlayer == null)
+			return fPlayer;
+		}
+		if (ForcePlugin.debug && fPlayer == null) {
 			ForcePlugin.log.info("FocrePlayer object is null, creation failed.");
+			return null;
+		}
+		return null;
 	}
 
 	/**
@@ -131,13 +142,18 @@ public class PlayerHandler {
 	 *
 	 * @param playerName - The String representing a Players name
 	 *                     (use getName() NOT getDisplayName()!!)
+	 * @return
 	 */
-	public void createNewForcePlayer(String playerName) {
+	public ForcePlayer createNewForcePlayer(String playerName) {
 		if (filePlayers.contains(playerName)) {
-			players.put(playerName, new ForcePlayer(playerName));
+			ForcePlayer fp = new ForcePlayer(playerName);
+			players.put(playerName, fp);
+			return fp;
 		} else {
 			filePlayers.add(playerName);
-			players.put(playerName, new ForcePlayer(playerName, playerFolder.getPath()));
+			ForcePlayer fp = new ForcePlayer(playerName, playerFolder.getPath());
+			players.put(playerName, fp);
+			return fp;
 		}
 	}
 
