@@ -272,6 +272,8 @@ public class Tools {
 		return false;
 	}
 
+	// TODO: correct Push/Pull functions -.-
+
 	/**
 	 * Moves a set of Blocks forward or backward. If the blocks hit another one they stop!
 	 * @param blocks
