@@ -47,10 +47,9 @@ public class Reload extends BaseCommand {
 			sender.sendMessage(ChatColor.AQUA + "Reloading configuration files...");
 		ForcePlugin.getInstance().reload();
 		if (sender instanceof ConsoleCommandSender)
-			ForcePlugin.log.info("Reloaded configuration files: config.yml, ranksInfo.yml.");
+			ForcePlugin.log.info("Reloaded configuration files");
 		else
-			sender.sendMessage(ChatColor.GREEN + "Reloaded configuration files: "
-					+ ChatColor.GOLD + "config.yml, ranksInfo.yml.");
+			sender.sendMessage(ChatColor.GREEN + "Reloaded configuration files");
 	}
 
 	/* (non-Javadoc)
