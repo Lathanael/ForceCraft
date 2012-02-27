@@ -104,7 +104,7 @@ public class ForcePlugin extends JavaPlugin {
 		Tools.savePlayerFiles(PlayerHandler.getInstance().getPlayerList());
 		saveConfig();
 		try {
-			powerInfo.save(new File(getDataFolder().getPath() + File.separator + "ranksInfo.yml"));
+			powerInfo.save(new File(getDataFolder().getPath() + File.separator + "powerInfo.yml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
