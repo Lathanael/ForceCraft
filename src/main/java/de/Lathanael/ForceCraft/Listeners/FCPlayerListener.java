@@ -43,7 +43,12 @@ public class FCPlayerListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
 		ForcePlayer fp = PlayerHandler.getInstance().createForcePlayer(p.getName(), true);
-		p.setDisplayName("[" + fp.getRankName() + "] " + p.getDisplayName());
+		if (fp == null)
+			return;
+		String rankName = fp.getRankName();
+		if (!rankName.equalsIgnoreCase("none")) {
+			p.setDisplayName("[" + fp.getRankName() + "] " + p.getDisplayName());
+		}
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)
