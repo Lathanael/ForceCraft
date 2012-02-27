@@ -30,6 +30,7 @@ import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
@@ -59,6 +60,7 @@ public class Lift extends BasePower {
 			if (ftarget == null)
 				return 0;
 			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
+			ftarget.setPowerState(PlayerPowerStates.LIFTED);
 			Scheduler.getInstance().scheduleLiftTask(player,
 					PlayerHandler.getInstance().getPlayer(pTarget.getName()));
 			player.increasePwrAmount(name);
