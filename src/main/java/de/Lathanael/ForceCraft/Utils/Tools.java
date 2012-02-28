@@ -31,7 +31,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -46,6 +45,7 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.Utils.BlockStrengths.*;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -115,7 +115,6 @@ public class Tools {
 		ArrayList<LivingEntity> livingE = new ArrayList<LivingEntity>();
 		for (Entity e : nearbyE) {
 			if (e instanceof LivingEntity) {
-				debugMsg("Adding entity to the list.", player);
 				livingE.add((LivingEntity) e);
 			}
 		}
@@ -139,7 +138,6 @@ public class Tools {
 				ez = loc.getZ();
 				if ((bx-0.75 <= ex && ex <= bx+1.75) && (bz-0.75 <= ez && ez <= bz+1.75) && (by-1 <= ey && ey <= by+2.5)) {
 					// entity is close enough, return the target
-					debugMsg("Found entity!", player);
 					return e;
 				}
 			}
@@ -272,41 +270,40 @@ public class Tools {
 		return false;
 	}
 
-	// TODO: correct Push/Pull functions -.-
-
 	/**
 	 * Moves a set of Blocks forward or backward. If the blocks hit another one they stop!
 	 * @param blocks
 	 * @param pushing
 	 */
 	public static boolean moveBlocks(Block block, Player player, int rank, boolean pushing) {
-		Block up = block.getRelative(BlockFace.UP);
-		Block down = block.getRelative(BlockFace.DOWN);
+		Block up = block.getRelative(0, 1, 0);
+		Block down = block.getRelative(0, -1, 0);
 		// western blocks
-		Block west = block.getRelative(BlockFace.WEST);
-		Block westUp = west.getRelative(BlockFace.UP);
-		Block westDown = west.getRelative(BlockFace.DOWN);
+		Block west = block.getRelative(1, 0, 0);
+		Block westUp = west.getRelative(0, 1, 0);
+		Block westDown = west.getRelative(0, -1, 0);
 		//eastern blocks
-		Block east = block.getRelative(BlockFace.EAST);
-		Block eastUp = east.getRelative(BlockFace.UP);
-		Block eastDown = east.getRelative(BlockFace.DOWN);
+		Block east = block.getRelative(-1, 0 , 0);
+		Block eastUp = east.getRelative(0, 1, 0);
+		Block eastDown = east.getRelative(0, -1, 0);
 		// southern blocks
-		Block south = block.getRelative(BlockFace.SOUTH);
-		Block southUp = south.getRelative(BlockFace.UP);
-		Block southDown = south.getRelative(BlockFace.DOWN);
+		Block south = block.getRelative(0, 0, -1);
+		Block southUp = south.getRelative(0, 1, 0);
+		Block southDown = south.getRelative(0, -1, 0);
 		// northern blocks
-		Block north = block.getRelative(BlockFace.NORTH);
-		Block northUp = north.getRelative(BlockFace.UP);
-		Block northDown = north.getRelative(BlockFace.DOWN);
+		Block north = block.getRelative(0, 0, 1);
+		Block northUp = north.getRelative(0, 1, 0);
+		Block northDown = north.getRelative(0, -1, 0);
 
 		if (pushing) {
 			char dir = getOrientation(player.getLocation().getYaw());
-			if (dir == 'i')
+			if (dir == 'i') {
 				return false;
-			if (rank == 1)
+			}
+			if (rank == 1) {
 				return true;
-			else if (rank == 2) {
-				if (BlockStrenghts.Low.containsBlock(block.getType().toString()))
+			} else if (rank == 2) {
+				if (Low.containsBlock(block.getTypeId()))
 					block.breakNaturally();
 				return true;
 			} else if (rank == 3) {
@@ -320,11 +317,11 @@ public class Tools {
 					blocks.add(north);
 					blocks.add(south);
 				}
-				if (BlockStrenghts.Low.containsBlock(block.getType().toString()) || BlockStrenghts.Middle.containsBlock(block.getType().toString()))
+				if (Low.containsBlock(block.getTypeId()) || Medium.containsBlock(block.getTypeId()))
 					block.breakNaturally();
 				for (Block b : blocks) {
-					if (BlockStrenghts.Low.containsBlock(b.getType().toString()))
-						block.breakNaturally();
+					if (Low.containsBlock(b.getTypeId()))
+						b.breakNaturally();
 				}
 			} else if (rank == 4) {
 				List<Block> blocks = new ArrayList<Block>();
@@ -337,11 +334,11 @@ public class Tools {
 					blocks.add(north);
 					blocks.add(south);
 				}
-				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+				if (!Indestructible.containsBlock(block.getTypeId()))
 					block.breakNaturally();
 				for (Block b : blocks) {
-					if (BlockStrenghts.Low.containsBlock(b.getType().toString()) || BlockStrenghts.Middle.containsBlock(b.getType().toString()))
-						block.breakNaturally();
+					if (Low.containsBlock(b.getTypeId()) || Medium.containsBlock(b.getTypeId()))
+						b.breakNaturally();
 				}
 				return true;
 			} else if (rank == 5) {
@@ -363,11 +360,11 @@ public class Tools {
 					blocks.add(southUp);
 					blocks.add(southDown);
 				}
-				if (!BlockStrenghts.Indestructible.containsBlock(block.getType().toString()))
+				if (!Indestructible.containsBlock(block.getTypeId()))
 					block.breakNaturally();
 				for (Block b : blocks) {
-					if (BlockStrenghts.Low.containsBlock(b.getType().toString()) || BlockStrenghts.Middle.containsBlock(b.getType().toString()))
-						block.breakNaturally();
+					if (!Indestructible.containsBlock(b.getTypeId()))
+						b.breakNaturally();
 				}
 				return true;
 			}
@@ -679,7 +676,7 @@ public class Tools {
 	private static char getOrientation(float yaw) {
 		if (yaw < 0)
 			yaw += 360;
-		int newYaw = Math.round(yaw/90);
+		int newYaw = Math.abs(Math.round(yaw/90));
 		char value;
 		switch (newYaw) {
 		case 0:
@@ -693,6 +690,9 @@ public class Tools {
 			break;
 		case 3:
 			value = 'w';
+			break;
+		case 4:
+			value = 's';
 			break;
 		default:
 			value = 'i';
