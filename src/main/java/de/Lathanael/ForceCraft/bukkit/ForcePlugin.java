@@ -52,6 +52,7 @@ import de.Lathanael.ForceCraft.Commands.Set;
 import de.Lathanael.ForceCraft.Events.FCKeyBinding;
 import de.Lathanael.ForceCraft.Listeners.FCButtonListener;
 import de.Lathanael.ForceCraft.Listeners.FCEntityListener;
+import de.Lathanael.ForceCraft.Listeners.FCEventListener;
 import de.Lathanael.ForceCraft.Listeners.FCInputListener;
 import de.Lathanael.ForceCraft.Listeners.FCPlayerListener;
 import de.Lathanael.ForceCraft.Listeners.FCPluginListener;
@@ -137,6 +138,7 @@ public class ForcePlugin extends JavaPlugin {
 		pm.registerEvents(new FCInputListener(this), this);
 		pm.registerEvents(new FCPluginListener(), this);
 		pm.registerEvents(new FCEntityListener(), this);
+		pm.registerEvents(new FCEventListener(), this);
 		pm.registerEvents(new FCButtonListener(this), this);
 		PluginDescriptionFile pdf = getDescription();
 		try {
