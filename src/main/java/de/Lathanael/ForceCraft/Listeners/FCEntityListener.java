@@ -43,6 +43,29 @@ public class FCEntityListener implements Listener{
 
 	@EventHandler (priority = EventPriority.NORMAL)
 	public void onEntityDamageEvent(EntityDamageEvent event) {
+		if (event.isCancelled())
+			return;
+		if (event.getCause().equals(DamageCause.FALL)) {
+			Entity dropped = event.getEntity();
+			if (dropped instanceof Player) {
+				Player drop = (Player) dropped;
+				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(drop.getName());
+				if (fPlayer == null)
+					return;
+				if (fPlayer.hasPowerState(PlayerPowerStates.LIFTED)) {
+					event.setCancelled(true);
+					return;
+				}
+				if (fPlayer.hasPowerState(PlayerPowerStates.CHOKED)) {
+					event.setCancelled(true);
+					return;
+				} else if (fPlayer.containsLastState(PlayerPowerStates.LIFTED)) {
+					fPlayer.removeLastState(PlayerPowerStates.LIFTED);
+					event.setCancelled(true);
+					return;
+				}
+			}
+		}
 		if (event instanceof EntityDamageByEntityEvent) {
 			EntityDamageByEntityEvent newEvent = (EntityDamageByEntityEvent)event;
 			Entity attacker = newEvent.getDamager();
@@ -53,7 +76,6 @@ public class FCEntityListener implements Listener{
 					return;
 				if (fPlayer.hasPowerState(PlayerPowerStates.RAGE)) {
 					newEvent.setDamage(newEvent.getDamage()*2);
-					return;
 				}
 			}
 			if (attacked instanceof Player) {
@@ -79,19 +101,6 @@ public class FCEntityListener implements Listener{
 			if ((event.getEntity() instanceof LivingEntity)
 					&& ForcePlugin.containsStrokedEntity(event.getEntity().getUniqueId()))
 				event.setDamage(0);
-		}
-		if (event.getCause().equals(DamageCause.FALL)) {
-			Entity dropped = event.getEntity();
-			if (dropped instanceof Player) {
-				Player drop = (Player) dropped;
-				ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(drop.getName());
-				if (fPlayer == null)
-					return;
-				if (fPlayer.hasPowerState(PlayerPowerStates.LIFTED)) {
-					event.setDamage(2);
-					fPlayer.removePowerState(PlayerPowerStates.LIFTED);
-				}
-			}
 		}
 	}
 
