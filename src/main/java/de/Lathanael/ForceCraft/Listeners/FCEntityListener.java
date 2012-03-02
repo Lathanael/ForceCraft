@@ -30,6 +30,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
@@ -63,7 +64,13 @@ public class FCEntityListener implements Listener{
 					fPlayer.removeLastState(PlayerPowerStates.LIFTED);
 					event.setCancelled(true);
 					return;
+				} else if (fPlayer.containsLastState(PlayerPowerStates.CHOKED)) {
+					fPlayer.removeLastState(PlayerPowerStates.CHOKED);
+					event.setCancelled(true);
+					((SpoutPlayer) drop).setGravityMultiplier(1);
+					return;
 				}
+
 			}
 		}
 		if (event instanceof EntityDamageByEntityEvent) {
@@ -95,6 +102,11 @@ public class FCEntityListener implements Listener{
 				fPlayer = PlayerHandler.getInstance().getPlayer(((Player) event.getEntity()).getName());
 				if (fPlayer != null && fPlayer.hasPowerState(PlayerPowerStates.SHOCKED)) {
 					event.setDamage(0);
+					return;
+				}
+				if (fPlayer != null && fPlayer.containsLastState(PlayerPowerStates.SHOCKED)) {
+					event.setDamage(0);
+					fPlayer.removeLastState(PlayerPowerStates.SHOCKED);
 					return;
 				}
 			}
