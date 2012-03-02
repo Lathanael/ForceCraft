@@ -92,10 +92,7 @@ public class ForcePlugin extends JavaPlugin {
 	public static boolean autoPromote = true;
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 	public static int checkDist = 0;
-	public static String manaBarTexURL = "";
-	public static String backgroundTexURL = "";
-	public static String skillPointTexURL = "";
-	public static String spHighlightedTexURL = "";
+
 	public static int maxSP;
 	public static int startingSP;
 	public static boolean manaBarEnabled;
@@ -122,9 +119,8 @@ public class ForcePlugin extends JavaPlugin {
 		loadConfig(config);
 		loadPowerInfoFile();
 		loadTexturePathsFile();
-		loadTextures();
+		TextureURLs.loadTextures(texturePaths);
 		loadAutoPromoteFile();
-		PromoteValues.setInstance();
 		PromoteValues.loadValues(autoPromoteValues);
 		PlayerHandler.setInstance();
 		PlayerHandler.getInstance().initialize(getDataFolder().getPath());
@@ -181,13 +177,6 @@ public class ForcePlugin extends JavaPlugin {
 		startingSP = config.getInt("startingSkillPoints", 10);
 		manaBarEnabled = config.getBoolean("manaBarEnabled", true);
 		autoPromote = config.getBoolean("EnableAutoPromote", true);
-	}
-
-	public void loadTextures() {
-		manaBarTexURL = texturePaths.getString("manaBarTexURL", "http://dl.dropbox.com/u/42731731/BarTex.jpg");
-		skillPointTexURL = texturePaths.getString("SkillPoint", "http://dl.dropbox.com/u/42731731/SkillPoint.png");
-		spHighlightedTexURL = texturePaths.getString("SPHighlighted", "http://dl.dropbox.com/u/42731731/SkillPointHighlighted.png");
-		backgroundTexURL = texturePaths.getString("BackgroundTexURL", "http://dl.dropbox.com/u/42731731/Background.png");
 	}
 
 	private void loadPowerInfoFile() {
@@ -339,8 +328,9 @@ public class ForcePlugin extends JavaPlugin {
 
 	public void reload() {
 		loadPowerInfoFile();
+		PromoteValues.loadValues(autoPromoteValues);
 		loadTexturePathsFile();
-		loadTextures();
+		TextureURLs.loadTextures(texturePaths);
 		loadAutoPromoteFile();
 		config = YamlConfiguration.loadConfiguration(loadConfigurationFile());
 		loadConfig(config);

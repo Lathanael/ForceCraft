@@ -28,6 +28,7 @@ import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.bukkit.TextureURLs;
 import de.Lathanael.ForceCraft.gui.Geometry;
 import de.Lathanael.ForceCraft.gui.Admin.Buttons.PICloseButton;
 import de.Lathanael.ForceCraft.gui.PlayerInfo.PIListModel;
@@ -44,7 +45,7 @@ public class PlayerInfoPopup extends GenericPopup {
 	public PlayerInfoPopup(SpoutPlayer player, Geometry edges) {
 		int screenWidth = player.getMainScreen().getWidth();
 		int screenHeight = player.getMainScreen().getHeight();
-		background = new GenericTexture(ForcePlugin.backgroundTexURL);
+		background = new GenericTexture(TextureURLs.getBackground("BackgroundTexURL"));
 		background.setHeight(200).setWidth(400).setX((screenWidth - 400)/2).setY((screenHeight-200)/2);
 		background.setPriority(RenderPriority.Highest);
 		attachWidget(ForcePlugin.getInstance(), background);

@@ -26,6 +26,8 @@ import org.getspout.spoutapi.gui.Texture;
 import org.getspout.spoutapi.gui.Widget;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
+import de.Lathanael.ForceCraft.bukkit.TextureURLs;
+
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
@@ -37,15 +39,15 @@ public class PowerSymbols extends GenericContainer {
 	// TODO: setting up thos symbols!
 	public PowerSymbols(SpoutPlayer player) {
 		int screenWidth = player.getMainScreen().getWidth();
-		symb1 = new GenericTexture();
+		symb1 = new GenericTexture(TextureURLs.getSymbol("Symbol"));
 		symb1.setHeight(15).setWidth(15).setY(0).setX(screenWidth-15);
-		symb2 = new GenericTexture();
+		symb2 = new GenericTexture(TextureURLs.getSymbol("Symbol"));
 		symb2.setHeight(15).setWidth(15).setY(0).setX(screenWidth-30);
-		symb3 = new GenericTexture();
+		symb3 = new GenericTexture(TextureURLs.getSymbol("Symbol"));
 		symb3.setHeight(15).setWidth(15).setY(0).setX(screenWidth-45);
-		symb4 = new GenericTexture();
+		symb4 = new GenericTexture(TextureURLs.getSymbol("Symbol"));
 		symb4.setHeight(15).setWidth(15).setY(0).setX(screenWidth-60);
-		symb5 = new GenericTexture();
+		symb5 = new GenericTexture(TextureURLs.getSymbol("Symbol"));
 		symb5.setHeight(15).setWidth(15).setY(0).setX(screenWidth-75);
 		addChildren(new Widget[] {symb1, symb2, symb3, symb4, symb5});
 		setWidth(0).setHeight(0);

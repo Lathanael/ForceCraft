@@ -34,6 +34,7 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.bukkit.TextureURLs;
 import de.Lathanael.ForceCraft.gui.Admin.AdminGUI;
 import de.Lathanael.ForceCraft.gui.Admin.AdminGUI2;
 import de.Lathanael.ForceCraft.gui.ErrorScreen.ErrorScreen;
@@ -70,7 +71,7 @@ public class FCUserInterface extends GenericPopup {
 		int screenWidth = player.getMainScreen().getWidth();
 		int screenHeight = player.getMainScreen().getHeight();
 		fPlayer = PlayerHandler.getInstance().getPlayer(player.getName());
-		background = new GenericTexture(ForcePlugin.backgroundTexURL);
+		background = new GenericTexture(TextureURLs.getBackground("BackgroundTexURL"));
 		background.setHeight(200).setWidth(400).setX((screenWidth - 400)/2).setY((screenHeight-200)/2);
 		background.setPriority(RenderPriority.Highest);
 		edges.setLeft((screenWidth-390)/2);

@@ -28,7 +28,7 @@ import org.getspout.spoutapi.gui.RenderPriority;
 import org.getspout.spoutapi.gui.Widget;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.bukkit.TextureURLs;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -50,7 +50,7 @@ public class ManaBarGUI extends GenericContainer {
 		int screenWidth = player.getMainScreen().getWidth();
 
 		// Setting up Manabar background
-		mbTex = new GenericTexture(ForcePlugin.manaBarTexURL);
+		mbTex = new GenericTexture(TextureURLs.getManaBar("manaBarTexURL"));
 		mbTex.setPriority(RenderPriority.High);
 		mbTex.setX((screenWidth - 202)/2).setY(2);
 		mbTex.setWidth(202).setHeight(5);

@@ -33,6 +33,7 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
+import de.Lathanael.ForceCraft.bukkit.TextureURLs;
 import de.Lathanael.ForceCraft.gui.Geometry;
 import de.Lathanael.ForceCraft.gui.SkillTree.Buttons.NextButton;
 import de.Lathanael.ForceCraft.gui.SkillTree.Buttons.PrevButton;
@@ -91,15 +92,15 @@ public class SKGUIPageDark extends GenericContainer {
 		skillPoints.setVisible(true);
 		skillPoints.setDirty(true);
 		ski1 = new SkillTreeItem(edges,
-				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Choke", fPlayer);
+				new GenericTexture(TextureURLs.getPowerImage("Choke")), "Choke", fPlayer);
 		ski1.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 45);
 		treeItem.put("Choke", ski1);
 		ski2 = new SkillTreeItem(edges,
-				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Rage", fPlayer);
+				new GenericTexture(TextureURLs.getPowerImage("Rage")), "Rage", fPlayer);
 		ski2.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 85);
 		treeItem.put("Rage", ski2);
 		ski3 = new SkillTreeItem(edges,
-				new GenericTexture("http://dl.dropbox.com/u/42731731/Power_Back.png"), "Lightning", fPlayer);
+				new GenericTexture(TextureURLs.getPowerImage("Lightning")), "Lightning", fPlayer);
 		ski3.setHeight(36).setWidth(300).setX(edges.getLeft() + 10).setY(edges.getTop() + 125);
 		treeItem.put("Lightning", ski3);
 		addChildren(new Widget[] {alignment, label, prev, next, warning, skillPoints, ski1, ski2, ski3});

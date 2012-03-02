@@ -27,6 +27,7 @@ import org.getspout.spoutapi.gui.Texture;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.bukkit.ForcePlugin;
+import de.Lathanael.ForceCraft.bukkit.TextureURLs;
 import de.Lathanael.ForceCraft.gui.Geometry;
 import de.Lathanael.ForceCraft.gui.ErrorScreen.Buttons.ESCloseButton;
 
@@ -43,7 +44,7 @@ public class ErrorScreen extends GenericPopup {
 	public ErrorScreen (SpoutPlayer player, String errorMsg) {
 		int screenWidth = player.getMainScreen().getWidth();
 		int screenHeight = player.getMainScreen().getHeight();
-		background = new GenericTexture(ForcePlugin.backgroundTexURL);
+		background = new GenericTexture(TextureURLs.getBackground("BackgroundTexURL"));
 		background.setHeight(50).setWidth(200).setX((screenWidth - 200)/2).setY((screenHeight-50)/2);
 		edges.setLeft((screenWidth-190)/2);
 		edges.setRight(background.getX()+background.getWidth()-10);
