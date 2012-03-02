@@ -23,6 +23,7 @@ package de.Lathanael.ForceCraft.Powers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
@@ -50,6 +51,7 @@ public class Jump extends BasePower {
 	@Override
 	public int execute(ForcePlayer player, Entity target) {
 		player.setPowerState(PlayerPowerStates.JUMP);
+		((SpoutPlayer) player.getHandler()).setJumpingMultiplier(2);
 		Scheduler.getInstance().scheduleCancelJumpTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
