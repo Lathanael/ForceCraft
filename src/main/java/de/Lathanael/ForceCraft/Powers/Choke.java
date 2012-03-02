@@ -30,6 +30,7 @@ import de.Lathanael.ForceCraft.Commands.PermissionsHandler;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Utils.ForceAlignment;
+import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
 import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
@@ -55,9 +56,11 @@ public class Choke extends BasePower {
 			return 0;
 		if (target instanceof Player) {
 			Player pTarget = (Player) target;
-			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.5));
-			Scheduler.getInstance().scheduleChokeTask(player,
-					PlayerHandler.getInstance().getPlayer(pTarget.getName()));
+			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.71));
+			ForcePlayer fTarget = PlayerHandler.getInstance().getPlayer(pTarget.getName());
+			fTarget.setPowerState(PlayerPowerStates.CHOKED);
+			Scheduler.getInstance().scheduleChokeTask(player, fTarget);
+			Scheduler.getInstance().scheduleCancelChokeTask(player, fTarget);
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
 			player.decMana(manaCost+costInc*player.getSkillRank(name));

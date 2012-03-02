@@ -49,6 +49,7 @@ public class Meditation extends BasePower {
 	@Override
 	public int execute(ForcePlayer player, Entity target) {
 		Scheduler.getInstance().scheduleMeditationTask(player);
+		Scheduler.getInstance().scheduleCancelMeditationTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));

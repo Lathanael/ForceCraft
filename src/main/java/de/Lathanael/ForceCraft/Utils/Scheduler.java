@@ -20,6 +20,8 @@
 
 package de.Lathanael.ForceCraft.Utils;
 
+import java.util.HashMap;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
@@ -37,6 +39,7 @@ public class Scheduler {
 
 	private static Scheduler instance = null;
 	private static ForcePlugin plugin;
+	private static HashMap<Player, Integer> ids = new HashMap<Player, Integer>();
 
 	public static void initInstance(ForcePlugin newPlugin) {
 		if (instance == null)
@@ -72,16 +75,27 @@ public class Scheduler {
 					}
 				}
 				, 0 , 10);
+		ids.put(target.getHandler(), taskID);
+	}
 
-		// Stops Force Heal after 10 seconds
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(
-				plugin,
-				new Runnable() {
-					public void run() {
-						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
+	/**
+	 * Cancels the Heal task for the given player after 10 seconds
+	 *
+	 * @param player - The ForcePlayer whos task should be stopped
+	 */
+	public void scheduleCancelHealTask(final ForcePlayer player) {
+		if (ids.containsKey(player.getHandler())) {
+			final int id = ids.get(player.getHandler());
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(
+					plugin,
+					new Runnable() {
+						public void run() {
+							ForcePlugin.getInstance().getServer().getScheduler().cancelTask(id);
+						}
 					}
-				}
-				, 200L);
+					, 200L);
+			ids.remove(player.getHandler());
+		}
 	}
 
 	/**
@@ -108,16 +122,27 @@ public class Scheduler {
 					}
 				}
 				, 0 , 10);
+		ids.put(player.getHandler(), taskID);
+	}
 
-		// Stops Force Mediation after 10 seconds
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(
-				plugin,
-				new Runnable() {
-					public void run() {
-						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
+	/**
+	 * Cancels the Meditation task for the given player after 10 seconds
+	 *
+	 * @param player - The ForcePlayer whos task should be stopped
+	 */
+	public void scheduleCancelMeditationTask(final ForcePlayer player) {
+		if (ids.containsKey(player.getHandler())) {
+			final int id = ids.get(player.getHandler());
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(
+					plugin,
+					new Runnable() {
+						public void run() {
+							ForcePlugin.getInstance().getServer().getScheduler().cancelTask(id);
+						}
 					}
-				}
-				, 200L);
+					, 200L);
+			ids.remove(player.getHandler());
+		}
 	}
 
 	/**
@@ -208,14 +233,13 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Choke");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Choke." + String.valueOf(playerRank), 1)*20;
+
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
 						SpoutPlayer pTarget = (SpoutPlayer) target.getHandler();
 						if (pTarget == null)
 							return;
-						pTarget.setGravityMultiplier(0);
 						int health = pTarget.getHealth();
 						if (health - 1 < 0)
 							pTarget.setHealth(0);
@@ -223,15 +247,31 @@ public class Scheduler {
 							pTarget.setHealth(health - 1);
 					}
 				}, 10, 20);
+		ids.put(target.getHandler(), taskID);
+	}
 
-		// Cancel the Choke task after xx seconds(delay)
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
-				new Runnable() {
+	/**
+	 * Cancels the Choke task for the given target after a delay definde by the skillrank of the caster
+	 *
+	 * @param player - The ForcePlayer whos task should be stopped
+	 */
+	public void scheduleCancelChokeTask(final ForcePlayer player, final ForcePlayer target) {
+		int playerRank = player.getSkillRank("Choke");
+		if (playerRank == 0)
+			return;
+		if (ids.containsKey(target.getHandler())) {
+			long delay = plugin.powerInfo.getLong("Choke." + String.valueOf(playerRank), 1)*20;
+			final int id = ids.get(target.getHandler());
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+					new Runnable() {
 						public void run() {
-							plugin.getServer().getScheduler().cancelTask(taskID);
+							plugin.getServer().getScheduler().cancelTask(id);
 							((SpoutPlayer) target.getHandler()).setGravityMultiplier(1);
+							target.removePowerState(PlayerPowerStates.CHOKED);
 						}
 				}, delay);
+			ids.remove(target.getHandler());
+		}
 	}
 
 	/**
@@ -280,7 +320,7 @@ public class Scheduler {
 		final int playerRank = player.getSkillRank("Lightning");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Lightning.Duration." + String.valueOf(playerRank), 1)*20;
+
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
@@ -295,15 +335,30 @@ public class Scheduler {
 							pTarget.setHealth(health - amount);
 					}
 				}, 0, 20);
+		ids.put(target.getHandler(), taskID);
+	}
 
-		// Stops the lightning after xx seceonds
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
-				new Runnable() {
-					public void run() {
-						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
-						target.removePowerState(PlayerPowerStates.SHOCKED);
-					}
+	/**
+	 * Cancels the Lightning task for the given target after a delay definde by the skillrank of the caster
+	 *
+	 * @param player - The ForcePlayer whos task should be stopped
+	 */
+	public void scheduleCancelLightningTask(final ForcePlayer player, final ForcePlayer target) {
+		final int playerRank = player.getSkillRank("Lightning");
+		if (playerRank == 0)
+			return;
+		if (ids.containsKey(target.getHandler())) {
+			long delay = plugin.powerInfo.getLong("Lightning.Duration." + String.valueOf(playerRank), 1)*20;
+			final int id = ids.get(target.getHandler());
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+					new Runnable() {
+						public void run() {
+							plugin.getServer().getScheduler().cancelTask(id);
+							target.removePowerState(PlayerPowerStates.SHOCKED);
+						}
 				}, delay);
+			ids.remove(target.getHandler());
+		}
 	}
 
 	/**
@@ -342,27 +397,57 @@ public class Scheduler {
 				}, delay);
 	}
 
+	/**
+	 * Lifts the provided target. Durations depend on the players Skill rank.
+	 *
+	 * @param player - ForcePlayer object who casted Lift.
+	 * @param target - LivingEntity to be hit.
+	 */
 	public void scheduleLiftTask(final ForcePlayer player, final ForcePlayer target) {
 		final int playerRank = player.getSkillRank("Lift");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 1)*20;
+
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						target.getHandler().setVelocity(new Vector(0, 1, 0).normalize().multiply(0.38));
+						target.getHandler().setVelocity(new Vector(0, 1, 0).normalize().multiply(0.71));
 					}
-				}, 0, 10);
-
-		// Stops the lift after xx seceonds
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
-				new Runnable() {
-					public void run() {
-						ForcePlugin.getInstance().getServer().getScheduler().cancelTask(taskID);
-					}
-				}, delay);
+				}, 0, 20);
+		ids.put(target.getHandler(), taskID);
 	}
 
+	/**
+	 * Cancels the Lift task for the given target after a delay definde by the skillrank of the caster
+	 *
+	 * @param player - The ForcePlayer whos task should be stopped
+	 */
+	public void scheduleCancelLiftTask(final ForcePlayer player, final ForcePlayer target) {
+		final int playerRank = player.getSkillRank("Lift");
+		if (playerRank == 0)
+			return;
+		if (ids.containsKey(target.getHandler())) {
+			long delay = plugin.powerInfo.getLong("Lift." + String.valueOf(playerRank), 1)*20;
+			final int id = ids.get(target.getHandler());
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+					new Runnable() {
+						public void run() {
+							ForcePlugin.getInstance().getServer().getScheduler().cancelTask(id);
+							target.getHandler().setHealth(target.getHandler().getHealth()-2);
+							target.removePowerState(PlayerPowerStates.LIFTED);
+							target.addLastState(PlayerPowerStates.LIFTED);
+						}
+					}, delay);
+			ids.remove(target.getHandler());
+		}
+	}
+
+	/**
+	 * Lifts the provided living entity. Durations depend on the players Skill rank.
+	 *
+	 * @param player - ForcePlayer object who casted Lift.
+	 * @param target - LivingEntity to be lifted.
+	 */
 	public void scheduleEntityLiftTask(final ForcePlayer player, final LivingEntity target) {
 		final int playerRank = player.getSkillRank("Lift");
 		if (playerRank == 0)
@@ -371,7 +456,7 @@ public class Scheduler {
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						target.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.37));
+						target.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.38));
 					}
 				}, 0, 10);
 
@@ -384,6 +469,12 @@ public class Scheduler {
 				}, delay);
 	}
 
+	/**
+	 * Cancels the power Force Flash a player has. It is cancelled after a
+	 * given time, depending on the players Rank.
+	 *
+	 * @param player - The ForcePlayer object for home the Force Flash should be cancelled
+	 */
 	public void scheduleCancelFlashTask(final ForcePlayer player) {
 		int playerRank = player.getSkillRank("Flash");
 		if (playerRank == 0)

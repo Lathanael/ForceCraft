@@ -220,6 +220,10 @@ public class Tools {
 		debugMsg(message, sender, false);
 	}
 
+	public static void debugMsg(String message) {
+		debugMsg(message, null, false);
+	}
+
 	/**
 	 * Checks if one entity is within the range of another one (in xyz)
 	 *

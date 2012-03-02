@@ -60,6 +60,7 @@ public class ForcePlayer {
 	protected File playerFile;
 	protected long lastTimeCasted = 0;
 	protected HashSet<PlayerPowerStates> powers = new HashSet<PlayerPowerStates>();
+	protected HashSet<PlayerPowerStates> lastStates = new HashSet<PlayerPowerStates>();
 	protected TreeMap<Keyboard, String> keys = new TreeMap<Keyboard, String>();
 	protected HashMap<String, Integer> amounts = new HashMap<String, Integer>();
 	protected HashMap<String, Long> times = new HashMap<String, Long>();
@@ -440,6 +441,19 @@ public class ForcePlayer {
 			return powers.contains(state);
 		else
 			return false;
+	}
+
+	public void addLastState(PlayerPowerStates state) {
+		lastStates.add(state);
+	}
+
+	public void removeLastState(PlayerPowerStates state) {
+		if (lastStates.contains(state))
+			lastStates.remove(state);
+	}
+
+	public boolean containsLastState(PlayerPowerStates state) {
+		return lastStates.contains(state);
 	}
 
 	public void setLastTimeUsed(String powerName, long time) {

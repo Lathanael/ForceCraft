@@ -59,10 +59,10 @@ public class Lift extends BasePower {
 			ForcePlayer ftarget = PlayerHandler.getInstance().getPlayer(pTarget.getName());
 			if (ftarget == null)
 				return 0;
-			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.75));
+			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.85));
 			ftarget.setPowerState(PlayerPowerStates.LIFTED);
-			Scheduler.getInstance().scheduleLiftTask(player,
-					PlayerHandler.getInstance().getPlayer(pTarget.getName()));
+			Scheduler.getInstance().scheduleLiftTask(player, ftarget);
+			Scheduler.getInstance().scheduleCancelLiftTask(player, ftarget);
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
 			player.decMana(manaCost+costInc*player.getSkillRank(name));

@@ -61,6 +61,7 @@ public class Lightning extends BasePower {
 				return 0;
 			fPlayer.setPowerState(PlayerPowerStates.SHOCKED);
 			Scheduler.getInstance().scheduleLightningTask(player, fPlayer);
+			Scheduler.getInstance().scheduleCancelLightningTask(player, fPlayer);
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
 			player.decMana(manaCost+costInc*player.getSkillRank(name));

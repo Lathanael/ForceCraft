@@ -52,10 +52,13 @@ public class Heal extends BasePower {
 		Player pTarget = null;
 		if (target != null && target instanceof Player)
 			pTarget = (Player) target;
-		if (target == null)
+		if (target == null) {
 			Scheduler.getInstance().scheduleHealTask(player, player);
-		else
+			Scheduler.getInstance().scheduleCancelHealTask(player);
+		} else {
 			Scheduler.getInstance().scheduleHealTask(player, PlayerHandler.getInstance().getPlayer(pTarget.getName()));
+			Scheduler.getInstance().scheduleCancelHealTask(PlayerHandler.getInstance().getPlayer(pTarget.getName()));
+		}
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
 		player.decMana(manaCost+costInc*player.getSkillRank(name));
