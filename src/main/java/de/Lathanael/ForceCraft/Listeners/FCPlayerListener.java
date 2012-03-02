@@ -32,6 +32,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import de.Lathanael.ForceCraft.Players.ForcePlayer;
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 import de.Lathanael.ForceCraft.Utils.PlayerPowerStates;
+import de.Lathanael.ForceCraft.Utils.Scheduler;
 import de.Lathanael.ForceCraft.Utils.Tools;
 
 /**
@@ -49,6 +50,7 @@ public class FCPlayerListener implements Listener {
 		if (!rankName.equalsIgnoreCase("none")) {
 			p.setDisplayName("[" + fp.getRankName() + "] " + p.getDisplayName());
 		}
+		Scheduler.getInstance().scheduleRefillManaTask(fp);
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)
@@ -56,18 +58,22 @@ public class FCPlayerListener implements Listener {
 		if (event.isCancelled())
 			return;
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
-		if (fPlayer != null)
+		if (fPlayer != null) {
 			fPlayer.updateFile(true);
-		if ((event.getReason().toLowerCase().contains("flying") || event.getReason().toLowerCase()
-				.contains("floating")) && fPlayer.hasPowerState(PlayerPowerStates.LIFTED))
-			event.setCancelled(true);
+			if ((event.getReason().toLowerCase().contains("flying") || event.getReason().toLowerCase()
+					.contains("floating")) && fPlayer.hasPowerState(PlayerPowerStates.LIFTED))
+				event.setCancelled(true);
+			Scheduler.getInstance().scheduleCancelRefillManaTask(fPlayer);
+		}
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		ForcePlayer fPlayer = PlayerHandler.getInstance().getPlayer(event.getPlayer().getName());
-		if (fPlayer != null)
+		if (fPlayer != null) {
 			fPlayer.updateFile(true);
+			Scheduler.getInstance().scheduleCancelRefillManaTask(fPlayer);
+		}
 	}
 
 	@EventHandler (priority = EventPriority.NORMAL)
