@@ -489,4 +489,39 @@ public class Scheduler {
 					}
 				}, delay);
 	}
+
+	/**
+	 * Refills xx Mana every xx seconds, amount and time depend on settings!
+	 *
+	 * @param player
+	 */
+	public void scheduleRefillManaTask(final ForcePlayer player) {
+		int delay = ForcePlugin.refillTime*20;
+		final int amount = ForcePlugin.refillAmount;
+		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
+				new Runnable() {
+					public void run() {
+						player.incMana(amount);
+					}
+				}, 0, delay);
+		ids.put(player.getHandler(), taskID);
+	}
+
+	/**
+	 * Cancels the refilltask after the player left the game!
+	 *
+	 * @param player
+	 */
+	public void scheduleCancelRefillManaTask(final ForcePlayer player) {
+		if (ids.containsKey(player.getHandler())) {
+			final int id = ids.get(player.getHandler());
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
+					new Runnable() {
+						public void run() {
+							ForcePlugin.getInstance().getServer().getScheduler().cancelTask(id);
+						}
+					}, 0);
+			ids.remove(player.getHandler());
+		}
+	}
 }

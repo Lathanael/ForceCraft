@@ -92,7 +92,8 @@ public class ForcePlugin extends JavaPlugin {
 	public static boolean autoPromote = true;
 	private static HashMap<UUID, LivingEntity> entitiesStroked = new HashMap<UUID, LivingEntity>();
 	public static int checkDist = 0;
-
+	public static int refillTime = 0;
+	public static int refillAmount = 0;
 	public static int maxSP;
 	public static int startingSP;
 	public static boolean manaBarEnabled;
@@ -177,6 +178,8 @@ public class ForcePlugin extends JavaPlugin {
 		startingSP = config.getInt("startingSkillPoints", 10);
 		manaBarEnabled = config.getBoolean("manaBarEnabled", true);
 		autoPromote = config.getBoolean("EnableAutoPromote", true);
+		refillTime = config.getInt("Refill.Time", 1);
+		refillAmount = config.getInt("Refill.Amount", 10);
 	}
 
 	private void loadPowerInfoFile() {

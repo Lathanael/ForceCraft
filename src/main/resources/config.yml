@@ -7,6 +7,9 @@ maxSkillPoints: 20
 startingSkillPoints: 5
 manaBarEnabled: true
 EnableAutoPromote: true
+Refill:
+    Time: 1
+    Amount: 10
 Power:
   Push:
     enabled: true
