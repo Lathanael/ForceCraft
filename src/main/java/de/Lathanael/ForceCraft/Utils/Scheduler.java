@@ -501,7 +501,8 @@ public class Scheduler {
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						player.incMana(amount);
+						if (player.getMana() != player.getMaxMana())
+							player.incMana(amount);
 					}
 				}, 0, delay);
 		ids.put(player.getHandler(), taskID);
