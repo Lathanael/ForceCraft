@@ -234,12 +234,14 @@ public class Scheduler {
 		if (playerRank == 0)
 			return;
 
+		final SpoutPlayer pTarget = (SpoutPlayer) target.getHandler();
+		if (pTarget == null)
+			return;
+		pTarget.setGravityMultiplier(0);
+		pTarget.setVelocity(new Vector(0, 0, 0));
 		final int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					public void run() {
-						SpoutPlayer pTarget = (SpoutPlayer) target.getHandler();
-						if (pTarget == null)
-							return;
 						int health = pTarget.getHealth();
 						if (health - 1 < 0)
 							pTarget.setHealth(0);

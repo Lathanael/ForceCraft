@@ -56,7 +56,7 @@ public class Choke extends BasePower {
 			return 0;
 		if (target instanceof Player) {
 			Player pTarget = (Player) target;
-			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.71));
+			pTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.85));
 			ForcePlayer fTarget = PlayerHandler.getInstance().getPlayer(pTarget.getName());
 			fTarget.setPowerState(PlayerPowerStates.CHOKED);
 			Scheduler.getInstance().scheduleChokeTask(player, fTarget);
@@ -67,7 +67,7 @@ public class Choke extends BasePower {
 			return manaCost+costInc*player.getSkillRank(name);
 		} else if (target instanceof LivingEntity) {
 			LivingEntity eTarget = (LivingEntity) target;
-			eTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.5));
+			eTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.85));
 			Scheduler.getInstance().scheduleChokeLivingEntityTask(player, eTarget);
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
