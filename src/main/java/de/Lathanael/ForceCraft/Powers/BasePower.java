@@ -99,7 +99,7 @@ public abstract class BasePower {
 		if (player.getLastTimeUsed(name) > 0) {
 			time = (System.currentTimeMillis() - player.getLastTimeUsed(name))/1000;
 		}
-		if ((int) Math.round(delay) == 0 || (int) Math.round(time) == 0 || time <= delay) {
+		if ((int) Math.round(delay) == 0 || (int) Math.round(time) == 0 || time >= delay) {
 			return true;
 		}
 		player.getHandler().sendMessage(ChatColor.RED + "You need to wait to use Force " + name + " again!");
