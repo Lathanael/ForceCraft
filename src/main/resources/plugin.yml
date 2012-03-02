@@ -18,7 +18,7 @@ commands:
     fc_set:
         description: Sets different properties for a given player, name is case SENSITIVE!
         aliases: [fset]
-        usage: /<command> [player] [type] <number>
+        usage: /<command> [player] [type] [value(s)]
     fc_bind:
         description: Binds a Force Power the given key.
         aliases: [fbind]
@@ -84,9 +84,9 @@ commands:
         aliases: [heal, fheal]
         usage: /<command>
     fc_flash:
-        description: Use Force Flash to blind the target.
+        description: Use Force Flash to illuminate the area around you.
         aliases: [flash]
-        usage: /<command> <target>
+        usage: /<command>
     fc_lightning:
         description: Use Force Lightning to strike the target with lightnings.
         aliases: [lightning]
@@ -154,7 +154,7 @@ permissions:
         description: Allows usage of the /finfo command.
         default: false
     force.set:
-        description: Allows usage of the /fset command
+        description: Allows usage of the /fset command.
         default: false
     force.bind:
         description: Allows usage of the /fbind command.
