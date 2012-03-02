@@ -32,15 +32,9 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class PromoteValues {
 
-	private static PromoteValues instance = null;
 	private static HashMap<String, Integer> values = new HashMap<String, Integer>();
 
 	public PromoteValues() {
-	}
-
-	public static void setInstance() {
-		if (instance == null)
-			instance = new PromoteValues();
 	}
 
 	public static void loadValues(FileConfiguration promoteValues) {
