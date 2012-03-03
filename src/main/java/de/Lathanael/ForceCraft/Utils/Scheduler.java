@@ -214,7 +214,7 @@ public class Scheduler {
 		int playerRank = player.getSkillRank("Shield");
 		if (playerRank == 0)
 			return;
-		long delay = plugin.powerInfo.getLong("Shield." + String.valueOf(playerRank), 10)*20;
+		long delay = plugin.powerInfo.getLong("Shield.Duration." + String.valueOf(playerRank), 10)*20;
 		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin,
 				new Runnable() {
 					public void run() {
