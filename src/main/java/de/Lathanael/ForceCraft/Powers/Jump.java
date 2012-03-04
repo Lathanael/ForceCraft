@@ -55,8 +55,10 @@ public class Jump extends BasePower {
 		Scheduler.getInstance().scheduleCancelJumpTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
-		player.decMana(manaCost+costInc*player.getSkillRank(name));
-		return manaCost+costInc*player.getSkillRank(name);
+		int skillRank = player.getSkillRank(name);
+		int cost = manaCost+costInc*(skillRank == 0 ? 0 : (skillRank - 1));
+		player.decMana(cost);
+		return cost;
 	}
 
 	@Override

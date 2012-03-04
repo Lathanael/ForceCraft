@@ -54,6 +54,7 @@ public class Lift extends BasePower {
 	public int execute(ForcePlayer player, Entity target) {
 		if (target == null)
 			return 0;
+		int skillRank = player.getSkillRank(name);
 		if (target instanceof Player) {
 			Player pTarget = (Player) target;
 			ForcePlayer ftarget = PlayerHandler.getInstance().getPlayer(pTarget.getName());
@@ -65,16 +66,18 @@ public class Lift extends BasePower {
 			Scheduler.getInstance().scheduleCancelLiftTask(player, ftarget);
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
-			player.decMana(manaCost+costInc*player.getSkillRank(name));
-			return manaCost+costInc*player.getSkillRank(name);
+			int cost = manaCost+costInc*(skillRank == 0 ? 0 : (skillRank - 1));
+			player.decMana(cost);
+			return cost;
 		} else if (target instanceof LivingEntity) {
 			LivingEntity eTarget = (LivingEntity) target;
 			eTarget.setVelocity(new Vector(0, 1, 0).normalize().multiply(0.80));
 			Scheduler.getInstance().scheduleEntityLiftTask(player, eTarget);
 			player.increasePwrAmount(name);
 			player.setLastTimeUsed(name, System.currentTimeMillis());
-			player.decMana(manaCost+costInc*player.getSkillRank(name));
-			return manaCost+costInc*player.getSkillRank(name);
+			int cost = manaCost+costInc*(skillRank == 0 ? 0 : (skillRank - 1));
+			player.decMana(cost);
+			return cost;
 		}
 		return 0;
 	}

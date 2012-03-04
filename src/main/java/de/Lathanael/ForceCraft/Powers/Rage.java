@@ -57,8 +57,10 @@ public class Rage extends BasePower {
 		sPlayer.setDisplayName(ChatColor.RED + sPlayer.getDisplayName());
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
-		player.decMana(manaCost+costInc*player.getSkillRank(name));
-		return manaCost+costInc*player.getSkillRank(name);
+		int skillRank = player.getSkillRank(name);
+		int cost = manaCost+costInc*(skillRank == 0 ? 0 : (skillRank - 1));
+		player.decMana(cost);
+		return cost;
 	}
 
 	@Override

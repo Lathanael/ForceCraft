@@ -53,8 +53,10 @@ public class Flash extends BasePower {
 		Scheduler.getInstance().scheduleCancelFlashTask(player);
 		player.increasePwrAmount(name);
 		player.setLastTimeUsed(name, System.currentTimeMillis());
-		player.decMana(manaCost+costInc*player.getSkillRank(name));
-		return manaCost+costInc*player.getSkillRank(name);
+		int skillRank = player.getSkillRank(name);
+		int cost = manaCost+costInc*(skillRank == 0 ? 0 : (skillRank - 1));
+		player.decMana(cost);
+		return cost;
 	}
 
 	@Override
