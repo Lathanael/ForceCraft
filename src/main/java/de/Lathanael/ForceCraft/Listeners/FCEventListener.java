@@ -41,10 +41,14 @@ public class FCEventListener implements Listener{
 			return;
 		}
 		ForcePlayer p = event.getPlayer();
-		int rank = p.getRank();
+		int rank = p.getRank() == 5 ? 5 : p.getRank() + 1;
+		if (rank == 5)
+			return;
 		boolean promote = false;
 		HashMap<String, Integer> amounts = p.getPowerAmounts();
 		for (Map.Entry<String, Integer> entries : amounts.entrySet()) {
+			if (!ForcePlugin.getInstance().config.getBoolean("Power." + entries.getKey() + ".enabled"))
+				continue;
 			int value = PromoteValues.getValue(entries.getKey() + "." + String.valueOf(rank));
 			if (value <= 0)
 				continue;
