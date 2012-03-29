@@ -256,13 +256,13 @@
     <dependency>
     	<groupId>org.bukkit</groupId>
     	<artifactId>bukkit</artifactId>
-    	<version>1.2.4-R1.0</version>
+    	<version>1.2.4-R1.1-SNAPSHOT</version>
     	<scope>provided</scope>
     </dependency>
     <dependency>
     	<groupId>org.bukkit</groupId>
     	<artifactId>craftbukkit</artifactId>
-    	<version>1.2.4-R1.0</version>
+    	<version>1.2.4-R1.1-SNAPSHOT</version>
     	<scope>provided</scope>
     </dependency>
   </dependencies>
