@@ -18,10 +18,10 @@
 
 package de.Lathanael.ForceCraft.Commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.getspout.commons.ChatColor;
 
 import de.Lathanael.ForceCraft.Players.PlayerHandler;
 
